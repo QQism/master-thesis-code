@@ -9,20 +9,32 @@ using Mapbox.Unity.Location;
 using System.Text;
 using System;
 
+public enum MeshSelection
+{
+    Cube,
+    Cylinder
+}
+
 public class TestScript : MonoBehaviour {
     public AbstractMap _map;
     public Camera _camera;
     private String datasetFile = "\\Datasets\\vic_wateruse_2008_2009.csv";
     public Transform _barsContainer;
 
+    public Mesh _cubeMesh;
+    public Mesh _cylinderMesh;
+    public MeshSelection _meshSelectionType;
+
     public delegate void OnDataLoaded();
     public static event OnDataLoaded onDataLoaded;
 
     [SerializeField]
-    private GameObject _barChart;
+    private GameObject _framedBar;
     private List<GameObject> _bars = new List<GameObject>();
     private float _maxBarHeight = 50.0f;
     private float _barHeightBuffer = 1.2f;
+    private Mesh _meshSelection;
+
 
 	// Use this for initialization
 	void Start () { }
@@ -31,6 +43,14 @@ public class TestScript : MonoBehaviour {
     {
         //_map.OnInitialized += placeBarChart;
         _map.OnInitialized += loadCSVData;
+
+        if (_meshSelectionType == MeshSelection.Cube)
+        {
+            _meshSelection = _cubeMesh;
+        } else if (_meshSelectionType == MeshSelection.Cylinder) 
+        {
+            _meshSelection = _cylinderMesh;
+        }
     }
 
     void loadCSVData()
@@ -44,6 +64,7 @@ public class TestScript : MonoBehaviour {
 
         float maxValue = 0;
         for (int i=1; i < lines.Length; i++)
+        //for (int i=1; i < 2; i++)
         {
             string[] lineData = lines[i].Split(',');
             if (lineData.Length < 5)
@@ -65,12 +86,16 @@ public class TestScript : MonoBehaviour {
             float latitude = float.Parse(lineData[3]);
             float longitude = float.Parse(lineData[4]);
             Vector2d position = new Vector2d(latitude, longitude);
-            GameObject bar = Instantiate(_barChart, _map.GeoToWorldPosition(position), Quaternion.identity);
+            GameObject bar = Instantiate(_framedBar, _map.GeoToWorldPosition(position), Quaternion.identity);
             bar.transform.SetParent(_barsContainer, true);
             bar.transform.name = "Bar " + stringData;
             float amount = float.Parse(lineData[1]);
-            bar.GetComponent<BarCustomData>().Value = amount;
-            bar.GetComponent<BarCustomData>().LatLong = position; 
+
+            FramedBarData barDataComponent = bar.GetComponent<FramedBarData>();
+            barDataComponent.Value = amount;
+            barDataComponent.LatLong = position;
+            barDataComponent.Elevation = _map.QueryElevationInUnityUnitsAt(position);
+            barDataComponent.BarMesh = _meshSelection;
 
             if (maxValue < amount)
                 maxValue = amount;
@@ -80,9 +105,9 @@ public class TestScript : MonoBehaviour {
 
         foreach (GameObject bar in _bars)
         {
-            transformBarWithAmount(bar,
-                bar.GetComponent<BarCustomData>().Value,
-                _map.QueryElevationInUnityUnitsAt(bar.GetComponent<BarCustomData>().LatLong), maxValue);
+            FramedBarData barDataComponent = bar.GetComponent<FramedBarData>();
+            barDataComponent.MaxValue = maxValue;
+            barDataComponent.updateBars();
         }
     }
 
@@ -106,7 +131,7 @@ public class TestScript : MonoBehaviour {
             //Debug.Log(_map.CenterLatitudeLongitude.ToString());
             //_cube.transform.position = _map.GeoToWorldPosition(positions[0]);
             //Debug.Log("After  Transform:" + "  X:" + _cube.transform.position.x.ToString() + ", Y:" + _cube.transform.position.y.ToString() + ", Z:" + _cube.transform.position.y.ToString());
-            Instantiate(_barChart, _map.GeoToWorldPosition(pos), Quaternion.identity);
+            //Instantiate(_barChart, _map.GeoToWorldPosition(pos), Quaternion.identity);
         }
     }
 

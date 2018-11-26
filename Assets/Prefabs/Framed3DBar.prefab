@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4600707562930144}
   - component: {fileID: 114961520442391128}
   m_Layer: 0
-  m_Name: FramedBar
+  m_Name: Framed3DBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -231,5 +231,6 @@ MonoBehaviour:
   _barHeightBuffer: 1.2
   _elevation: 0
   _maxValue: 1
+  _barMesh: {fileID: 0}
   _dataBar: {fileID: 1315859709506506}
   _frameBar: {fileID: 1924695585344114}

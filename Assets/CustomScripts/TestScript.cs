@@ -12,7 +12,8 @@ using System;
 public enum MeshSelection
 {
     Cube,
-    Cylinder
+    Cylinder,
+    Quad
 }
 
 public class TestScript : MonoBehaviour {
@@ -23,6 +24,7 @@ public class TestScript : MonoBehaviour {
 
     public Mesh _cubeMesh;
     public Mesh _cylinderMesh;
+    public Mesh _quadMesh;
     public MeshSelection _meshSelectionType;
 
     public delegate void OnDataLoaded();
@@ -50,7 +52,11 @@ public class TestScript : MonoBehaviour {
         } else if (_meshSelectionType == MeshSelection.Cylinder) 
         {
             _meshSelection = _cylinderMesh;
+        } else if (_meshSelectionType == MeshSelection.Quad)
+        {
+            _meshSelection = _quadMesh;
         }
+
     }
 
     void loadCSVData()
@@ -86,6 +92,7 @@ public class TestScript : MonoBehaviour {
             float latitude = float.Parse(lineData[3]);
             float longitude = float.Parse(lineData[4]);
             Vector2d position = new Vector2d(latitude, longitude);
+
             GameObject bar = Instantiate(_framedBar, _map.GeoToWorldPosition(position), Quaternion.identity);
             bar.transform.SetParent(_barsContainer, true);
             bar.transform.name = "Bar " + stringData;

@@ -8,21 +8,22 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications: []
     m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 0}
+  m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1257486800756004}
-  m_IsPrefabParent: 1
+  m_IsPrefabAsset: 1
 --- !u!1 &1257486800756004
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4867834046800562}
   - component: {fileID: 114478715909612932}
+  - component: {fileID: 114928773677519064}
   m_Layer: 0
   m_Name: Map
-  m_TagString: Untagged
+  m_TagString: Map
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +31,7 @@ GameObject:
 --- !u!4 &4867834046800562
 Transform:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1257486800756004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -43,7 +44,7 @@ Transform:
 --- !u!114 &114478715909612932
 MonoBehaviour:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1257486800756004}
   m_Enabled: 1
@@ -53,7 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _options:
     locationOptions:
-      latitudeLongitude: 37.784179, -122.401583
+      latitudeLongitude: -37.8142, 144.9632
       zoom: 15
     extentOptions:
       extentType: 1
@@ -63,10 +64,10 @@ MonoBehaviour:
           visibleBuffer: 0
           disposeBuffer: 0
         rangeAroundCenterOptions:
-          west: 1
-          north: 1
-          east: 1
-          south: 1
+          west: 10
+          north: 10
+          east: 10
+          south: 10
         rangeAroundTransformOptions:
           targetTransform: {fileID: 0}
           visibleBuffer: 0
@@ -82,12 +83,12 @@ MonoBehaviour:
   _initializeOnStart: 1
   _imagery:
     _layerProperty:
-      sourceType: 0
+      sourceType: 2
       sourceOptions:
         isActive: 1
         layerSource:
           Name: Streets
-          Id: mapbox://styles/mapbox/streets-v10
+          Id: mapbox://styles/mapbox/dark-v9
           Modified: 
           UserName: 
       rasterOptions:
@@ -104,7 +105,7 @@ MonoBehaviour:
           Id: mapbox.terrain-rgb
           Modified: 
           UserName: 
-      elevationLayerType: 0
+      elevationLayerType: 1
       requiredOptions:
         exaggerationFactor: 1
       colliderOptions:
@@ -124,10 +125,32 @@ MonoBehaviour:
     _layerProperty:
       tileJsonData:
         tileJSONLoaded: 0
-        LayerDisplayNames: []
-      _sourceType: 3
+        LayerDisplayNames:
+        - admin
+        - aeroway
+        - airport_label
+        - barrier_line
+        - building
+        - country_label
+        - housenum_label
+        - landuse
+        - landuse_overlay
+        - marine_label
+        - motorway_junction
+        - mountain_peak_label
+        - place_label
+        - poi_label
+        - rail_station_label
+        - road
+        - road_label
+        - state_label
+        - water
+        - water_label
+        - waterway
+        - waterway_label
+      _sourceType: 0
       sourceOptions:
-        isActive: 0
+        isActive: 1
         layerSource:
           Name: Mapbox Terrain
           Id: mapbox.3d-buildings,mapbox.mapbox-streets-v7
@@ -142,6 +165,91 @@ MonoBehaviour:
       performanceOptions:
         isEnabled: 1
         entityPerCoroutine: 20
-      vectorSubLayers: []
+      vectorSubLayers:
+      - coreOptions:
+          sourceId: 
+          isActive: 1
+          sublayerName: Untitled
+          geometryType: 2
+          layerName: building
+          snapToTerrain: 1
+          combineMeshes: 0
+        lineGeometryOptions:
+          Width: 1
+        filterOptions:
+          _selectedLayerName: building
+          filters:
+          - Key: height
+            KeyDescription: Number. Height of building or part of building.
+            PropertyValue: 4
+            Min: 4
+            Max: 0
+            filterOperator: 2
+          combinerType: 0
+        extrusionOptions:
+          _selectedLayerName: building
+          extrusionType: 1
+          extrusionGeometryType: 0
+          propertyName: height
+          propertyDescription: Number. Height of building or part of building.
+          minimumHeight: 0
+          maximumHeight: 1
+          extrusionScaleFactor: 1
+        colliderOptions:
+          colliderType: 0
+        materialOptions:
+          style: 1
+          texturingType: 0
+          materials:
+          - Materials:
+            - {fileID: 0}
+          - Materials:
+            - {fileID: 0}
+          atlasInfo: {fileID: 11400000, guid: c422f39ca8fe566479230c87805b3301, type: 2}
+          lightStyleOpacity: 1
+          darkStyleOpacity: 1
+          colorStyleColor: {r: 0.38823533, g: 0.38823533, b: 0.38823533, a: 1}
+          samplePalettes: 0
+          colorPalette: {fileID: 0}
+          customStyleOptions:
+            texturingType: 0
+            materials:
+            - Materials:
+              - {fileID: 0}
+            - Materials:
+              - {fileID: 0}
+            atlasInfo: {fileID: 11400000, guid: 414754d7155df47beb52ca117a774f21,
+              type: 2}
+            colorPalette: {fileID: 11400000, guid: 57bdfa37edf7a4f7f999d19443497554,
+              type: 2}
+        performanceOptions:
+          isEnabled: 0
+          entityPerCoroutine: 0
+        honorBuildingIdSetting: 1
+        buildingsWithUniqueIds: 1
+        moveFeaturePositionTo: 0
+        MeshModifiers: []
+        GoModifiers: []
+        presetFeatureType: 0
+        _maskValue: 0
+        selectedTypes: 
       locationPrefabList: []
   _tileProvider: {fileID: 0}
+--- !u!114 &114928773677519064
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1257486800756004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68268392a2f4be24fafd84d7db49dd88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _map: {fileID: 114478715909612932}
+  _camera: {fileID: 0}
+  _barsContainer: {fileID: 0}
+  _cubeMesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  _cylinderMesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  _meshSelectionType: 1
+  _framedBar: {fileID: 1019800495448966, guid: 945c3e4300939a146a52b149183d3241, type: 2}

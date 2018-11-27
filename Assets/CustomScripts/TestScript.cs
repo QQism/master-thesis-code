@@ -104,6 +104,8 @@ public class TestScript : MonoBehaviour {
             barDataComponent.Elevation = _map.QueryElevationInUnityUnitsAt(position);
             barDataComponent.BarMesh = _meshSelection;
 
+            bar.GetComponent<RotationAdjustment>().playerCamera = _camera;
+
             if (maxValue < amount)
                 maxValue = amount;
 

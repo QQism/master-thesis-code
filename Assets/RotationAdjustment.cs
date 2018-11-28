@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class RotationAdjustment : MonoBehaviour {
 	public Camera playerCamera;
-	// Use this for initialization
-	void Start () {
-		
-	}
+	public bool _frontFacing = true;
+	private Quaternion _originRotation;
 	
-	// Update is called once per frame
+	void Awake()
+	{
+		_originRotation = transform.rotation;
+	}
+
 	void LateUpdate () {
-		transform.rotation = playerCamera.transform.rotation;
+		if (_frontFacing)
+			transform.rotation = playerCamera.transform.rotation;
+		else
+			transform.rotation = _originRotation;
 	}
 }

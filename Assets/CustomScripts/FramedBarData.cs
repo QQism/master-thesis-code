@@ -22,58 +22,31 @@ public class FramedBarData : MonoBehaviour {
 
     public float Value
     {
-        get
-        {
-            return _value;
-        }
-        set
-        {
-            _value = value;
-        }
+        get { return _value; }
+        set { _value = value; }
     }
 
     public Vector2d LatLong
     {
-        get
-        {
-            return _latLong;
-        }
-        set
-        {
-            _latLong = value;
-        }
+        get { return _latLong; }
+        set { _latLong = value; }
     }
 
     public float MaxValue
     {
-        get
-        {
-            return _maxValue;
-        }
-        set
-        {
-            _maxValue = value;
-        }
+        get { return _maxValue; }
+        set { _maxValue = value; }
     }
 
     public float Elevation
     {
-        get
-        {
-            return _elevation;
-        }
-        set
-        {
-            _elevation = value;
-        }
+        get { return _elevation; }
+        set { _elevation = value; }
     }
 
     public Mesh BarMesh
     {
-        get
-        {
-            return _barMesh;
-        }
+        get { return _barMesh; }
         set
         {
             _barMesh = value;
@@ -108,8 +81,6 @@ public class FramedBarData : MonoBehaviour {
     void scaleCubeDataBarToValue()
     {
         float scaledAmount = _value / (_maxValue * _barHeightBuffer);
-        // Debug.Log("Amount: " + scaledAmount.ToString());
-        // Debug.Log("Bar position: " + transform.position.ToString() + ", Max height: " + _maxHeight.ToString());
 
         _dataBar.transform.localScale = new Vector3(_dataBar.transform.localScale.x, scaledAmount, _dataBar.transform.localScale.z);
         float newY = -0.5f + scaledAmount/2;
@@ -136,8 +107,6 @@ public class FramedBarData : MonoBehaviour {
     void scaleQuadDataBarToValue()
     {
         float scaledAmount = _value / (_maxValue * _barHeightBuffer);
-        // Debug.Log("Amount: " + scaledAmount.ToString());
-        // Debug.Log("Bar position: " + transform.position.ToString() + ", Max height: " + _maxHeight.ToString());
 
         _dataBar.transform.localScale = new Vector3(_dataBar.transform.localScale.x, scaledAmount, _dataBar.transform.localScale.z);
         float newY = -0.5f + scaledAmount/2;
@@ -158,11 +127,7 @@ public class FramedBarData : MonoBehaviour {
     void scaleCylinderDataBarToValue()
     {
         float scaledAmount = _value / (_maxValue * _barHeightBuffer);
-        // Debug.Log("Amount: " + scaledAmount.ToString());
-        // Debug.Log("Bar position: " + transform.position.ToString() + ", Max height: " + _maxHeight.ToString());
-
         _dataBar.transform.localScale = new Vector3(_dataBar.transform.localScale.x, scaledAmount, _dataBar.transform.localScale.z);
-        //_dataBar.transform.localPosition = new Vector3(_dataBar.transform.localPosition.x, scaledAmount/ 2.0f, _dataBar.transform.localPosition.z);
     }
 
     void scaleCylinderFrameBarToValue()

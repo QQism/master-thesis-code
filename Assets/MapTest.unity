@@ -289,7 +289,7 @@ Prefab:
     - target: {fileID: 114928773677519064, guid: e6b749c6d877f4c19a5a5c3c0783d53b,
         type: 2}
       propertyPath: _meshSelectionType
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114928773677519064, guid: e6b749c6d877f4c19a5a5c3c0783d53b,
         type: 2}
@@ -388,6 +388,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4401105977069858, guid: 945c3e4300939a146a52b149183d3241, type: 2}
       propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114350646584960524, guid: 945c3e4300939a146a52b149183d3241,
+        type: 2}
+      propertyPath: _lookingAtCamera
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -557,5 +562,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9df4bcfc987cfdc4d823a0bfa3518d7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rotationEnabled: 0
   speedH: 2
   speedV: 2

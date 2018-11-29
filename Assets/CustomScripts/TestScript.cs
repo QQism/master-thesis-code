@@ -103,6 +103,7 @@ public class TestScript : MonoBehaviour {
             barDataComponent.LatLong = position;
             barDataComponent.Elevation = _map.QueryElevationInUnityUnitsAt(position);
             barDataComponent.BarMesh = _meshSelection;
+            barDataComponent._meshType = _meshSelectionType.ToString();
 
             bar.GetComponent<RotationAdjustment>().playerCamera = _camera;
 

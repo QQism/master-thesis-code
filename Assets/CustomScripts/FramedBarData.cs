@@ -82,20 +82,34 @@ public class FramedBarData : MonoBehaviour {
 
     public void updateBars()
     {
-        updateFrameBarTransform();
-        updateDataBarTransform();
+        moveBarOffTheGround();
+        scaleDataBarToValue();
+        scaleFrameBarToValue();
     }
 
-    void updateDataBarTransform()
+    void moveBarOffTheGround()
+    { 
+        transform.position += new Vector3(0, _elevation + _maxHeight/2, 0);
+    }
+
+    void scaleDataBarToValue()
     {
         float scaledAmount = _value / (_maxValue * _barHeightBuffer);
         // Debug.Log("Amount: " + scaledAmount.ToString());
         // Debug.Log("Bar position: " + transform.position.ToString() + ", Max height: " + _maxHeight.ToString());
 
-        transform.position += new Vector3(0, _elevation, 0);
         _dataBar.transform.localScale = new Vector3(_dataBar.transform.localScale.x, scaledAmount, _dataBar.transform.localScale.z);
-        _dataBar.transform.localPosition = new Vector3(_dataBar.transform.localPosition.x, scaledAmount/ 2.0f, _dataBar.transform.localPosition.z);
+        //_dataBar.transform.localPosition = new Vector3(_dataBar.transform.localPosition.x, scaledAmount/ 2.0f, _dataBar.transform.localPosition.z);
     }
 
-    void updateFrameBarTransform() { }
+    void scaleFrameBarToValue()
+    { 
+        float scaledAmount = 1 - (_value / (_maxValue * _barHeightBuffer));
+        Vector3 oldScale = _frameBar.transform.localScale;
+        _frameBar.transform.localScale = new Vector3(oldScale.x, scaledAmount, oldScale.z);
+
+        Vector3 oldPosition = _frameBar.transform.localPosition;
+        _frameBar.transform.localPosition = new Vector3(oldPosition.x, _dataBar.transform.localScale.y + _frameBar.transform.localScale.y, oldPosition.z);
+
+    }
 }

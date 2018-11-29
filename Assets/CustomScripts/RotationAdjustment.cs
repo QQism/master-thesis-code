@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RotationAdjustment : MonoBehaviour {
 	public Camera playerCamera;
-	public bool _frontFacing = true;
+	public bool _lookingAtCamera = true;
 	private Quaternion _originRotation;
 	
 	void Awake()
@@ -13,7 +13,7 @@ public class RotationAdjustment : MonoBehaviour {
 	}
 
 	void LateUpdate () {
-		if (_frontFacing)
+		if (_lookingAtCamera)
 			transform.rotation = playerCamera.transform.rotation;
 		else
 			transform.rotation = _originRotation;

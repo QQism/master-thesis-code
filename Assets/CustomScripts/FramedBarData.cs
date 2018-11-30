@@ -11,65 +11,63 @@ public class FramedBarData : MonoBehaviour {
     public float _barHeightBuffer;
     public float _elevation;
     public float _maxValue;
-    public Mesh _barMesh;
-
-    public string _meshType;
 
     [SerializeField]
     public GameObject _dataBar;
     [SerializeField]
     public GameObject _frameBar;
 
-    public float Value
-    {
-        get { return _value; }
-        set { _value = value; }
-    }
+    public Dictionary<MeshSelection, Mesh> AvailableMeshes { get; set; }
 
-    public Vector2d LatLong
-    {
-        get { return _latLong; }
-        set { _latLong = value; }
-    }
+    public float Value { get { return _value; } set { _value = value; } }
 
-    public float MaxValue
-    {
-        get { return _maxValue; }
-        set { _maxValue = value; }
-    }
+    public Vector2d LatLong { get { return _latLong; } set { _latLong = value; } }
 
-    public float Elevation
-    {
-        get { return _elevation; }
-        set { _elevation = value; }
-    }
+    public float MaxValue { get { return _maxValue; } set { _maxValue = value; } }
 
-    public Mesh BarMesh
-    {
-        get { return _barMesh; }
-        set
-        {
-            _barMesh = value;
-            _dataBar.GetComponent<MeshFilter>().mesh = _barMesh;
-            _frameBar.GetComponent<MeshFilter>().mesh = _barMesh;
-        }
-    }
+    public float Elevation { get { return _elevation; } set { _elevation = value; } }
+
+    [SerializeField]
+    public MeshSelection _meshType;
+
+    public MeshSelection MeshType { get { return _meshType; } set { _meshType = value; } }
+
+    private float _meshScaleFactor = 1;
 
     public void updateBars()
     {
+        _dataBar.GetComponent<MeshFilter>().mesh = AvailableMeshes[_meshType];
+        _frameBar.GetComponent<MeshFilter>().mesh = AvailableMeshes[_meshType];
+
         moveBarOffTheGround();
 
-        if (_meshType == MeshSelection.Cylinder.ToString())
+        if (_meshType == MeshSelection.Cylinder)
+        { 
+            _meshScaleFactor = 2;
             scaleCylinderMesh();
-        else if (_meshType == MeshSelection.Cube.ToString())
-            scaleCubeMesh();
-        else if (_meshType == MeshSelection.Quad.ToString())
+        }
+        else if (_meshType == MeshSelection.Cube)
+        { 
+            _meshScaleFactor = 1;
+            scaleCylinderMesh();
+        }
+        else if (_meshType == MeshSelection.Quad)
+        { 
+            _meshScaleFactor = 1;
             scaleQuadMesh();
+        }
+            
+        //scaleCylinderMesh();
+    }
+
+    void OnValidate()
+    {
+        updateBars();
     }
 
     void moveBarOffTheGround()
     { 
-        transform.position += new Vector3(0, _elevation + _maxHeight/2, 0);
+        transform.position = new Vector3(transform.position.x, _elevation + _maxHeight/2, transform.position.z);
     }
 
     void scaleCubeMesh()
@@ -80,7 +78,7 @@ public class FramedBarData : MonoBehaviour {
 
     void scaleCubeDataBarToValue()
     {
-        float scaledAmount = _value / (_maxValue * _barHeightBuffer);
+        float scaledAmount = Value / (_maxValue * _barHeightBuffer);
 
         _dataBar.transform.localScale = new Vector3(_dataBar.transform.localScale.x, scaledAmount, _dataBar.transform.localScale.z);
         float newY = -0.5f + scaledAmount/2;
@@ -88,7 +86,7 @@ public class FramedBarData : MonoBehaviour {
     }
     void scaleCubeFrameBarToValue()
     {
-        float scaledAmount = 1 - (_value / (_maxValue * _barHeightBuffer));
+        float scaledAmount = 1 - (Value / (_maxValue * _barHeightBuffer));
         Vector3 oldScale = _frameBar.transform.localScale;
         _frameBar.transform.localScale = new Vector3(oldScale.x, scaledAmount, oldScale.z);
 
@@ -106,7 +104,7 @@ public class FramedBarData : MonoBehaviour {
 
     void scaleQuadDataBarToValue()
     {
-        float scaledAmount = _value / (_maxValue * _barHeightBuffer);
+        float scaledAmount = Value / (_maxValue * _barHeightBuffer);
 
         _dataBar.transform.localScale = new Vector3(_dataBar.transform.localScale.x, scaledAmount, _dataBar.transform.localScale.z);
         float newY = -0.5f + scaledAmount/2;
@@ -114,7 +112,7 @@ public class FramedBarData : MonoBehaviour {
     }
     void scaleQuadFrameBarToValue()
     {
-        float scaledAmount = 1 - (_value / (_maxValue * _barHeightBuffer));
+        float scaledAmount = 1 - (Value / (_maxValue * _barHeightBuffer));
         Vector3 oldScale = _frameBar.transform.localScale;
         _frameBar.transform.localScale = new Vector3(oldScale.x, scaledAmount, oldScale.z);
 
@@ -126,18 +124,20 @@ public class FramedBarData : MonoBehaviour {
 
     void scaleCylinderDataBarToValue()
     {
-        float scaledAmount = _value / (_maxValue * _barHeightBuffer);
+        float scaledAmount = Value / (_maxValue * _barHeightBuffer) / _meshScaleFactor;
         _dataBar.transform.localScale = new Vector3(_dataBar.transform.localScale.x, scaledAmount, _dataBar.transform.localScale.z);
+        float newY = -0.5f + scaledAmount/2 * _meshScaleFactor;
+        _dataBar.transform.localPosition = new Vector3(_dataBar.transform.localPosition.x, newY, _dataBar.transform.localPosition.z);
     }
 
     void scaleCylinderFrameBarToValue()
     { 
-        float scaledAmount = 1 - (_value / (_maxValue * _barHeightBuffer));
+        float scaledAmount = (1 - (Value / (_maxValue * _barHeightBuffer))) / _meshScaleFactor;
         Vector3 oldScale = _frameBar.transform.localScale;
         _frameBar.transform.localScale = new Vector3(oldScale.x, scaledAmount, oldScale.z);
 
         Vector3 oldPosition = _frameBar.transform.localPosition;
-        _frameBar.transform.localPosition = new Vector3(oldPosition.x, _dataBar.transform.localScale.y + _frameBar.transform.localScale.y, oldPosition.z);
+        _frameBar.transform.localPosition = new Vector3(oldPosition.x, 0.5f - scaledAmount/2 * _meshScaleFactor, oldPosition.z);
 
     }
 

@@ -68,6 +68,11 @@ public class TestScript : MonoBehaviour {
         string[] filters = { "Melbourne Cbd", "Caulfield North", "Clayton" };
         Debug.Log("Number of records: " + lines.Length.ToString());
 
+        Dictionary<MeshSelection, Mesh> meshes = new Dictionary<MeshSelection, Mesh>();
+        meshes.Add(MeshSelection.Cube, _cubeMesh);
+        meshes.Add(MeshSelection.Cylinder, _cylinderMesh);
+        meshes.Add(MeshSelection.Quad, _quadMesh);
+
         float maxValue = 0;
         for (int i=1; i < lines.Length; i++)
         //for (int i=1; i < 2; i++)
@@ -102,8 +107,8 @@ public class TestScript : MonoBehaviour {
             barDataComponent.Value = amount;
             barDataComponent.LatLong = position;
             barDataComponent.Elevation = _map.QueryElevationInUnityUnitsAt(position);
-            barDataComponent.BarMesh = _meshSelection;
-            barDataComponent._meshType = _meshSelectionType.ToString();
+            barDataComponent.AvailableMeshes = meshes;
+            barDataComponent.MeshType = _meshSelectionType;
 
             bar.GetComponent<RotationAdjustment>().playerCamera = _camera;
 

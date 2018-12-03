@@ -57,29 +57,29 @@ public class FramedBarData : MonoBehaviour {
         transform.position = new Vector3(transform.position.x, _elevation + _maxHeight/2, transform.position.z);
     }
 
-    void scaleDataBarToValue(float scaleFactor=1)
+    void scaleDataBarToValue(float meshScaleFactor=1)
     {
-        float scaledAmount = Value / (_maxValue * _barHeightBuffer) / scaleFactor;
+        float scaledAmount = Value / (_maxValue * _barHeightBuffer) / meshScaleFactor;
         _dataBar.transform.localScale = new Vector3(_dataBar.transform.localScale.x, scaledAmount, _dataBar.transform.localScale.z);
-        float newY = -0.5f + scaledAmount/2 * scaleFactor;
+        float newY = -0.5f + scaledAmount/2 * meshScaleFactor;
         _dataBar.transform.localPosition = new Vector3(_dataBar.transform.localPosition.x, newY, _dataBar.transform.localPosition.z);
     }
 
-    void scaleFrameBarToValue(float scaleFactor=1)
+    void scaleFrameBarToValue(float meshScaleFactor=1)
     { 
-        float scaledAmount = (1 - (Value / (_maxValue * _barHeightBuffer))) / scaleFactor;
+        float scaledAmount = (1 - (Value / (_maxValue * _barHeightBuffer))) / meshScaleFactor;
         Vector3 oldScale = _frameBar.transform.localScale;
         _frameBar.transform.localScale = new Vector3(oldScale.x, scaledAmount, oldScale.z);
 
         // newY = -0.5f + scaledAmount/2 + (1- scaledAmount) = 0.5f - scaledAmount/2
         Vector3 oldPosition = _frameBar.transform.localPosition;
-        _frameBar.transform.localPosition = new Vector3(oldPosition.x, 0.5f - scaledAmount/2 * scaleFactor, oldPosition.z);
+        _frameBar.transform.localPosition = new Vector3(oldPosition.x, 0.5f - scaledAmount/2 * meshScaleFactor, oldPosition.z);
 
     }
 
-    void scaleMesh(float scaleFactor)
+    void scaleMesh(float meshScaleFactor)
     {
-        scaleDataBarToValue(scaleFactor);
-        scaleFrameBarToValue(scaleFactor);
+        scaleDataBarToValue(meshScaleFactor);
+        scaleFrameBarToValue(meshScaleFactor);
     }
 }

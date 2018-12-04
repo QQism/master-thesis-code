@@ -17,6 +17,8 @@ public class FramedBarData : MonoBehaviour {
 
     public float _landscapeWidth = 0;
 
+    public bool _perspectiveScaling = false;
+
     [SerializeField]
     public GameObject _dataBar;
     [SerializeField]
@@ -55,9 +57,11 @@ public class FramedBarData : MonoBehaviour {
 
     void Update()
     {
-        //updatePerspectiveScale();
-        //updateBars();
-        
+        if (_perspectiveScaling)
+        {
+            updatePerspectiveScale();
+            updateBars();
+        }
     }
 
     void updatePerspectiveScale()

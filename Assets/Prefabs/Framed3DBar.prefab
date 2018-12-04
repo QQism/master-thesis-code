@@ -224,7 +224,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b512d84a6794efd46ba97a26ec00faa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 0}
   _lookingAtCamera: 1
 --- !u!114 &114961520442391128
 MonoBehaviour:
@@ -241,10 +240,13 @@ MonoBehaviour:
   _latLong:
     x: 0
     y: 0
-  _maxHeight: 50
+  _maxHeight: 32
   _barHeightBuffer: 1.2
   _elevation: 0
   _maxValue: 1
+  _perspectiveWidthScaleFactor: 0.023529412
+  _perspectiveHeightScaleFactor: 0.3764706
+  _landscapeWidth: 0
   _dataBar: {fileID: 1315859709506506}
   _frameBar: {fileID: 1924695585344114}
   _meshType: 0

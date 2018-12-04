@@ -12,6 +12,11 @@ public class FramedBarData : MonoBehaviour {
     public float _elevation;
     public float _maxValue;
 
+    public float _perspectiveWidthScaleFactor = 1/42.5f;
+    public float _perspectiveHeightScaleFactor = 32/42.5f;
+
+    public float _landscapeWidth = 0;
+
     [SerializeField]
     public GameObject _dataBar;
     [SerializeField]
@@ -32,24 +37,36 @@ public class FramedBarData : MonoBehaviour {
 
     public MeshSelection MeshType { get { return _meshType; } set { _meshType = value; } }
 
+    public Camera PlayerCamera { get; set; }
+
     public void updateBars()
     {
         _dataBar.GetComponent<MeshFilter>().mesh = AvailableMeshes[_meshType];
         _frameBar.GetComponent<MeshFilter>().mesh = AvailableMeshes[_meshType];
 
         moveBarOffTheGround();
-
-        if (_meshType == MeshSelection.Cylinder)
-            scaleMesh(2);
-        else if (_meshType == MeshSelection.Cube)
-            scaleMesh(1);
-        else if (_meshType == MeshSelection.Quad)
-            scaleMesh(1);
+        scaleMesh(heightScaleFactor());
     }
 
     void OnValidate()
     {
         updateBars();
+    }
+
+    void Update()
+    {
+        //updatePerspectiveScale();
+        //updateBars();
+        
+    }
+
+    void updatePerspectiveScale()
+    {
+        _landscapeWidth = calculateLandscapeWidth();
+        float newScaleX, newScaleY, newScaleZ;
+        newScaleX = newScaleZ = _landscapeWidth * _perspectiveWidthScaleFactor;
+        newScaleY = _landscapeWidth * _perspectiveHeightScaleFactor / heightScaleFactor();
+        transform.localScale = new Vector3(newScaleX, newScaleY, newScaleZ);
     }
 
     void moveBarOffTheGround()
@@ -81,5 +98,23 @@ public class FramedBarData : MonoBehaviour {
     {
         scaleDataBarToValue(meshScaleFactor);
         scaleFrameBarToValue(meshScaleFactor);
+    }
+
+    public float calculateLandscapeWidth()
+    {
+        float distance = Vector3.Distance(PlayerCamera.transform.position, transform.position);
+        float radFov = PlayerCamera.fieldOfView * Mathf.Deg2Rad;
+        return distance * 2 * Mathf.Sin(Mathf.PI/2.0f - radFov) / Mathf.Sin(radFov);
+    }
+
+    float heightScaleFactor()
+    {
+        switch (_meshType)
+        {
+            case MeshSelection.Cylinder:
+                return 2.0f;
+            default:
+                return 1.0f;
+        }
     }
 }

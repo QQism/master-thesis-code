@@ -16,7 +16,7 @@ public enum MeshSelection
     Quad
 }
 
-public class TestScript : MonoBehaviour {
+public class LoadDataSet : MonoBehaviour {
     public AbstractMap _map;
     public Camera _camera;
     private String datasetFile = "\\Datasets\\vic_wateruse_2008_2009.csv";
@@ -104,13 +104,15 @@ public class TestScript : MonoBehaviour {
             float amount = float.Parse(lineData[1]);
 
             FramedBarData barDataComponent = bar.GetComponent<FramedBarData>();
+            barDataComponent.PlayerCamera = _camera;
             barDataComponent.Value = amount;
             barDataComponent.LatLong = position;
             barDataComponent.Elevation = _map.QueryElevationInUnityUnitsAt(position);
             barDataComponent.AvailableMeshes = meshes;
             barDataComponent.MeshType = _meshSelectionType;
 
-            bar.GetComponent<RotationAdjustment>().playerCamera = _camera;
+            bar.GetComponent<RotationAdjustment>().PlayerCamera = _camera;
+            Debug.Log("Width " + bar.transform.name + ": " + barDataComponent.calculateLandscapeWidth());
 
             if (maxValue < amount)
                 maxValue = amount;

@@ -12,12 +12,16 @@ public class FramedBarData : MonoBehaviour {
     public float _elevation;
     public float _maxValue;
 
-    public float _perspectiveWidthScaleFactor = 1/42.5f;
-    public float _perspectiveHeightScaleFactor = 32/42.5f;
+    //public float _perspectiveWidthScaleFactor = 1/42.5f;
+    public float _perspectiveWidthScaleFactor = 4/174.6323f;
+    // public float _perspectiveHeightScaleFactor = 32/42.5f;
+    public float _perspectiveHeightScaleFactor = 32/174.6323f;
 
     public float _landscapeWidth = 0;
 
     public bool _perspectiveScaling = false;
+
+    public float _distanceToScreenY = 0;
 
     [SerializeField]
     public GameObject _dataBar;
@@ -41,17 +45,25 @@ public class FramedBarData : MonoBehaviour {
 
     public Camera PlayerCamera { get; set; }
 
+    private Vector3 _originalScale;
+
+    void Start()
+    {
+        _originalScale = transform.localScale;
+    }
+
     public void updateBars()
     {
         _dataBar.GetComponent<MeshFilter>().mesh = AvailableMeshes[_meshType];
         _frameBar.GetComponent<MeshFilter>().mesh = AvailableMeshes[_meshType];
 
-        moveBarOffTheGround();
         scaleMesh(heightScaleFactor());
+        moveBarOffTheGround();
     }
 
     void OnValidate()
     {
+        Debug.Log("[" + name + "] Distance to X: " + PlayerCamera.WorldToScreenPoint(Vector3.Scale(transform.position, new Vector3(1, 0, 1))).y.ToString());
         updateBars();
     }
 
@@ -75,7 +87,8 @@ public class FramedBarData : MonoBehaviour {
 
     void moveBarOffTheGround()
     { 
-        transform.position = new Vector3(transform.position.x, _elevation + _maxHeight/2, transform.position.z);
+        //transform.position = new Vector3(transform.position.x, _elevation + _maxHeight/2, transform.position.z);
+        transform.position = new Vector3(transform.position.x, _elevation + transform.localScale.y/2, transform.position.z);
     }
 
     void scaleDataBarToValue(float meshScaleFactor=1)
@@ -106,7 +119,9 @@ public class FramedBarData : MonoBehaviour {
 
     public float calculateLandscapeWidth()
     {
-        float distance = Vector3.Distance(PlayerCamera.transform.position, transform.position);
+        float distance = PlayerCamera.WorldToScreenPoint(Vector3.Scale(transform.position, new Vector3(1, 0, 1))).y;
+        //float distance = Vector3.Distance(PlayerCamera.transform.position, transform.position);
+        _distanceToScreenY = distance;
         float radFov = PlayerCamera.fieldOfView * Mathf.Deg2Rad;
         return distance * 2 * Mathf.Sin(Mathf.PI/2.0f - radFov) / Mathf.Sin(radFov);
     }

@@ -113,6 +113,9 @@ public class LoadDataSet : MonoBehaviour {
 
             bar.GetComponent<RotationAdjustment>().PlayerCamera = _camera;
             Debug.Log("Width " + bar.transform.name + ": " + barDataComponent.calculateLandscapeWidth());
+            Debug.Log("Screen Point " + bar.transform.name + ": " + _camera.WorldToScreenPoint(
+                Vector3.Scale( barDataComponent.transform.position, new Vector3(1, 0, 1))));
+
 
             if (maxValue < amount)
                 maxValue = amount;

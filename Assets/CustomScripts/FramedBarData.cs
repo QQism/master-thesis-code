@@ -63,7 +63,7 @@ public class FramedBarData : MonoBehaviour {
 
     void OnValidate()
     {
-        Debug.Log("[" + name + "] Distance to X: " + PlayerCamera.WorldToScreenPoint(Vector3.Scale(transform.position, new Vector3(1, 0, 1))).y.ToString());
+        //Debug.Log("[" + name + "] Distance to X: " + PlayerCamera.WorldToScreenPoint(Vector3.Scale(transform.position, new Vector3(1, 0, 1))).y.ToString());
         updateBars();
     }
 
@@ -78,11 +78,9 @@ public class FramedBarData : MonoBehaviour {
 
     void updatePerspectiveScale()
     {
-        _landscapeWidth = calculateLandscapeWidth();
-        float newScaleX, newScaleY, newScaleZ;
-        newScaleX = newScaleZ = _landscapeWidth * _perspectiveWidthScaleFactor;
-        newScaleY = _landscapeWidth * _perspectiveHeightScaleFactor / heightScaleFactor();
-        transform.localScale = new Vector3(newScaleX, newScaleY, newScaleZ);
+        float distance = (PlayerCamera.transform.position - transform.position).magnitude;
+        float size = distance * 0.0001f * PlayerCamera.fieldOfView;
+        transform.localScale = _originalScale * size;
     }
 
     void moveBarOffTheGround()

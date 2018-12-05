@@ -247,8 +247,8 @@ MonoBehaviour:
   _perspectiveWidthScaleFactor: 0.023529412
   _perspectiveHeightScaleFactor: 0.3764706
   _landscapeWidth: 0
-  _perspectiveScaling: 0
+  _perspectiveScaling: 1
   _distanceToScreenY: 0
   _dataBar: {fileID: 1315859709506506}
   _frameBar: {fileID: 1924695585344114}
-  _meshType: 0
+  _meshType: 1

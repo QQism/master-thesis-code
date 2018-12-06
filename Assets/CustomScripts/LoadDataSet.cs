@@ -97,8 +97,11 @@ public class LoadDataSet : MonoBehaviour {
             float latitude = float.Parse(lineData[3]);
             float longitude = float.Parse(lineData[4]);
             Vector2d position = new Vector2d(latitude, longitude);
+            //Debug.Log(name + "[Height]: " + _map.GeoToWorldPosition(position, true));
+            //Debug.Log(name + "[No Height]: " + _map.GeoToWorldPosition(position, false));
+            //Debug.Log(name + "[Default]: " + _map.GeoToWorldPosition(position));
 
-            GameObject bar = Instantiate(_framedBar, _map.GeoToWorldPosition(position), Quaternion.identity);
+            GameObject bar = Instantiate(_framedBar, _map.GeoToWorldPosition(position, true), Quaternion.identity);
             bar.transform.SetParent(_barsContainer, true);
             bar.transform.name = "Bar " + stringData;
             float amount = float.Parse(lineData[1]);

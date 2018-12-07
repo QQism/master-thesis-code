@@ -61,6 +61,28 @@ public class FramedBarData : MonoBehaviour {
         moveBarOffTheGround();
     }
 
+    public void shear()
+    {
+        Debug.Log("Sheer " + name);
+        Mesh mesh = _dataBar.GetComponent<MeshFilter>().mesh;
+        Vector3[] vertices = mesh.vertices;
+
+        for (int i=0; i < vertices.Length; i++)
+        {
+            if (mesh.vertices[i].x> 0) {
+                vertices[i].x +=  2 * vertices[i].y; 
+            } else {
+                vertices[i].x -=  2 * vertices[i].y; 
+            }
+        }
+
+        mesh.vertices = vertices;
+        mesh.RecalculateBounds();
+        mesh.RecalculateNormals();
+        mesh.RecalculateTangents();
+    }
+
+
     void OnValidate()
     {
         //Debug.Log("[" + name + "] Distance to X: " + PlayerCamera.WorldToScreenPoint(Vector3.Scale(transform.position, new Vector3(1, 0, 1))).y.ToString());
@@ -71,8 +93,9 @@ public class FramedBarData : MonoBehaviour {
     {
         if (_perspectiveScaling)
         {
-            updatePerspectiveScale();
+            //updatePerspectiveScale();
             updateBars();
+            shear();
         }
     }
 

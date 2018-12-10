@@ -7,7 +7,7 @@ public class ConeTransformBehavior : MonoBehaviour {
 
 	public float _coneAngle = 30;
 
-	public float _originRotation = Vector3.zero;
+	public float _originRotation = 0;
 	// Use this for initialization
 	void Start () {
 		//float distance = transform. Mathf.Tan(Mathf.Deg2Rad * _coneAngle);

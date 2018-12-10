@@ -3,20 +3,12 @@ guid: a34df029ed84c0046bbe47dc6a6eb5cd
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: Camera
-    100002: Lamp
-    100004: Plane
-    100006: //RootNode
-    400000: Camera
-    400002: Lamp
-    400004: Plane
-    400006: //RootNode
-    2000000: Camera
+    100000: //RootNode
+    400000: //RootNode
     2100000: No Name
-    2300000: Plane
-    3300000: Plane
-    4300000: Plane
-    10800000: Lamp
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Grid
   externalObjects: {}
   materials:
     importMaterials: 1

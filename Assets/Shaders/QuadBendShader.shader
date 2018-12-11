@@ -44,10 +44,11 @@
 
 				//float side = sign(v.vertex.y);
 
-				if (v.vertex.y > 0)
+				/*if (v.vertex.y > 0)
 					v.vertex.x *= _UpperScale;
 				else
 					v.vertex.x *= _LowerScale;
+					*/
 
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv = v.uv;
@@ -56,10 +57,10 @@
 			
 			fixed4 frag (v2f i) : SV_Target
 			{
-				fixed4 col = tex2D(_MainTex, i.uv);
+				//fixed4 col = tex2D(_MainTex, i.uv);
 
 
-				//fixed4 c = tex2D (_MainTex, i.uv_MainTex) * _Color;
+				fixed4 c = tex2D (_MainTex, i.uv) * _Color;
 				//o.Albedo = c.rgb;
 				// Metallic and smoothness come from slider variables
 				//o.Metallic = _Metallic;
@@ -69,7 +70,18 @@
 			
 				// just invert the colors
 				//col.rgb = _Color;
-				return _Color;
+
+				//return _Color;
+				//return float4(i.uv.x % 2, 10, 10, 0.5);
+
+				//return c;
+				
+				if (i.uv.x % 2)
+					return c;
+				else
+					return c * float4(0, 0, 0, 255);
+			
+				//return _Color;
 			}
 			ENDCG
 		}

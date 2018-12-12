@@ -3,8 +3,8 @@
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
-		_UpperScale ("Upper Scale", Range(0, 2)) = 1.5
-		_LowerScale ("Lower Scale", Range(0, 2)) = 0.8
+		_UpperScale ("Upper Scale", Range(0, 1)) = 1
+		_LowerScale ("Lower Scale", Range(0, 1)) = 0.6
 		_Color("Color", Color) = (27, 212, 56, 0.5)
 	}
 	SubShader
@@ -42,13 +42,9 @@
 			{
 				v2f o;
 
-				//float side = sign(v.vertex.y);
+				float avg = (_UpperScale + _LowerScale)/2.0;
 
-				/*if (v.vertex.y > 0)
-					v.vertex.x *= _UpperScale;
-				else
-					v.vertex.x *= _LowerScale;
-					*/
+				v.vertex.x *=  avg + (v.vertex.y * (_UpperScale - avg)*100);
 
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv = v.uv;
@@ -58,7 +54,6 @@
 			fixed4 frag (v2f i) : SV_Target
 			{
 				//fixed4 col = tex2D(_MainTex, i.uv);
-
 
 				fixed4 c = tex2D (_MainTex, i.uv) * _Color;
 				//o.Albedo = c.rgb;
@@ -71,15 +66,14 @@
 				// just invert the colors
 				//col.rgb = _Color;
 
-				//return _Color;
+				return _Color;
 				//return float4(i.uv.x % 2, 10, 10, 0.5);
 
-				//return c;
-				
-				if (i.uv.x % 2)
-					return c;
-				else
-					return c * float4(0, 0, 0, 255);
+				//return (c * 0.90);
+				//if (fmod(i.uv.x, 2) ==0)
+				//	return c;
+				//else
+				//	return 1 - c;
 			
 				//return _Color;
 			}

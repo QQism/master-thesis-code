@@ -24,7 +24,14 @@ public class BarsRenderer : MonoBehaviour {
             quadMaterial.SetFloat("_UpperScale", 1.0f);
             quadMaterial.SetFloat("_LowerScale", 0.0f);
             bar.transform.Rotate(0, i*rotateAngle, 0);
+			bar.transform.Rotate(63.434f, 0, 0);
+			bar.transform.localPosition += new Vector3(0, 0, 0.5f);
         }
+	}
+
+	float calculateUpperScale(float S, float alphaAngle)
+	{
+		return Mathf.Sqrt(2 * Mathf.Pow(S, 2) * (1 - Mathf.Cos(alphaAngle)));
 	}
 	
 	// Update is called once per frame

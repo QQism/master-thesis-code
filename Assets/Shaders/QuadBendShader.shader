@@ -3,7 +3,7 @@
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
-		_UpperScale ("Upper Scale", Range(0, 1)) = 1
+		_UpperScale ("Upper Scale", Range(0, 2)) = 1
 		_LowerScale ("Lower Scale", Range(0, 1)) = 0.6
 		_Color("Color", Color) = (27, 212, 56, 0.5)
 	}

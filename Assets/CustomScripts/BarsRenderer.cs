@@ -9,7 +9,7 @@ public class BarsRenderer : MonoBehaviour {
 	[Range(0, 90)]
 	public float _miterAngle = 45;
 
-	private int _quadsCount = 4;
+	private int _quadsCount = 8;
 
 	private float _faceHeight = 1.0f;
 
@@ -29,9 +29,9 @@ public class BarsRenderer : MonoBehaviour {
 
 			float miterRadAngle = _miterAngle * Mathf.Deg2Rad;
 			float baseRadius = _faceHeight * Mathf.Sin(miterRadAngle);
-			float upperScale = baseRadius * 2;
+			// float upperScale = baseRadius * 2;
+			float upperScale = baseRadius / Mathf.Sin(rotateYAngle * Mathf.Deg2Rad);
 			float height = _faceHeight * Mathf.Sin(Mathf.PI/2 - miterRadAngle);
-
 
             quadMaterial.SetFloat("_UpperScale", upperScale);
             quadMaterial.SetFloat("_LowerScale", 0.0f);

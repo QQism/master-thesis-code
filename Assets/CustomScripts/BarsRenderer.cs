@@ -9,7 +9,7 @@ public class BarsRenderer : MonoBehaviour {
 	[Range(0, 90)]
 	public float _miterAngle = 45;
 
-	private int _quadsCount = 8;
+	private int _quadsCount = 32;
 
 	private float _faceHeight = 1.0f;
 
@@ -18,20 +18,23 @@ public class BarsRenderer : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
+        Material quadMaterial = new Material(_quad.GetComponent<Renderer>().sharedMaterial);
 		float rotateYAngle = 360.0f / _quadsCount;
         for (int i = 0; i < _quadsCount; i++)
         {
             GameObject bar = Instantiate(_quad, transform.position, Quaternion.identity);
 			bar.name = "Bar " + i.ToString();
             bar.transform.SetParent(transform);
-            Material quadMaterial = new Material(_quad.GetComponent<Renderer>().sharedMaterial);
+            // Material quadMaterial = new Material(_quad.GetComponent<Renderer>().sharedMaterial);
             bar.GetComponent<Renderer>().sharedMaterial = quadMaterial;
 
 			float miterRadAngle = _miterAngle * Mathf.Deg2Rad;
 			float baseRadius = _faceHeight * Mathf.Sin(miterRadAngle);
-			// float upperScale = baseRadius * 2;
-			float upperScale = baseRadius / Mathf.Sin(rotateYAngle * Mathf.Deg2Rad);
 			float height = _faceHeight * Mathf.Sin(Mathf.PI/2 - miterRadAngle);
+
+			float rotateYRadAngle = rotateYAngle * Mathf.Deg2Rad;
+
+			float upperScale = baseRadius * 2 * Mathf.Sin(rotateYRadAngle/2) / Mathf.Sin(Mathf.PI/2 - rotateYRadAngle/2);
 
             quadMaterial.SetFloat("_UpperScale", upperScale);
             quadMaterial.SetFloat("_LowerScale", 0.0f);

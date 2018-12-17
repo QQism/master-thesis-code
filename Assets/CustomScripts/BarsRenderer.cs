@@ -34,7 +34,6 @@ public class BarsRenderer : MonoBehaviour {
             GameObject bar = Instantiate(_quad, transform.position, Quaternion.identity);
 			bar.name = "Bar " + i.ToString();
             bar.transform.SetParent(transform);
-            //Material quadMaterial = new Material(_quad.GetComponent<Renderer>().sharedMaterial);
 			Renderer renderer = bar.GetComponent<Renderer>();
             renderer.sharedMaterial = quadMaterial;
 
@@ -42,23 +41,6 @@ public class BarsRenderer : MonoBehaviour {
 			renderer.GetPropertyBlock(block);
 			block.SetColor("_CustomColor", Color.Lerp(Color.black, Color.cyan, rotateYAngle * i/360));
 			renderer.SetPropertyBlock(block);
-
-			/*
-			float miterRadAngle = _miterAngle * Mathf.Deg2Rad;
-			float baseRadius = _faceHeight * Mathf.Sin(miterRadAngle);
-			float height = _faceHeight * Mathf.Sin(Mathf.PI/2 - miterRadAngle);
-
-			float rotateYRadAngle = rotateYAngle * Mathf.Deg2Rad;
-
-			float upperScale = baseRadius * 2 * Mathf.Sin(rotateYRadAngle/2) / Mathf.Sin(Mathf.PI/2 - rotateYRadAngle/2);
-			float lowerScale = _lowerFaceHeight * Mathf.Sin(miterRadAngle);
-
-            quadMaterial.SetFloat("_UpperScale", upperScale);
-            quadMaterial.SetFloat("_LowerScale", lowerScale);
-			bar.transform.localPosition += bar.transform.TransformDirection(bar.transform.forward) * baseRadius/2.0f;
-			bar.transform.RotateAround(Vector3.zero, Vector3.up, i * rotateYAngle);
-			bar.transform.Rotate(Vector3.right * _miterAngle, Space.Self);
-			*/
 
 			bars.Add(bar);
         }
@@ -81,14 +63,13 @@ public class BarsRenderer : MonoBehaviour {
 			Material quadMaterial = bar.GetComponent<Renderer>().sharedMaterial;
 
 			float miterRadAngle = _miterAngle * Mathf.Deg2Rad;
-			float baseRadius = _faceHeight * Mathf.Sin(miterRadAngle);
+			float upperBaseRadius = _faceHeight * Mathf.Sin(miterRadAngle);
 			float lowerBaseRadius = _lowerFaceHeight * Mathf.Sin(miterRadAngle);
 			float height = _faceHeight * Mathf.Sin(Mathf.PI/2 - miterRadAngle);
 
 			float rotateYRadAngle = rotateYAngle * Mathf.Deg2Rad;
 
-			float upperScale = baseRadius * 2 * Mathf.Sin(rotateYRadAngle/2) / Mathf.Sin(Mathf.PI/2 - rotateYRadAngle/2);
-			// float lowerScale = _lowerFaceHeight * Mathf.Sin(miterRadAngle);
+			float upperScale = upperBaseRadius * 2 * Mathf.Sin(rotateYRadAngle/2) / Mathf.Sin(Mathf.PI/2 - rotateYRadAngle/2);
 			float lowerScale = lowerBaseRadius * 2 * Mathf.Sin(rotateYRadAngle/2) / Mathf.Sin(Mathf.PI/2 - rotateYRadAngle/2);
 
             quadMaterial.SetFloat("_UpperScale", upperScale);
@@ -98,9 +79,8 @@ public class BarsRenderer : MonoBehaviour {
 			bar.transform.localPosition = _originPosition;
 			bar.transform.rotation = Quaternion.identity;
 
-			//bar.transform.localPosition += bar.transform.TransformDirection(bar.transform.forward) * baseRadius/2.0f;
 			bar.transform.localPosition +=
-				bar.transform.TransformDirection(bar.transform.forward) * (baseRadius/2.0f + lowerBaseRadius/2.0f);
+				bar.transform.TransformDirection(bar.transform.forward) * (upperBaseRadius/2.0f + lowerBaseRadius/2.0f);
 			bar.transform.RotateAround(Vector3.zero, Vector3.up, i * rotateYAngle);
 			bar.transform.Rotate(Vector3.right * _miterAngle, Space.Self);
 		}

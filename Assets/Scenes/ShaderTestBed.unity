@@ -332,9 +332,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _quad: {fileID: 1483320548761882, guid: 1def1f758aced4edc9708fff52ef701d, type: 2}
-  _miterAngle: 90
-  _upperFaceHeight: 1
-  _lowerFaceHeight: 1
+  _miterAngle: 60
+  _lowerFaceHeight: 0.5
 --- !u!4 &913230144
 Transform:
   m_ObjectHideFlags: 0

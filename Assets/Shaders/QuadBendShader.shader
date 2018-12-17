@@ -3,9 +3,9 @@
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
-		_UpperScale ("Upper Scale", Range(0, 2)) = 1
-		_LowerScale ("Lower Scale", Range(0, 1)) = 0.6
-		_Color("Color", Color) = (27, 212, 56, 0.5)
+		_UpperScale ("Upper Scale", Range(0, 10)) = 1
+		_LowerScale ("Lower Scale", Range(0, 10)) = 0.6
+		_CustomColor("Custom Color", Color) = (.34, .85, .92, 0.5)
 	}
 	SubShader
 	{
@@ -36,7 +36,7 @@
 			sampler2D _MainTex;
 			float _UpperScale;
 			float _LowerScale;
-			float4 _Color;
+			float4 _CustomColor;
 
 			v2f vert (appdata v)
 			{
@@ -55,7 +55,7 @@
 			{
 				//fixed4 col = tex2D(_MainTex, i.uv);
 
-				fixed4 c = tex2D (_MainTex, i.uv) * _Color;
+				fixed4 c = tex2D (_MainTex, i.uv) * _CustomColor;
 				//o.Albedo = c.rgb;
 				// Metallic and smoothness come from slider variables
 				//o.Metallic = _Metallic;
@@ -66,7 +66,7 @@
 				// just invert the colors
 				//col.rgb = _Color;
 
-				return _Color;
+				return _CustomColor;
 				//return float4(i.uv.x % 2, 10, 10, 0.5);
 
 				//return (c * 0.90);

@@ -26,7 +26,7 @@ public class BarsRenderer : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
-        Material quadMaterial = new Material(_quad.GetComponent<Renderer>().sharedMaterial);
+        //Material quadMaterial = new Material(_quad.GetComponent<Renderer>().sharedMaterial);
 		float rotateYAngle = 360.0f / _quadsCount;
 		_faceHeight = _upperFaceHeight + _lowerFaceHeight;
         for (int i = 0; i < _quadsCount; i++)
@@ -34,13 +34,13 @@ public class BarsRenderer : MonoBehaviour {
             GameObject bar = Instantiate(_quad, transform.position, Quaternion.identity);
 			bar.name = "Bar " + i.ToString();
             bar.transform.SetParent(transform);
-			Renderer renderer = bar.GetComponent<Renderer>();
-            renderer.sharedMaterial = quadMaterial;
+			//Renderer renderer = bar.GetComponent<Renderer>();
+            // renderer.sharedMaterial = quadMaterial;
 
-			MaterialPropertyBlock block = new MaterialPropertyBlock();
-			renderer.GetPropertyBlock(block);
-			block.SetColor("_CustomColor", Color.Lerp(Color.black, Color.cyan, rotateYAngle * i/360));
-			renderer.SetPropertyBlock(block);
+			// MaterialPropertyBlock block = new MaterialPropertyBlock();
+			// renderer.GetPropertyBlock(block);
+			// block.SetColor("_CustomColor", Color.Lerp(Color.black, Color.cyan, rotateYAngle * i/360));
+			// renderer.SetPropertyBlock(block);
 
 			bars.Add(bar);
         }
@@ -60,7 +60,7 @@ public class BarsRenderer : MonoBehaviour {
         for (int i = 0; i < _quadsCount; i++)
         {
 			GameObject bar = bars[i];
-			Material quadMaterial = bar.GetComponent<Renderer>().sharedMaterial;
+			// Material quadMaterial = bar.GetComponent<Renderer>().sharedMaterial;
 
 			float miterRadAngle = _miterAngle * Mathf.Deg2Rad;
 			float upperBaseRadius = _faceHeight * Mathf.Sin(miterRadAngle);
@@ -72,22 +72,28 @@ public class BarsRenderer : MonoBehaviour {
 			float upperScale = upperBaseRadius * 2 * Mathf.Sin(rotateYRadAngle/2) / Mathf.Sin(Mathf.PI/2 - rotateYRadAngle/2);
 			float lowerScale = lowerBaseRadius * 2 * Mathf.Sin(rotateYRadAngle/2) / Mathf.Sin(Mathf.PI/2 - rotateYRadAngle/2);
 
-            quadMaterial.SetFloat("_UpperScale", upperScale);
-            quadMaterial.SetFloat("_LowerScale", lowerScale);
+			var traperzoid = bar.GetComponent<TrapezoidBarBehavior>();
+			traperzoid._upperScale = upperScale;
+			traperzoid._lowerScale = lowerScale;
+			traperzoid._level = 0;
+			traperzoid.ReCalculateScale();
+
+            //quadMaterial.SetFloat("_UpperScale", upperScale);
+            //quadMaterial.SetFloat("_LowerScale", lowerScale);
 
 			// Reset the bar rotation and position before rotating and translating
-			bar.transform.localPosition = _originPosition;
-			bar.transform.rotation = Quaternion.identity;
+			Transform trans = bar.transform;
+			trans.localPosition = _originPosition;
+			trans.rotation = Quaternion.identity;
 
-			bar.transform.localPosition +=
-				bar.transform.TransformDirection(bar.transform.forward) * (upperBaseRadius/2.0f + lowerBaseRadius/2.0f);
-			bar.transform.RotateAround(Vector3.zero, Vector3.up, i * rotateYAngle);
-			bar.transform.Rotate(Vector3.right * _miterAngle, Space.Self);
+			//bar.transform.localPosition += bar.transform.TransformDirection(bar.transform.forward) * (upperBaseRadius/2.0f + lowerBaseRadius/2.0f);
+			// trans.localPosition += trans.TransformDirection(trans.forward) * (upperBaseRadius/2.0f + lowerBaseRadius/2.0f);
+			trans.localPosition += trans.TransformDirection(trans.forward) * (upperBaseRadius + lowerBaseRadius );
+			trans.RotateAround(Vector3.zero, Vector3.up, i * rotateYAngle);
+			trans.Rotate(Vector3.right * _miterAngle, Space.Self);
 		}
 	}
 
 	// Update is called once per frame
-	void Update ()
-	{ 
-	}
+	void Update () { }
 }

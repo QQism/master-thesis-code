@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrapezoidBar : MonoBehaviour {
+public class TrapezoidBarBehavior : MonoBehaviour {
 
 	[Range(0, 5)]
 	public float _upperScale = 1.0f;
@@ -16,6 +16,10 @@ public class TrapezoidBar : MonoBehaviour {
 	// Use this for initialization
 
 	void Start () {
+	}
+
+	void Awake()
+	{
 		GameObject container = transform.Find("RotationContainer").gameObject;
 		_topBar = container.transform.Find("Top").gameObject;
 		_bottomBar = container.transform.Find("Bottom").gameObject;
@@ -31,11 +35,18 @@ public class TrapezoidBar : MonoBehaviour {
 		bottomRenderer.sharedMaterial = bottomMaterial;
 	}
 
-	void Awake()
+	void OnValidate()
 	{
+		ReCalculateScale();
+	}
+	
+	// Update is called once per frame
+	void Update ()
+	{
+		
 	}
 
-	void OnValidate()
+	public void ReCalculateScale()
 	{
 		if (_topBar == null || _bottomBar == null)
 			return;
@@ -61,11 +72,5 @@ public class TrapezoidBar : MonoBehaviour {
 		topMaterial.SetFloat("_LowerScale", midScale);
 		bottomMaterial.SetFloat("_UpperScale", midScale);
 		bottomMaterial.SetFloat("_LowerScale", _lowerScale);
-	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-		
 	}
 }

@@ -17,7 +17,7 @@ public class BarsRenderer : MonoBehaviour {
 
 	private Vector3 _originPosition = Vector3.zero;
 
-	private int _quadsCount = 32;
+	private int _quadsCount = 64;
 
 	private float _faceHeight = 0;
 

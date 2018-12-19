@@ -17,7 +17,7 @@ public class BarsRenderer : MonoBehaviour {
 
 	private Vector3 _originPosition = Vector3.zero;
 
-	private int _quadsCount = 64;
+	private int _quadsCount = 4;
 
 	private float _faceHeight = 0;
 
@@ -85,11 +85,14 @@ public class BarsRenderer : MonoBehaviour {
 			Transform trans = bar.transform;
 			trans.localPosition = _originPosition;
 			trans.rotation = Quaternion.identity;
+			// trans.localPosition = transform.localPosition;
+			// trans.localRotation = transform.rotation;
 
 			//bar.transform.localPosition += bar.transform.TransformDirection(bar.transform.forward) * (upperBaseRadius/2.0f + lowerBaseRadius/2.0f);
 			// trans.localPosition += trans.TransformDirection(trans.forward) * (upperBaseRadius/2.0f + lowerBaseRadius/2.0f);
 			trans.localPosition += trans.TransformDirection(trans.forward) * (upperBaseRadius + lowerBaseRadius );
-			trans.RotateAround(Vector3.zero, Vector3.up, i * rotateYAngle);
+			// trans.RotateAround(Vector3.zero, Vector3.up, i * rotateYAngle);
+			trans.RotateAround(transform.position, Vector3.up, i * rotateYAngle);
 			trans.Rotate(Vector3.right * _miterAngle, Space.Self);
 		}
 	}

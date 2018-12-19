@@ -59,9 +59,6 @@ public class BarsRenderer : MonoBehaviour {
 		_faceHeight = _upperFaceHeight + _lowerFaceHeight;
         for (int i = 0; i < _quadsCount; i++)
         {
-			GameObject bar = bars[i];
-			// Material quadMaterial = bar.GetComponent<Renderer>().sharedMaterial;
-
 			float miterRadAngle = _miterAngle * Mathf.Deg2Rad;
 			float upperBaseRadius = _faceHeight * Mathf.Sin(miterRadAngle);
 			float lowerBaseRadius = _lowerFaceHeight * Mathf.Sin(miterRadAngle);
@@ -72,26 +69,18 @@ public class BarsRenderer : MonoBehaviour {
 			float upperScale = upperBaseRadius * 2 * Mathf.Sin(rotateYRadAngle/2) / Mathf.Sin(Mathf.PI/2 - rotateYRadAngle/2);
 			float lowerScale = lowerBaseRadius * 2 * Mathf.Sin(rotateYRadAngle/2) / Mathf.Sin(Mathf.PI/2 - rotateYRadAngle/2);
 
+			GameObject bar = bars[i];
 			var traperzoid = bar.GetComponent<TrapezoidBarBehavior>();
 			traperzoid._upperScale = upperScale;
 			traperzoid._lowerScale = lowerScale;
 			traperzoid._level = 0;
 			traperzoid.ReCalculateScale();
 
-            //quadMaterial.SetFloat("_UpperScale", upperScale);
-            //quadMaterial.SetFloat("_LowerScale", lowerScale);
-
 			// Reset the bar rotation and position before rotating and translating
 			Transform trans = bar.transform;
 			trans.localPosition = _originPosition;
 			trans.rotation = Quaternion.identity;
-			// trans.localPosition = transform.localPosition;
-			// trans.localRotation = transform.rotation;
-
-			//bar.transform.localPosition += bar.transform.TransformDirection(bar.transform.forward) * (upperBaseRadius/2.0f + lowerBaseRadius/2.0f);
-			// trans.localPosition += trans.TransformDirection(trans.forward) * (upperBaseRadius/2.0f + lowerBaseRadius/2.0f);
-			trans.localPosition += trans.TransformDirection(trans.forward) * (upperBaseRadius + lowerBaseRadius );
-			// trans.RotateAround(Vector3.zero, Vector3.up, i * rotateYAngle);
+			trans.localPosition += trans.TransformDirection(trans.forward) * (upperBaseRadius + lowerBaseRadius);
 			trans.RotateAround(transform.position, Vector3.up, i * rotateYAngle);
 			trans.Rotate(Vector3.right * _miterAngle, Space.Self);
 		}

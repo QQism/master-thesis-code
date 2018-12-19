@@ -54,6 +54,21 @@ public class FramedBarData : MonoBehaviour {
 
     public void updateBars()
     {
+        if (_dataBar == null || _frameBar == null)
+            return;
+
+        MeshFilter _dataBarFilter = _dataBar.GetComponent<MeshFilter>();
+        MeshFilter _frameBarFilter = _frameBar.GetComponent<MeshFilter>();
+
+        if (_dataBarFilter == null ||
+            _dataBarFilter.sharedMesh == null ||
+            _frameBarFilter == null ||
+            _frameBarFilter.sharedMesh == null)
+            return;
+
+        if (AvailableMeshes == null)
+            return;
+
         _dataBar.GetComponent<MeshFilter>().mesh = AvailableMeshes[_meshType];
         _frameBar.GetComponent<MeshFilter>().mesh = AvailableMeshes[_meshType];
 
@@ -63,7 +78,7 @@ public class FramedBarData : MonoBehaviour {
 
     public void shear()
     {
-        Debug.Log("Sheer " + name);
+        // Debug.Log("Sheer " + name);
         Mesh mesh = _dataBar.GetComponent<MeshFilter>().mesh;
         Vector3[] vertices = mesh.vertices;
 
@@ -95,7 +110,7 @@ public class FramedBarData : MonoBehaviour {
         {
             //updatePerspectiveScale();
             updateBars();
-            shear();
+            // shear();
         }
     }
 

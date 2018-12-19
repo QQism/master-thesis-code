@@ -5,19 +5,24 @@
 		_MainTex ("Texture", 2D) = "white" {}
 		_UpperScale ("Upper Scale", Range(0, 5)) = 1
 		_LowerScale ("Lower Scale", Range(0, 5)) = 0.6
-		_CustomColor("Custom Color", Color) = (.34, .85, .92, 0.5)
+		_CustomColor("Custom Color", Color) = (.34, .85, .92, 1)
+		_Transparency("Transparency", Range(0, 1)) = 0.8
 	}
 	SubShader
 	{
-		Tags { "RenderType"="Opaque" "Queue"="Transparent" }
+		Tags { "RenderType"="Transparent" "Queue"="Transparent" }
 		// No culling or depth
-		Cull Off ZWrite Off ZTest Always
+		Cull Off
+		ZWrite Off
+		ZTest Always
+		Blend SrcAlpha OneMinusSrcAlpha
 
 		Pass
 		{
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
+			// #pragma surface surf Standard fullforwardshadows alpha
 			
 			#include "UnityCG.cginc"
 
@@ -37,6 +42,7 @@
 			float _UpperScale;
 			float _LowerScale;
 			float4 _CustomColor; 
+			float _Transparency;
 
 			v2f vert (appdata v)
 			{
@@ -52,8 +58,10 @@
 			}
 			
 			fixed4 frag (v2f i) : SV_Target
-			{
-				return _CustomColor;
+			{ 
+				fixed4 col = tex2D(_MainTex, i.uv) * _CustomColor;
+				col.a = _Transparency;
+				return col;
 			}
 			ENDCG
 		}

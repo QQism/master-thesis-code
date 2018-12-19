@@ -13,6 +13,11 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 	public float _level = 0.5f;
 	private GameObject _topBar;
 	private GameObject _bottomBar;
+
+	[Range(0, 1)]
+	public float _topTranparency;
+	[Range(0, 1)]
+	public float _bottomTranparency;
 	// Use this for initialization
 
 	void Start () {
@@ -60,7 +65,6 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 		_bottomBar.transform.localPosition = new Vector3(oldBottomPosition.x, oldBottomPosition.y, _level - 1);
 		_topBar.transform.localPosition = new Vector3(oldTopPosition.x, oldTopPosition.y, _level);
 
-
 		Material topMaterial =  _topBar.GetComponent<Renderer>().sharedMaterial;
 		Material bottomMaterial =  _bottomBar.GetComponent<Renderer>().sharedMaterial;
 
@@ -72,5 +76,8 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 		topMaterial.SetFloat("_LowerScale", midScale);
 		bottomMaterial.SetFloat("_UpperScale", midScale);
 		bottomMaterial.SetFloat("_LowerScale", _lowerScale);
+
+		topMaterial.SetFloat("_Transparency", _topTranparency);
+		bottomMaterial.SetFloat("_Transparency", _bottomTranparency);
 	}
 }

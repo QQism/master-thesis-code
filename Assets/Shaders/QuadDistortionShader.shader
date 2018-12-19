@@ -22,7 +22,6 @@
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
-			// #pragma surface surf Standard fullforwardshadows alpha
 			
 			#include "UnityCG.cginc"
 

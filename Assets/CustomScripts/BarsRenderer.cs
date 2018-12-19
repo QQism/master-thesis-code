@@ -6,6 +6,7 @@ public class BarsRenderer : MonoBehaviour {
 
 	public GameObject _quad;
 
+	[Header("Shape")]
 	[Range(0, 90)]
 	public float _miterAngle = 45;
 
@@ -15,9 +16,14 @@ public class BarsRenderer : MonoBehaviour {
 	[Range(0, 1)]
 	public float _lowerFaceHeight = 0.0f;
 
+	[Header("Appearance")]
+	[Range(0, 1)]
+	public float _topTransparency = 0.5f;
+	[Range(0, 1)]
+	public float _bottomTransparency = 0.5f;
 	private Vector3 _originPosition = Vector3.zero;
 
-	private int _quadsCount = 4;
+	private int _quadsCount = 64;
 
 	private float _faceHeight = 0;
 
@@ -34,6 +40,9 @@ public class BarsRenderer : MonoBehaviour {
             GameObject bar = Instantiate(_quad, transform.position, Quaternion.identity);
 			bar.name = "Bar " + i.ToString();
             bar.transform.SetParent(transform);
+			var traperzoid = bar.GetComponent<TrapezoidBarBehavior>();
+			traperzoid._level = 0;
+
 			//Renderer renderer = bar.GetComponent<Renderer>();
             // renderer.sharedMaterial = quadMaterial;
 
@@ -73,7 +82,9 @@ public class BarsRenderer : MonoBehaviour {
 			var traperzoid = bar.GetComponent<TrapezoidBarBehavior>();
 			traperzoid._upperScale = upperScale;
 			traperzoid._lowerScale = lowerScale;
-			traperzoid._level = 0;
+			// traperzoid._level = 0;
+			traperzoid._topTranparency = _topTransparency;
+			traperzoid._bottomTranparency = _bottomTransparency;
 			traperzoid.ReCalculateScale();
 
 			// Reset the bar rotation and position before rotating and translating

@@ -48,7 +48,6 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
-		
 	}
 
 	public void ReCalculateScale()

@@ -7,6 +7,10 @@
 		_LowerScale ("Lower Scale", Range(0, 5)) = 0.6
 		_CustomColor("Custom Color", Color) = (.34, .85, .92, 1)
 		_Transparency("Transparency", Range(0, 1)) = 0.8
+		_TickColor("Tick Color", Color) = (0, 0, 0, 1)
+		_TickThickness("Tick Thickness", Range(0, 1)) = 0.01
+		_LevelScale("Scale Level", Range(0, 1)) = 0
+		_OnTop("On Top?", Int) = 0
 	}
 	SubShader
 	{
@@ -27,14 +31,15 @@
 
 			struct appdata
 			{
-				float4 vertex : POSITION;
 				float2 uv : TEXCOORD0;
+				float4 vertex : POSITION;
 			};
 
 			struct v2f
 			{
 				float2 uv : TEXCOORD0;
 				float4 vertex : SV_POSITION;
+				float4 og_vertex : TEXCOORD1;
 			};
 
 			sampler2D _MainTex;
@@ -42,6 +47,8 @@
 			float _LowerScale;
 			float4 _CustomColor; 
 			float _Transparency;
+			float4 _TickColor;
+			float _TickThickness;
 
 			v2f vert (appdata v)
 			{
@@ -53,12 +60,22 @@
 
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv = v.uv;
+				o.og_vertex = v.vertex;
 				return o;
 			}
 			
 			fixed4 frag (v2f i) : SV_Target
 			{ 
-				fixed4 col = tex2D(_MainTex, i.uv) * _CustomColor;
+				//fixed4 col = tex2D(_MainTex, i.uv) * _TickColor;
+				float4 color = _CustomColor;
+				float og_step = 0.5;
+				float step = (og_step * 2);
+				float temp = (i.og_vertex.z + 1) % step;
+				if (temp >= (og_step - 0.00001))
+					color = _TickColor;
+
+				fixed4 col = tex2D(_MainTex, i.uv) * color;
+
 				col.a = _Transparency;
 				return col;
 			}

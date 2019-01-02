@@ -23,7 +23,7 @@ public class BarsRenderer : MonoBehaviour {
 	public float _bottomTransparency = 0.5f;
 	private Vector3 _originPosition = Vector3.zero;
 
-	private int _quadsCount = 512;
+	private int _quadsCount = 4;
 
 	private float _faceHeight = 0;
 

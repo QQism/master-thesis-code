@@ -18,6 +18,12 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 	public float _topTranparency;
 	[Range(0, 1)]
 	public float _bottomTranparency;
+
+	[Range(0, 10)]
+	public int _ticksCount = 0;
+
+	[Range(0, 1)]
+	public float _tickThickness = 0.01f;
 	// Use this for initialization
 
 	void Start () {
@@ -55,8 +61,11 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 		if (_topBar == null || _bottomBar == null)
 			return;
 
-		_bottomBar.transform.localScale = new Vector3(1, 1, _level);
-		_topBar.transform.localScale = new Vector3(1, 1, 1 - _level);
+		float bottomScale = _level;
+		float topScale = 1 - _level;
+
+		_bottomBar.transform.localScale = new Vector3(1, 1, bottomScale);
+		_topBar.transform.localScale = new Vector3(1, 1, topScale);
 
 		Vector3 oldBottomPosition = _bottomBar.transform.localPosition;
 		Vector3 oldTopPosition = _topBar.transform.localPosition;
@@ -73,8 +82,15 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 		float midScale = _upperScale + (_lowerScale -_upperScale) * (1 - _level);
 		topMaterial.SetFloat("_UpperScale", _upperScale);
 		topMaterial.SetFloat("_LowerScale", midScale);
+
 		bottomMaterial.SetFloat("_UpperScale", midScale);
 		bottomMaterial.SetFloat("_LowerScale", _lowerScale);
+
+		topMaterial.SetInt("_OnTop", 1);
+		bottomMaterial.SetInt("_OnTop", 0);
+
+		topMaterial.SetFloat("_LevelScale", topScale);
+		bottomMaterial.SetFloat("_LevelScale", bottomScale);
 
 		topMaterial.SetFloat("_Transparency", _topTranparency);
 		bottomMaterial.SetFloat("_Transparency", _bottomTranparency);

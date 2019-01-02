@@ -584,17 +584,32 @@ Prefab:
     - target: {fileID: 114371449616811490, guid: c99f8c54d3dadb44098238709904fa10,
         type: 2}
       propertyPath: _upperScale
-      value: 2.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114371449616811490, guid: c99f8c54d3dadb44098238709904fa10,
         type: 2}
       propertyPath: _lowerScale
-      value: 1.96
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114371449616811490, guid: c99f8c54d3dadb44098238709904fa10,
         type: 2}
       propertyPath: _level
-      value: 0.6
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114371449616811490, guid: c99f8c54d3dadb44098238709904fa10,
+        type: 2}
+      propertyPath: _ticksCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114371449616811490, guid: c99f8c54d3dadb44098238709904fa10,
+        type: 2}
+      propertyPath: _topTranparency
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114371449616811490, guid: c99f8c54d3dadb44098238709904fa10,
+        type: 2}
+      propertyPath: _bottomTranparency
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c99f8c54d3dadb44098238709904fa10, type: 2}

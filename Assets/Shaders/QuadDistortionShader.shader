@@ -8,7 +8,7 @@
 		_CustomColor("Custom Color", Color) = (.34, .85, .92, 1)
 		_Transparency("Transparency", Range(0, 1)) = 0.8
 		_TickColor("Tick Color", Color) = (0, 0, 0, 1)
-		_TickThickness("Tick Thickness", Range(0, 1)) = 0.01
+		_TickThickness("Tick Thickness", Range(0, 1)) = 0.1
 		_LevelScale("Scale Level", Range(0, 1)) = 0
 		_OnTop("On Top?", Int) = 0
 	}
@@ -66,12 +66,17 @@
 			
 			fixed4 frag (v2f i) : SV_Target
 			{ 
+				float thickness = 0.05;
 				//fixed4 col = tex2D(_MainTex, i.uv) * _TickColor;
 				float4 color = _CustomColor;
-				float og_step = 0.5;
+				float og_step = 0.25;
 				float step = (og_step * 2);
 				float temp = (i.og_vertex.z + 1) % step;
-				if (temp >= (og_step - 0.00001))
+				float topOffset = i.og_vertex.z + thickness;
+				float bottomOffset = i.og_vertex.z - thickness;
+
+				if ((topOffset < 1 && bottomOffset > -1)
+					 && (temp >= (step - thickness) || temp <= thickness))
 					color = _TickColor;
 
 				fixed4 col = tex2D(_MainTex, i.uv) * color;

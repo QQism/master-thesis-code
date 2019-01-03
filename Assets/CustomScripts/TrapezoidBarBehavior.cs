@@ -99,8 +99,10 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 
 		// topMaterial.SetFloat("_TickThickness", _tickThickness * (topScale * (1 - bottomScale)));
 		// bottomMaterial.SetFloat("_TickThickness", _tickThickness * (bottomScale * (1 - topScale)));
-		topMaterial.SetFloat("_TickThickness", _tickThickness);
-		bottomMaterial.SetFloat("_TickThickness", _tickThickness);
+		float topThickness =_tickThickness * (_tickThickness / (topScale * _tickThickness));
+		float bottomThickness =_tickThickness * (_tickThickness / (bottomScale * _tickThickness));
+		topMaterial.SetFloat("_TickThickness", topThickness);
+		bottomMaterial.SetFloat("_TickThickness", bottomThickness);
 
 		topMaterial.SetFloat("_Transparency", _topTranparency);
 		bottomMaterial.SetFloat("_Transparency", _bottomTranparency);

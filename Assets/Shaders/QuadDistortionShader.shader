@@ -131,9 +131,10 @@
 					full_range = bottom_end + 1;
 					step = og_step * full_range;
 					temp = (i.og_vertex.z + bottom_end) % step;
-					topOffset = i.og_vertex.z + thickness;
+					topOffset = i.og_vertex.z + bottom_end + thickness;
+					bottomOffset = i.og_vertex.z + bottom_end - thickness;
 
-					if ((topOffset < 1) &&
+					if ((topOffset < full_range && bottomOffset > 0) &&
 						(temp >= (step - thickness) || temp <= thickness))
 						color = _TickColor;
 
@@ -143,9 +144,10 @@
 					full_range = bottom_end + 1;
 					step = og_step * full_range;
 					temp = (i.og_vertex.z + 1) % step;
-					bottomOffset = i.og_vertex.z - thickness;
+					topOffset = i.og_vertex.z + 1 + thickness;
+					bottomOffset = i.og_vertex.z + 1 - thickness;
 
-					if ((bottomOffset > -1)
+					if ((topOffset < full_range && bottomOffset > 0)
 						&& (temp >= (step - thickness) || temp <= thickness))
 						color = _TickColor;
 				}

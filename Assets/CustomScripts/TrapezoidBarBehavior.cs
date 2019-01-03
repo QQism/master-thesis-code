@@ -92,6 +92,16 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 		topMaterial.SetFloat("_LevelScale", topScale);
 		bottomMaterial.SetFloat("_LevelScale", bottomScale);
 
+		float tickStep = 1.0f / (_ticksCount + 1);
+		Debug.Log("Stick step: " + tickStep);
+		topMaterial.SetFloat("_TickStep", tickStep);
+		bottomMaterial.SetFloat("_TickStep", tickStep);
+
+		// topMaterial.SetFloat("_TickThickness", _tickThickness * (topScale * (1 - bottomScale)));
+		// bottomMaterial.SetFloat("_TickThickness", _tickThickness * (bottomScale * (1 - topScale)));
+		topMaterial.SetFloat("_TickThickness", _tickThickness);
+		bottomMaterial.SetFloat("_TickThickness", _tickThickness);
+
 		topMaterial.SetFloat("_Transparency", _topTranparency);
 		bottomMaterial.SetFloat("_Transparency", _bottomTranparency);
 	}

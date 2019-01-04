@@ -4,30 +4,34 @@ using UnityEngine;
 
 public class TrapezoidBarBehavior : MonoBehaviour {
 
+	[Header("Shape Transformations")]
 	[Range(0, 5)]
 	public float _upperScale = 1.0f;
 	[Range(0, 5)]
 	public float _lowerScale = 1.0f;
 
+	[Header("Data Volume")]
 	[Range(0, 1)]
 	public float _level = 0.5f;
 	private GameObject _topBar;
 	private GameObject _bottomBar;
 
+	[Header("Main Colors")]
 	[Range(0, 1)]
-	public float _topTranparency;
+	public float _topTransparency;
 	[Range(0, 1)]
-	public float _bottomTranparency;
+	public float _bottomTransparency;
 
+	[Header("Ticks Customization")]
 	[Range(0, 10)]
 	public int _ticksCount = 0;
 
 	[Range(0, 1)]
 	public float _tickThickness = 0.01f;
-	// Use this for initialization
 
-	void Start () {
-	}
+	[Range(0, 1)]
+	public float _tickTransparency = 0.8f;
+
 
 	void Awake()
 	{
@@ -93,18 +97,16 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 		bottomMaterial.SetFloat("_LevelScale", bottomScale);
 
 		float tickStep = 1.0f / (_ticksCount + 1);
-		Debug.Log("Stick step: " + tickStep);
 		topMaterial.SetFloat("_TickStep", tickStep);
 		bottomMaterial.SetFloat("_TickStep", tickStep);
 
-		// topMaterial.SetFloat("_TickThickness", _tickThickness * (topScale * (1 - bottomScale)));
-		// bottomMaterial.SetFloat("_TickThickness", _tickThickness * (bottomScale * (1 - topScale)));
-		float topThickness =_tickThickness * (_tickThickness / (topScale * _tickThickness));
-		float bottomThickness =_tickThickness * (_tickThickness / (bottomScale * _tickThickness));
-		topMaterial.SetFloat("_TickThickness", topThickness);
-		bottomMaterial.SetFloat("_TickThickness", bottomThickness);
+		topMaterial.SetFloat("_TickThickness", _tickThickness / topScale);
+		bottomMaterial.SetFloat("_TickThickness", _tickThickness  / bottomScale);
 
-		topMaterial.SetFloat("_Transparency", _topTranparency);
-		bottomMaterial.SetFloat("_Transparency", _bottomTranparency);
+		topMaterial.SetFloat("_Transparency", _topTransparency);
+		bottomMaterial.SetFloat("_Transparency", _bottomTransparency);
+
+		topMaterial.SetFloat("_TickTransparency", _tickTransparency);
+		bottomMaterial.SetFloat("_TickTransparency", _tickTransparency);
 	}
 }

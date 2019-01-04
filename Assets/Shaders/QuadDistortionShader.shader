@@ -7,7 +7,8 @@
 		_LowerScale ("Lower Scale", Range(0, 5)) = 0.6
 		_CustomColor("Custom Color", Color) = (.34, .85, .92, 1)
 		_Transparency("Transparency", Range(0, 1)) = 0.8
-		_TickColor("Tick Color", Color) = (0, 0, 0, 1)
+		_TickColor("Tick Color", Color) = (.75, .79, 0.8, 1)
+		_TickTransparency("Tick Transparency", Range(0, 1)) = 1
 		_TickThickness("Tick Thickness", Range(0, 1)) = 0.05
 		_LevelScale("Scale Level", Range(0, 1)) = 0.5
 		_TickStep("Tick Step", Range(0, 1)) = 0.25
@@ -49,6 +50,7 @@
 			float4 _CustomColor; 
 			float _Transparency;
 			float4 _TickColor;
+			float _TickTransparency;
 			float _TickThickness;
 			float _LevelScale;
 			int _OnTop;
@@ -70,92 +72,30 @@
 			
 			fixed4 frag (v2f i) : SV_Target
 			{ 
-				float thickness = 0.05;
-				//fixed4 col = tex2D(_MainTex, i.uv) * _TickColor;
+				fixed4 col;
 
-				int top = 0;
-				float level = 0.3;
-				float og_step = 0.25;
-				float4 color = _CustomColor;
+				float offset, full_range, step, bottom_end, tick_pos, topOffset, bottomOffset;
 
-				float full_range, step, temp, topOffset, bottomOffset;
+				offset = 2 * (1 - _LevelScale) / _LevelScale;
+				full_range = offset + 2;
+				step = _TickStep * full_range;
 
-				top = _OnTop;
-				level = _LevelScale;
-				og_step = _TickStep;
-				thickness = _TickThickness;
+				bottom_end = offset * _OnTop + 1;
+				tick_pos = (i.og_vertex.z + bottom_end) % step;
+				topOffset = i.og_vertex.z + bottom_end + _TickThickness;
+				bottomOffset = i.og_vertex.z + bottom_end - _TickThickness;
 
-				/*	
-				step = (og_step * 2);
-				temp = (i.og_vertex.z + 1) % step;
-				topOffset = i.og_vertex.z + thickness;
-				bottomOffset = i.og_vertex.z - thickness;
-				
-
-				if ((topOffset < 1 && bottomOffset > -1)
-					 && (temp >= (step - thickness) || temp <= thickness))
-					color = _TickColor;
-				*/
-
-				// Bottom
-				/*
-				float full_range = 1 + 2 * (1 - level) / level;
-				float step = og_step * full_range;
-				float temp = (i.og_vertex.z + 1) % step;
-				float bottomOffset = i.og_vertex.z - thickness;
-
-				if ((bottomOffset > -1)
-					&& (temp >= (step - thickness) || temp <= thickness))
-					color = _TickColor;
-				*/
-
-				// Top
-				/*
-				float bottom_end = (1 + 2 * level / (1 - level));
-				full_range = bottom_end + 1;
-				step = og_step * full_range;
-				temp = (i.og_vertex.z + bottom_end) % step;
-				topOffset = i.og_vertex.z + thickness;
-
-				if ((topOffset < 1) &&
-					(temp >= (step - thickness) || temp <= thickness))
-					color = _TickColor;
-				*/
-
-				float bottom_end;
-				
-				if (top)
+				if ((topOffset < full_range && bottomOffset > 0) &&
+					(tick_pos >= (step - _TickThickness) || tick_pos <= _TickThickness))
 				{
-					//bottom_end = (1 + 2 * level / (1 - level));
-					bottom_end = 1 + 2 * (1 - level) / level;
-					full_range = bottom_end + 1;
-					step = og_step * full_range;
-					temp = (i.og_vertex.z + bottom_end) % step;
-					topOffset = i.og_vertex.z + bottom_end + thickness;
-					bottomOffset = i.og_vertex.z + bottom_end - thickness;
-
-					if ((topOffset < full_range && bottomOffset > 0) &&
-						(temp >= (step - thickness) || temp <= thickness))
-						color = _TickColor;
-
+					col = tex2D(_MainTex, i.uv) * _TickColor;
+					col.a = _TickTransparency;
 				} else
 				{
-					bottom_end = 1 + 2 * (1 - level) / level;
-					full_range = bottom_end + 1;
-					step = og_step * full_range;
-					temp = (i.og_vertex.z + 1) % step;
-					topOffset = i.og_vertex.z + 1 + thickness;
-					bottomOffset = i.og_vertex.z + 1 - thickness;
-
-					if ((topOffset < full_range && bottomOffset > 0)
-						&& (temp >= (step - thickness) || temp <= thickness))
-						color = _TickColor;
+					col = tex2D(_MainTex, i.uv) * _CustomColor;
+					col.a = _Transparency;
 				}
-			
-
-				fixed4 col = tex2D(_MainTex, i.uv) * color;
-
-				col.a = _Transparency;
+				
 				return col;
 			}
 			ENDCG

@@ -594,12 +594,12 @@ Prefab:
     - target: {fileID: 114371449616811490, guid: c99f8c54d3dadb44098238709904fa10,
         type: 2}
       propertyPath: _level
-      value: 0.3
+      value: 0.14
       objectReference: {fileID: 0}
     - target: {fileID: 114371449616811490, guid: c99f8c54d3dadb44098238709904fa10,
         type: 2}
       propertyPath: _ticksCount
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114371449616811490, guid: c99f8c54d3dadb44098238709904fa10,
         type: 2}

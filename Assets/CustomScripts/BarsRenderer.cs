@@ -21,9 +21,17 @@ public class BarsRenderer : MonoBehaviour {
 	public float _topTransparency = 0.5f;
 	[Range(0, 1)]
 	public float _bottomTransparency = 0.5f;
+
+	[Header("Tick")]
+	[Range(0, 10)]
+	public int _ticksCount = 3;
+	[Range(0, 1)]
+	public float _tickThickness = 0.05f;
+	[Range(0, 1)]
+	public float _tickTransparency = 0.5f;
 	private Vector3 _originPosition = Vector3.zero;
 
-	private int _quadsCount = 4;
+	private int _quadsCount = 512;
 
 	private float _faceHeight = 0;
 
@@ -83,8 +91,11 @@ public class BarsRenderer : MonoBehaviour {
 			traperzoid._upperScale = upperScale;
 			traperzoid._lowerScale = lowerScale;
 			// traperzoid._level = 0;
-			traperzoid._topTranparency = _topTransparency;
-			traperzoid._bottomTranparency = _bottomTransparency;
+			traperzoid._topTransparency = _topTransparency;
+			traperzoid._bottomTransparency = _bottomTransparency;
+			traperzoid._ticksCount = _ticksCount;
+			traperzoid._tickThickness = _tickThickness;
+			traperzoid._tickTransparency = _tickTransparency;
 			traperzoid.ReCalculateScale();
 
 			// Reset the bar rotation and position before rotating and translating

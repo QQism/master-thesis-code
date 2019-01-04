@@ -69,6 +69,36 @@
 				o.og_vertex = v.vertex;
 				return o;
 			}
+
+			float when_lt(float x, float y)
+			{
+				return max(sign(y - x), 0.0);
+			}
+
+			float when_gt(float x, float y)
+			{
+				return max(sign(x - y), 0.0);
+			}
+
+			float when_ge(float x, float y)
+			{
+				return 1.0 - when_lt(x, y);
+			}
+
+			float when_le(float x, float y)
+			{
+				return 1.0 - when_gt(x, y);
+			}
+
+			float and(float x, float y)
+			{
+				return x * y;
+			}
+
+			float or(float x, float y)
+			{
+				return min(x + y, 1.0);
+			}
 			
 			fixed4 frag (v2f i) : SV_Target
 			{ 
@@ -85,6 +115,24 @@
 				topOffset = i.og_vertex.z + bottom_end + _TickThickness;
 				bottomOffset = i.og_vertex.z + bottom_end - _TickThickness;
 
+				/*
+				// 1 if is tick, 0 if not 
+				float condition = and(and(
+										when_lt(topOffset, full_range),
+										when_gt(bottomOffset, 0)),
+									or(
+										when_ge(tick_pos, step - _TickThickness),
+										when_le(tick_pos, _TickThickness)));
+				float4 color = (_TickColor * condition + _CustomColor * !condition);
+				float transparency = (_TickTransparency * condition + _Transparency * !condition);
+
+				//col = tex2D(_MainTex, i.uv) * _CustomColor;
+				col = tex2D(_MainTex, i.uv) * color;
+				col.a = transparency;
+				*/
+
+				
+								
 				if ((topOffset < full_range && bottomOffset > 0) &&
 					(tick_pos >= (step - _TickThickness) || tick_pos <= _TickThickness))
 				{
@@ -95,6 +143,11 @@
 					col = tex2D(_MainTex, i.uv) * _CustomColor;
 					col.a = _Transparency;
 				}
+				
+
+				//col = tex2D(_MainTex, i.uv) * _CustomColor;
+				//col.a = _Transparency;
+				
 				
 				return col;
 			}

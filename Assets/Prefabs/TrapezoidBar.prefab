@@ -207,14 +207,14 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1343147699349670}
-  m_Mesh: {fileID: 4300000, guid: e807576aca69e7244aabce30e339557f, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 63ba573bdc24610429b8b3203466a515, type: 3}
 --- !u!33 &33575638225439086
 MeshFilter:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1326492685248308}
-  m_Mesh: {fileID: 4300000, guid: e807576aca69e7244aabce30e339557f, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 63ba573bdc24610429b8b3203466a515, type: 3}
 --- !u!114 &114371449616811490
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -228,4 +228,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _upperScale: 1
   _lowerScale: 1
-  _level: 0.5
+  _level: 1
+  _topTransparency: 1
+  _bottomTransparency: 1
+  _ticksCount: 2
+  _tickThickness: 0.01
+  _tickTransparency: 0.8

@@ -99,7 +99,7 @@
 			{
 				return min(x + y, 1.0);
 			}
-			
+
 			fixed4 frag (v2f i) : SV_Target
 			{ 
 				fixed4 col;
@@ -115,7 +115,7 @@
 				topOffset = i.og_vertex.z + bottom_end + _TickThickness;
 				bottomOffset = i.og_vertex.z + bottom_end - _TickThickness;
 
-				/*
+				
 				// 1 if is tick, 0 if not 
 				float condition = and(and(
 										when_lt(topOffset, full_range),
@@ -129,10 +129,8 @@
 				//col = tex2D(_MainTex, i.uv) * _CustomColor;
 				col = tex2D(_MainTex, i.uv) * color;
 				col.a = transparency;
-				*/
-
-				
-								
+							
+				/*
 				if ((topOffset < full_range && bottomOffset > 0) &&
 					(tick_pos >= (step - _TickThickness) || tick_pos <= _TickThickness))
 				{
@@ -143,11 +141,10 @@
 					col = tex2D(_MainTex, i.uv) * _CustomColor;
 					col.a = _Transparency;
 				}
-				
+				*/		
 
 				//col = tex2D(_MainTex, i.uv) * _CustomColor;
 				//col.a = _Transparency;
-				
 				
 				return col;
 			}

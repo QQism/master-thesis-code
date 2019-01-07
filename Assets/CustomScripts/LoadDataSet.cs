@@ -120,6 +120,7 @@ public class LoadDataSet : MonoBehaviour {
                 maxValue = amount;
 
             _bars.Add(bar);
+
         }
 
         foreach (GameObject bar in _bars)

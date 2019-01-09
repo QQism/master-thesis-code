@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BarsRenderer : MonoBehaviour {
+public class ConeRenderer : MonoBehaviour {
 
 	public GameObject _quad;
 
@@ -37,10 +37,16 @@ public class BarsRenderer : MonoBehaviour {
 
 	private List<GameObject> bars = new List<GameObject>();
 
-	// Use this for initialization
-	void Start ()
+	void OnValidate()
 	{
-        //Material quadMaterial = new Material(_quad.GetComponent<Renderer>().sharedMaterial);
+		if (bars.Count == _quadsCount)
+			UpdateBars();
+	}
+
+	void initializeWithData(List<DataPoint> dataPoints)
+	{
+		_quadsCount = dataPoints.Count * 2;
+
 		float rotateYAngle = 360.0f / _quadsCount;
 		_faceHeight = _upperFaceHeight + _lowerFaceHeight;
         for (int i = 0; i < _quadsCount; i++)
@@ -53,17 +59,6 @@ public class BarsRenderer : MonoBehaviour {
 			bars.Add(bar);
         }
 		UpdateBars();
-	}
-
-	void OnValidate()
-	{
-		if (bars.Count == _quadsCount)
-			UpdateBars();
-	}
-
-	void populateData(List<DataPoint> dataPoints)
-	{
-
 	}
 
 	void UpdateBars()

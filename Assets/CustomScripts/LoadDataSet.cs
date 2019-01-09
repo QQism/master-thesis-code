@@ -48,7 +48,6 @@ public class LoadDataSet : MonoBehaviour {
     private float _barHeightBuffer = 1.2f;
     private Mesh _meshSelection;
 
-
 	// Use this for initialization
 	void Start () { }
 
@@ -83,30 +82,6 @@ public class LoadDataSet : MonoBehaviour {
                 break;
             case VisualisationType.ProjectingCone:
                 break;
-        }
-    }
-
-    void transformBarWithAmount(GameObject bar, float amount, float elevation, float maxValue)
-    {
-        float scaledAmount = amount / (maxValue * _barHeightBuffer) * _maxBarHeight;
-        bar.transform.localScale = new Vector3(bar.transform.localScale.x, scaledAmount, bar.transform.localScale.z);
-        bar.transform.position += new Vector3(0, elevation + scaledAmount/2, 0);
-    }
-
-    void placeBarChart()
-    {
-        Vector2d[] positions = { new Vector2d(-37.81420, 144.96320),
-        new Vector2d(-37.810, 144.970),
-        new Vector2d(-37.830, 145.010),
-        new Vector2d(-38.030, 145.310)};
-
-        foreach (Vector2d pos in positions)
-        {
-            //Debug.Log("Before Transform:" + "  X:" + _cube.transform.position.x.ToString() + ", Y:" + _cube.transform.position.y.ToString() + ", Z:" + _cube.transform.position.z.ToString());
-            //Debug.Log(_map.CenterLatitudeLongitude.ToString());
-            //_cube.transform.position = _map.GeoToWorldPosition(positions[0]);
-            //Debug.Log("After  Transform:" + "  X:" + _cube.transform.position.x.ToString() + ", Y:" + _cube.transform.position.y.ToString() + ", Z:" + _cube.transform.position.y.ToString());
-            //Instantiate(_barChart, _map.GeoToWorldPosition(pos), Quaternion.identity);
         }
     }
 

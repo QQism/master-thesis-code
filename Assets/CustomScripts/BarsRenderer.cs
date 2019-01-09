@@ -8,13 +8,13 @@ public class BarsRenderer : MonoBehaviour {
 
 	[Header("Shape")]
 	[Range(0, 90)]
-	public float _miterAngle = 45;
+	public float _miterAngle = 64;
 
 	//[Range(0, 2)]
 	private float _upperFaceHeight = 1.0f;
 
 	[Range(0, 1)]
-	public float _lowerFaceHeight = 0.0f;
+	public float _lowerFaceHeight = 1.0f;
 
 	[Header("Appearance")]
 	[Range(0, 1)]
@@ -24,11 +24,11 @@ public class BarsRenderer : MonoBehaviour {
 
 	[Header("Tick")]
 	[Range(0, 10)]
-	public int _ticksCount = 3;
+	public int _ticksCount = 4;
 	[Range(0, 1)]
-	public float _tickThickness = 0.05f;
+	public float _tickThickness = 0.005f;
 	[Range(0, 1)]
-	public float _tickTransparency = 0.5f;
+	public float _tickTransparency = 1.0f;
 	private Vector3 _originPosition = Vector3.zero;
 
 	private int _quadsCount = 512;
@@ -50,15 +50,6 @@ public class BarsRenderer : MonoBehaviour {
             bar.transform.SetParent(transform);
 			var traperzoid = bar.GetComponent<TrapezoidBarBehavior>();
 			traperzoid._level = 0;
-
-			//Renderer renderer = bar.GetComponent<Renderer>();
-            // renderer.sharedMaterial = quadMaterial;
-
-			// MaterialPropertyBlock block = new MaterialPropertyBlock();
-			// renderer.GetPropertyBlock(block);
-			// block.SetColor("_CustomColor", Color.Lerp(Color.black, Color.cyan, rotateYAngle * i/360));
-			// renderer.SetPropertyBlock(block);
-
 			bars.Add(bar);
         }
 		UpdateBars();

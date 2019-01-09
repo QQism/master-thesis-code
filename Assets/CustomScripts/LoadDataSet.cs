@@ -16,10 +16,21 @@ public enum MeshSelection
     Quad
 }
 
+public enum VisualisationType
+{
+    InPlaceBars,
+    ProjectingCone,
+}
+
 public class LoadDataSet : MonoBehaviour {
     public AbstractMap _map;
     public Camera _camera;
     private String datasetFile = "\\Datasets\\vic_wateruse_2008_2009.csv";
+
+
+    public VisualisationType _visualisationType = VisualisationType.InPlaceBars;
+
+    [Header("In-place Bars")]
     public Transform _barsContainer;
 
     public Mesh _cubeMesh;
@@ -56,7 +67,6 @@ public class LoadDataSet : MonoBehaviour {
         {
             _meshSelection = _quadMesh;
         }
-
     }
 
     void loadCSVData()
@@ -65,16 +75,51 @@ public class LoadDataSet : MonoBehaviour {
         string[] lines = data.Split('\n');
 
         // Skip the header
-        string[] filters = { "Melbourne Cbd", "Caulfield North", "Clayton" };
         Debug.Log("Number of records: " + lines.Length.ToString());
+        switch(_visualisationType)
+        {
+            case VisualisationType.InPlaceBars:
+                addInPlaceBars(lines);
+                break;
+            case VisualisationType.ProjectingCone:
+                break;
+        }
+    }
 
+    void transformBarWithAmount(GameObject bar, float amount, float elevation, float maxValue)
+    {
+        float scaledAmount = amount / (maxValue * _barHeightBuffer) * _maxBarHeight;
+        bar.transform.localScale = new Vector3(bar.transform.localScale.x, scaledAmount, bar.transform.localScale.z);
+        bar.transform.position += new Vector3(0, elevation + scaledAmount/2, 0);
+    }
+
+    void placeBarChart()
+    {
+        Vector2d[] positions = { new Vector2d(-37.81420, 144.96320),
+        new Vector2d(-37.810, 144.970),
+        new Vector2d(-37.830, 145.010),
+        new Vector2d(-38.030, 145.310)};
+
+        foreach (Vector2d pos in positions)
+        {
+            //Debug.Log("Before Transform:" + "  X:" + _cube.transform.position.x.ToString() + ", Y:" + _cube.transform.position.y.ToString() + ", Z:" + _cube.transform.position.z.ToString());
+            //Debug.Log(_map.CenterLatitudeLongitude.ToString());
+            //_cube.transform.position = _map.GeoToWorldPosition(positions[0]);
+            //Debug.Log("After  Transform:" + "  X:" + _cube.transform.position.x.ToString() + ", Y:" + _cube.transform.position.y.ToString() + ", Z:" + _cube.transform.position.y.ToString());
+            //Instantiate(_barChart, _map.GeoToWorldPosition(pos), Quaternion.identity);
+        }
+    }
+
+    void addInPlaceBars(string[] lines)
+    {
+        string[] filters = { "Melbourne Cbd", "Caulfield North", "Clayton" };
         Dictionary<MeshSelection, Mesh> meshes = new Dictionary<MeshSelection, Mesh>();
         meshes.Add(MeshSelection.Cube, _cubeMesh);
         meshes.Add(MeshSelection.Cylinder, _cylinderMesh);
         meshes.Add(MeshSelection.Quad, _quadMesh);
 
         float maxValue = 0;
-        for (int i=1; i < lines.Length; i++)
+        for (int i = 1; i < lines.Length; i++)
         //for (int i=1; i < 2; i++)
         {
             string[] lineData = lines[i].Split(',');
@@ -132,30 +177,6 @@ public class LoadDataSet : MonoBehaviour {
         }
     }
 
-    void transformBarWithAmount(GameObject bar, float amount, float elevation, float maxValue)
-    {
-        float scaledAmount = amount / (maxValue * _barHeightBuffer) * _maxBarHeight;
-        bar.transform.localScale = new Vector3(bar.transform.localScale.x, scaledAmount, bar.transform.localScale.z);
-        bar.transform.position += new Vector3(0, elevation + scaledAmount/2, 0);
-    }
-
-    void placeBarChart()
-    {
-        Vector2d[] positions = { new Vector2d(-37.81420, 144.96320),
-        new Vector2d(-37.810, 144.970),
-        new Vector2d(-37.830, 145.010),
-        new Vector2d(-38.030, 145.310)};
-
-        foreach (Vector2d pos in positions)
-        {
-            //Debug.Log("Before Transform:" + "  X:" + _cube.transform.position.x.ToString() + ", Y:" + _cube.transform.position.y.ToString() + ", Z:" + _cube.transform.position.z.ToString());
-            //Debug.Log(_map.CenterLatitudeLongitude.ToString());
-            //_cube.transform.position = _map.GeoToWorldPosition(positions[0]);
-            //Debug.Log("After  Transform:" + "  X:" + _cube.transform.position.x.ToString() + ", Y:" + _cube.transform.position.y.ToString() + ", Z:" + _cube.transform.position.y.ToString());
-            //Instantiate(_barChart, _map.GeoToWorldPosition(pos), Quaternion.identity);
-        }
-    }
-
     string normalisedTextData(string data)
     {
         var builder = new StringBuilder(data);
@@ -164,7 +185,4 @@ public class LoadDataSet : MonoBehaviour {
 
         return builder.ToString().Trim();
     }
-
-    // Update is called once per frame
-    void Update () { }
 }

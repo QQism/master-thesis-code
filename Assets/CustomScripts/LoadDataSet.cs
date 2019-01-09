@@ -27,6 +27,8 @@ public class LoadDataSet : MonoBehaviour {
     public Camera _camera;
     private String datasetFile = "\\Datasets\\vic_wateruse_2008_2009.csv";
 
+    [SerializeField]
+    public GameObject _player = null;
 
     public VisualisationType _visualisationType = VisualisationType.InPlaceBars;
 
@@ -55,6 +57,7 @@ public class LoadDataSet : MonoBehaviour {
     private void Awake()
     {
         //_map.OnInitialized += placeBarChart;
+
         _map.OnInitialized += loadCSVData;
 
         if (_meshSelectionType == MeshSelection.Cube)
@@ -75,6 +78,7 @@ public class LoadDataSet : MonoBehaviour {
         string[] lines = data.Split('\n');
         List<DataPoint> dataPoints = new List<DataPoint>();
 
+        float maxValue = 0;
         string[] filters = { "Melbourne Cbd", "Caulfield North", "Clayton" };
         for (int i = 1; i < lines.Length; i++)
         {
@@ -102,10 +106,14 @@ public class LoadDataSet : MonoBehaviour {
 
             DataPoint point = new DataPoint();
             point.Name = stringData;
-            point.Position = position;
+            point.GeoPosition = position;
+            point.WorldPosition = _map.GeoToWorldPosition(position, true);
             point.Value = float.Parse(lineData[1]);
 
             dataPoints.Add(point);
+
+            if (maxValue < point.Value)
+                maxValue = point.Value;
         }
 
         // Skip the header
@@ -113,44 +121,42 @@ public class LoadDataSet : MonoBehaviour {
         switch(_visualisationType)
         {
             case VisualisationType.InPlaceBars:
-                addInPlaceBars(dataPoints);
+                addInPlaceBars(dataPoints, maxValue);
                 break;
             case VisualisationType.ProjectingCone:
                 break;
         }
+
+        var cone = _player.GetComponentInChildren<ConeRenderer>();
+        cone.initializeWithData(dataPoints, maxValue);
     }
 
-    void addInPlaceBars(List<DataPoint> points)
+    void addInPlaceBars(List<DataPoint> points, float maxValue)
     {
         Dictionary<MeshSelection, Mesh> meshes = new Dictionary<MeshSelection, Mesh>();
         meshes.Add(MeshSelection.Cube, _cubeMesh);
         meshes.Add(MeshSelection.Cylinder, _cylinderMesh);
         meshes.Add(MeshSelection.Quad, _quadMesh);
 
-        float maxValue = 0;
         foreach(DataPoint point in points)
         {
             //Debug.Log(name + "[Height]: " + _map.GeoToWorldPosition(position, true));
             //Debug.Log(name + "[No Height]: " + _map.GeoToWorldPosition(position, false));
             //Debug.Log(name + "[Default]: " + _map.GeoToWorldPosition(position));
 
-            GameObject bar = Instantiate(_framedBar, _map.GeoToWorldPosition(point.Position, true), Quaternion.identity);
+            GameObject bar = Instantiate(_framedBar, point.WorldPosition, Quaternion.identity);
             bar.transform.SetParent(_barsContainer, true);
             bar.transform.name = "Bar " + point.Name;
 
             FramedBarData barDataComponent = bar.GetComponent<FramedBarData>();
             barDataComponent.PlayerCamera = _camera;
             barDataComponent.Value = point.Value;
-            barDataComponent.LatLong = point.Position;
-            barDataComponent.Elevation = _map.QueryElevationInUnityUnitsAt(point.Position);
+            barDataComponent.LatLong = point.GeoPosition;
+            barDataComponent.Elevation = _map.QueryElevationInUnityUnitsAt(point.GeoPosition);
             barDataComponent.AvailableMeshes = meshes;
             barDataComponent.MeshType = _meshSelectionType;
 
             bar.GetComponent<RotationAdjustment>().PlayerCamera = _camera;
-
-            if (maxValue < point.Value)
-                maxValue = point.Value;
-
             _bars.Add(bar);
         }
 

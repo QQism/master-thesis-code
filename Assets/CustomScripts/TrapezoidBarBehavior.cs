@@ -54,6 +54,11 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 	{
 		ReCalculateScale();
 	}
+
+	public GameObject BottomBar()
+	{
+		return _bottomBar;
+	}
 	
 	// Update is called once per frame
 	void Update ()

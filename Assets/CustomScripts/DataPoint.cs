@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class DataPoint {
 	public string Name {get; set;}
-	public Vector2d Position {get; set;}
+	public Vector2d GeoPosition {get; set;}
+	public Vector3 WorldPosition {get; set;}
 	public float Value {get; set;}
 }

@@ -43,7 +43,7 @@ public class ConeRenderer : MonoBehaviour {
 			UpdateBars();
 	}
 
-	void initializeWithData(List<DataPoint> dataPoints)
+	public void initializeWithData(List<DataPoint> dataPoints, float maxValue)
 	{
 		_quadsCount = dataPoints.Count * 2;
 
@@ -59,6 +59,7 @@ public class ConeRenderer : MonoBehaviour {
 			bars.Add(bar);
         }
 		UpdateBars();
+		mapDataPointsToBars(dataPoints, maxValue);
 	}
 
 	void UpdateBars()
@@ -97,6 +98,29 @@ public class ConeRenderer : MonoBehaviour {
 			trans.RotateAround(transform.position, Vector3.up, i * rotateYAngle);
 			trans.Rotate(Vector3.right * _miterAngle, Space.Self);
 		}
+	}
+
+	void mapDataPointsToBars(List<DataPoint> dataPoints, float maxValue)
+	{
+		for (int i =0; i < bars.Count; i+=2)
+		{
+			var bar = bars[i];
+			var traperzoid = bar.GetComponent<TrapezoidBarBehavior>();
+			var point = dataPoints[i/2];
+			traperzoid._level = 1/maxValue * point.Value;
+			traperzoid.ReCalculateScale();
+
+			if (i==0)
+				drawProjectionLine(point, traperzoid.BottomBar());
+		}
+	}
+
+	void drawProjectionLine(DataPoint point, GameObject bar)
+	{
+		LineRenderer line = bar.AddComponent<LineRenderer>();
+		line.positionCount = 2;
+		line.SetPosition(0, bar.transform.position);
+		line.SetPosition(1, point.WorldPosition);
 	}
 
 	// Update is called once per frame

@@ -110,19 +110,39 @@ public class ConeRenderer : MonoBehaviour {
 			traperzoid._level = 1/maxValue * point.Value;
 			traperzoid.ReCalculateScale();
 
-			if (i==0)
-				drawProjectionLine(point, traperzoid.BottomBar());
+			//if (i==0)
+				//drawProjectionLine(point, traperzoid.BottomBar());
+			drawProjectionLine(point, bar);
 		}
 	}
 
 	void drawProjectionLine(DataPoint point, GameObject bar)
 	{
+		var lineWidth = 0.05f;
 		LineRenderer line = bar.AddComponent<LineRenderer>();
 		line.positionCount = 2;
-		line.SetPosition(0, bar.transform.position);
+		line.startWidth = lineWidth;
+		line.endWidth = lineWidth;
+		//Vector3 rotatedPosition = Quaternion.AngleAxis(-64, Vector3.right) * bar.transform.localPosition;
+		//bar.transform.
+
+		Matrix4x4 m = Camera.main.cameraToWorldMatrix;
+		Vector3 p = m.MultiplyPoint(new Vector3(0, 0, 0));
+		//line.SetPosition(0, bar.transform.TransformVector(Vector3.zero));
+		line.SetPosition(0, p);
+		
 		line.SetPosition(1, point.WorldPosition);
 	}
 
 	// Update is called once per frame
-	void Update () { }
+	void Update ()
+	{
+		for (int i =0; i < bars.Count; i+=2)
+		{
+			var bar = bars[i];
+			var line = bar.GetComponent<LineRenderer>();
+
+        	line.SetPosition(0, bar.transform.position);
+		}
+	}
 }

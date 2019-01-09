@@ -48,6 +48,7 @@ public class LoadDataSet : MonoBehaviour {
     private float _barHeightBuffer = 1.2f;
     private Mesh _meshSelection;
 
+
 	// Use this for initialization
 	void Start () { }
 
@@ -72,31 +73,12 @@ public class LoadDataSet : MonoBehaviour {
     {
         string data = System.IO.File.ReadAllText(Application.dataPath + datasetFile);
         string[] lines = data.Split('\n');
+        List<DataPoint> dataPoints = new List<DataPoint>();
 
-        // Skip the header
-        Debug.Log("Number of records: " + lines.Length.ToString());
-        switch(_visualisationType)
-        {
-            case VisualisationType.InPlaceBars:
-                addInPlaceBars(lines);
-                break;
-            case VisualisationType.ProjectingCone:
-                break;
-        }
-    }
-
-    void addInPlaceBars(string[] lines)
-    {
         string[] filters = { "Melbourne Cbd", "Caulfield North", "Clayton" };
-        Dictionary<MeshSelection, Mesh> meshes = new Dictionary<MeshSelection, Mesh>();
-        meshes.Add(MeshSelection.Cube, _cubeMesh);
-        meshes.Add(MeshSelection.Cylinder, _cylinderMesh);
-        meshes.Add(MeshSelection.Quad, _quadMesh);
-
-        float maxValue = 0;
         for (int i = 1; i < lines.Length; i++)
-        //for (int i=1; i < 2; i++)
         {
+
             string[] lineData = lines[i].Split(',');
             if (lineData.Length < 5)
                 continue;
@@ -117,30 +99,59 @@ public class LoadDataSet : MonoBehaviour {
             float latitude = float.Parse(lineData[3]);
             float longitude = float.Parse(lineData[4]);
             Vector2d position = new Vector2d(latitude, longitude);
+
+            DataPoint point = new DataPoint();
+            point.Name = stringData;
+            point.Position = position;
+            point.Value = float.Parse(lineData[1]);
+
+            dataPoints.Add(point);
+        }
+
+        // Skip the header
+        Debug.Log("Number of records: " + lines.Length.ToString());
+        switch(_visualisationType)
+        {
+            case VisualisationType.InPlaceBars:
+                addInPlaceBars(dataPoints);
+                break;
+            case VisualisationType.ProjectingCone:
+                break;
+        }
+    }
+
+    void addInPlaceBars(List<DataPoint> points)
+    {
+        Dictionary<MeshSelection, Mesh> meshes = new Dictionary<MeshSelection, Mesh>();
+        meshes.Add(MeshSelection.Cube, _cubeMesh);
+        meshes.Add(MeshSelection.Cylinder, _cylinderMesh);
+        meshes.Add(MeshSelection.Quad, _quadMesh);
+
+        float maxValue = 0;
+        foreach(DataPoint point in points)
+        {
             //Debug.Log(name + "[Height]: " + _map.GeoToWorldPosition(position, true));
             //Debug.Log(name + "[No Height]: " + _map.GeoToWorldPosition(position, false));
             //Debug.Log(name + "[Default]: " + _map.GeoToWorldPosition(position));
 
-            GameObject bar = Instantiate(_framedBar, _map.GeoToWorldPosition(position, true), Quaternion.identity);
+            GameObject bar = Instantiate(_framedBar, _map.GeoToWorldPosition(point.Position, true), Quaternion.identity);
             bar.transform.SetParent(_barsContainer, true);
-            bar.transform.name = "Bar " + stringData;
-            float amount = float.Parse(lineData[1]);
+            bar.transform.name = "Bar " + point.Name;
 
             FramedBarData barDataComponent = bar.GetComponent<FramedBarData>();
             barDataComponent.PlayerCamera = _camera;
-            barDataComponent.Value = amount;
-            barDataComponent.LatLong = position;
-            barDataComponent.Elevation = _map.QueryElevationInUnityUnitsAt(position);
+            barDataComponent.Value = point.Value;
+            barDataComponent.LatLong = point.Position;
+            barDataComponent.Elevation = _map.QueryElevationInUnityUnitsAt(point.Position);
             barDataComponent.AvailableMeshes = meshes;
             barDataComponent.MeshType = _meshSelectionType;
 
             bar.GetComponent<RotationAdjustment>().PlayerCamera = _camera;
 
-            if (maxValue < amount)
-                maxValue = amount;
+            if (maxValue < point.Value)
+                maxValue = point.Value;
 
             _bars.Add(bar);
-
         }
 
         foreach (GameObject bar in _bars)

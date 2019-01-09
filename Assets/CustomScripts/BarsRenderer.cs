@@ -61,6 +61,11 @@ public class BarsRenderer : MonoBehaviour {
 			UpdateBars();
 	}
 
+	void populateData(List<DataPoint> dataPoints)
+	{
+
+	}
+
 	void UpdateBars()
 	{ 
 		float rotateYAngle = 360.0f / _quadsCount;

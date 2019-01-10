@@ -43,7 +43,7 @@ public class ConeRenderer : MonoBehaviour {
 			UpdateBars();
 	}
 
-	public void initializeWithData(List<DataPoint> dataPoints, float maxValue)
+	public void initializeWithData(List<MapDataPoint> dataPoints, float maxValue)
 	{
 		_quadsCount = dataPoints.Count * 2;
 
@@ -100,7 +100,7 @@ public class ConeRenderer : MonoBehaviour {
 		}
 	}
 
-	void mapDataPointsToBars(List<DataPoint> dataPoints, float maxValue)
+	void mapDataPointsToBars(List<MapDataPoint> dataPoints, float maxValue)
 	{
 		for (int i =0; i < bars.Count; i+=2)
 		{
@@ -110,27 +110,18 @@ public class ConeRenderer : MonoBehaviour {
 			traperzoid._level = 1/maxValue * point.Value;
 			traperzoid.ReCalculateScale();
 
-			//if (i==0)
-				//drawProjectionLine(point, traperzoid.BottomBar());
 			drawProjectionLine(point, bar);
 		}
 	}
 
-	void drawProjectionLine(DataPoint point, GameObject bar)
+	void drawProjectionLine(MapDataPoint point, GameObject bar)
 	{
 		var lineWidth = 0.05f;
 		LineRenderer line = bar.AddComponent<LineRenderer>();
 		line.positionCount = 2;
 		line.startWidth = lineWidth;
 		line.endWidth = lineWidth;
-		//Vector3 rotatedPosition = Quaternion.AngleAxis(-64, Vector3.right) * bar.transform.localPosition;
-		//bar.transform.
-
-		Matrix4x4 m = Camera.main.cameraToWorldMatrix;
-		Vector3 p = m.MultiplyPoint(new Vector3(0, 0, 0));
-		//line.SetPosition(0, bar.transform.TransformVector(Vector3.zero));
-		line.SetPosition(0, p);
-		
+		line.SetPosition(0, bar.transform.position);		
 		line.SetPosition(1, point.WorldPosition);
 	}
 
@@ -141,6 +132,9 @@ public class ConeRenderer : MonoBehaviour {
 		{
 			var bar = bars[i];
 			var line = bar.GetComponent<LineRenderer>();
+
+			if (!line)
+				return;
 
         	line.SetPosition(0, bar.transform.position);
 		}

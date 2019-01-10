@@ -76,7 +76,7 @@ public class LoadDataSet : MonoBehaviour {
     {
         string data = System.IO.File.ReadAllText(Application.dataPath + datasetFile);
         string[] lines = data.Split('\n');
-        List<DataPoint> dataPoints = new List<DataPoint>();
+        List<MapDataPoint> dataPoints = new List<MapDataPoint>();
 
         float maxValue = 0;
         string[] filters = { "Melbourne Cbd", "Caulfield North", "Clayton" };
@@ -104,7 +104,7 @@ public class LoadDataSet : MonoBehaviour {
             float longitude = float.Parse(lineData[4]);
             Vector2d position = new Vector2d(latitude, longitude);
 
-            DataPoint point = new DataPoint();
+            MapDataPoint point = new MapDataPoint();
             point.Name = stringData;
             point.GeoPosition = position;
             point.WorldPosition = _map.GeoToWorldPosition(position, true);
@@ -131,14 +131,14 @@ public class LoadDataSet : MonoBehaviour {
         cone.initializeWithData(dataPoints, maxValue);
     }
 
-    void addInPlaceBars(List<DataPoint> points, float maxValue)
+    void addInPlaceBars(List<MapDataPoint> points, float maxValue)
     {
         Dictionary<MeshSelection, Mesh> meshes = new Dictionary<MeshSelection, Mesh>();
         meshes.Add(MeshSelection.Cube, _cubeMesh);
         meshes.Add(MeshSelection.Cylinder, _cylinderMesh);
         meshes.Add(MeshSelection.Quad, _quadMesh);
 
-        foreach(DataPoint point in points)
+        foreach(MapDataPoint point in points)
         {
             //Debug.Log(name + "[Height]: " + _map.GeoToWorldPosition(position, true));
             //Debug.Log(name + "[No Height]: " + _map.GeoToWorldPosition(position, false));

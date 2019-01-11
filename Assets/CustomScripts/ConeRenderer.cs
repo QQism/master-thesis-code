@@ -31,13 +31,17 @@ public class ConeRenderer : MonoBehaviour {
 	public float _tickTransparency = 1.0f;
 	private Vector3 _originPosition = Vector3.zero;
 
-	private int _quadsCount = 512;
+	private int _quadsCount = 1024;
 
 	private float _faceHeight = 0;
 
 	private List<GameObject> bars = new List<GameObject>();
 
 	private int[] _barsAssignments;
+
+	private float _projectionLineWidth = 0.05f;
+
+	private List<MapDataPoint> _dataPoints;
 
 	void OnValidate()
 	{
@@ -47,7 +51,7 @@ public class ConeRenderer : MonoBehaviour {
 
 	public void initializeWithData(List<MapDataPoint> dataPoints, float maxValue)
 	{
-		_quadsCount = dataPoints.Count * 2;
+		_dataPoints = dataPoints;
 
 		float rotateYAngle = 360.0f / _quadsCount;
 		_faceHeight = _upperFaceHeight + _lowerFaceHeight;
@@ -61,7 +65,7 @@ public class ConeRenderer : MonoBehaviour {
 			bars.Add(bar);
         }
 		UpdateBars();
-		mapDataPointsToBars(dataPoints, maxValue);
+		mapDataPointsToBars(maxValue);
 	}
 
 	void UpdateBars()
@@ -84,7 +88,6 @@ public class ConeRenderer : MonoBehaviour {
 			var traperzoid = bar.GetComponent<TrapezoidBarBehavior>();
 			traperzoid._upperScale = upperScale;
 			traperzoid._lowerScale = lowerScale;
-			// traperzoid._level = 0;
 			traperzoid._topTransparency = _topTransparency;
 			traperzoid._bottomTransparency = _bottomTransparency;
 			traperzoid._ticksCount = _ticksCount;
@@ -102,16 +105,17 @@ public class ConeRenderer : MonoBehaviour {
 		}
 	}
 
-	void mapDataPointsToBars(List<MapDataPoint> dataPoints, float maxValue)
+	void mapDataPointsToBars(float maxValue)
 	{
-		var costMatrix = buildCostMatrix(dataPoints);
+		var costMatrix = buildCostMatrix(_dataPoints);
 		_barsAssignments = HungarianAlgorithm.FindAssignments(costMatrix);
 
-		for (int i =0; i < bars.Count; i+=2)
+		for (int i=0; i < _dataPoints.Count; i++)
 		{	
-			var bar = bars[i];
+			var point = _dataPoints[i];
+			var bar = bars[_barsAssignments[i]*2];
 			var traperzoid = bar.GetComponent<TrapezoidBarBehavior>();
-			var point = dataPoints[_barsAssignments[i/2]];
+
 			traperzoid._level = 1/maxValue * point.Value;
 			traperzoid.ReCalculateScale();
 
@@ -131,34 +135,51 @@ public class ConeRenderer : MonoBehaviour {
 		line.SetPosition(1, point.WorldPosition);
 	}
 
+	void drawProjectionHead()
+	{
+
+	}
+
+	void drawProjectionTail()
+	{
+
+	}
+
 	// Update is called once per frame
 	void Update ()
 	{
-		for (int i =0; i < bars.Count; i+=2)
+		for (int i=0; i < bars.Count; i+=2)
 		{
 			var bar = bars[i];
 			var traperzoid = bar.GetComponent<TrapezoidBarBehavior>();
 			var line = bar.GetComponent<LineRenderer>();
 
 			if (!line)
-				return;
+				continue;
 
-        	line.SetPosition(0, traperzoid.BottomBar().transform.position);
+			var bottomBar = traperzoid.BottomBar();
+			//bottomBar.transform
+        	line.SetPosition(0, bottomBar.transform.position);
+			
 		}
 	}
 
 	float[, ] buildCostMatrix(List<MapDataPoint> dataPoints)
 	{
-		var costs = new float[dataPoints.Count, dataPoints.Count];
+		var costs = new float[dataPoints.Count, _quadsCount/2];
 
-		for (int i=0; i < bars.Count; i+=2)
+		for (int i=0; i < dataPoints.Count; i++)
 		{
-			var bar = bars[i];
+			var point = dataPoints[i]; 
 
-			for (int j=0; j < dataPoints.Count; j++)
+			for (int j=0; j < _quadsCount; j+=2)
 			{
-				var point = dataPoints[j]; 
-				costs[i/2, j] = Vector3.Distance(bar.transform.position, point.WorldPosition);
+				var bar = bars[j]; 
+				var traperzoid = bar.GetComponent<TrapezoidBarBehavior>();
+				costs[i, j/2] = Vector2.Distance(
+						new Vector2(traperzoid.BottomBar().transform.position.x, traperzoid.BottomBar().transform.position.z),
+						new Vector2(point.WorldPosition.x, point.WorldPosition.z));
+				// costs[i, j/2] = Vector3.Distance(traperzoid.BottomBar().transform.position, point.WorldPosition);
 			}
 		}
 		return costs;

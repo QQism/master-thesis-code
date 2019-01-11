@@ -4,8 +4,11 @@ using UnityEngine;
 using System;
 
 // Original source from https://github.com/vivet/HungarianAlgorithm
+// Modifications:
+// - Remove nameof to run in Unity
+// - Change cost value type from int to float
 
-namespace HungarianAlgorith
+namespace HungarianAlgorithms
 {
     /// <summary>
     /// Hungarian Algorithm.
@@ -18,7 +21,7 @@ namespace HungarianAlgorith
         /// <param name="costs">A cost matrix; the element at row <em>i</em> and column <em>j</em> represents the cost of agent <em>i</em> performing task <em>j</em>.</param>
         /// <returns>A matrix of assignments; the value of element <em>i</em> is the column of the task assigned to agent <em>i</em>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="costs"/> is null.</exception>
-        public static int[] FindAssignments(this int[,] costs)
+        public static int[] FindAssignments(this float[,] costs)
         {
             if (costs == null)
                 throw new ArgumentNullException("Costs are null");
@@ -28,7 +31,7 @@ namespace HungarianAlgorith
 
             for (var i = 0; i < h; i++)
             {
-                var min = int.MaxValue;
+                var min = float.MaxValue;
 
                 for (var j = 0; j < w; j++)
                 {
@@ -133,7 +136,7 @@ namespace HungarianAlgorith
 
             return 2;
         }
-        private static int RunStep2(int[,] costs, byte[,] masks, bool[] rowsCovered, bool[] colsCovered, int w, int h, ref Location pathStart)
+        private static int RunStep2(float[,] costs, byte[,] masks, bool[] rowsCovered, bool[] colsCovered, int w, int h, ref Location pathStart)
         {
             if (costs == null)
                 throw new ArgumentNullException("Costs is null");
@@ -203,7 +206,7 @@ namespace HungarianAlgorith
 
             return 1;
         }
-        private static int RunStep4(int[,] costs, bool[] rowsCovered, bool[] colsCovered, int w, int h)
+        private static int RunStep4(float[,] costs, bool[] rowsCovered, bool[] colsCovered, int w, int h)
         {
             if (costs == null)
                 throw new ArgumentNullException("Costs are null");
@@ -229,7 +232,7 @@ namespace HungarianAlgorith
             return 2;
         }
 
-        private static int FindMinimum(int[,] costs, bool[] rowsCovered, bool[] colsCovered, int w, int h)
+        private static float FindMinimum(float[,] costs, bool[] rowsCovered, bool[] colsCovered, int w, int h)
         {
             if (costs == null)
                 throw new ArgumentNullException("Costs are null");
@@ -240,7 +243,7 @@ namespace HungarianAlgorith
             if (colsCovered == null)
                 throw new ArgumentNullException("Cols covered are null");
 
-            var minValue = int.MaxValue;
+            var minValue = float.MaxValue;
 
             for (var i = 0; i < h; i++)
             {
@@ -292,7 +295,7 @@ namespace HungarianAlgorith
 
             return -1;
         }
-        private static Location FindZero(int[,] costs, bool[] rowsCovered, bool[] colsCovered, int w, int h)
+        private static Location FindZero(float[,] costs, bool[] rowsCovered, bool[] colsCovered, int w, int h)
         {
             if (costs == null)
                 throw new ArgumentNullException("Costs are null");

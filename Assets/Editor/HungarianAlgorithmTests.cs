@@ -4,13 +4,13 @@ using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 
-using HungarianAlgorith;
+using HungarianAlgorithms;
 
 public class HungarianAlgorithmTests {
 
     [Test]
     public void HungarianAlgorithm_Tests() {
-        int[, ] costs = new int[4, 4];
+        float[, ] costs = new float[4, 4];
         costs[0, 0] = 82;
         costs[0, 1] = 83;
         costs[0, 2] = 69;

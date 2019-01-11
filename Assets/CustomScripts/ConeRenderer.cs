@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using HungarianAlgorith;
+using HungarianAlgorithms;
 public class ConeRenderer : MonoBehaviour {
 
 	public GameObject _quad;
@@ -36,6 +36,8 @@ public class ConeRenderer : MonoBehaviour {
 	private float _faceHeight = 0;
 
 	private List<GameObject> bars = new List<GameObject>();
+
+	private int[] _barsAssignments;
 
 	void OnValidate()
 	{
@@ -102,11 +104,14 @@ public class ConeRenderer : MonoBehaviour {
 
 	void mapDataPointsToBars(List<MapDataPoint> dataPoints, float maxValue)
 	{
+		var costMatrix = buildCostMatrix(dataPoints);
+		_barsAssignments = HungarianAlgorithm.FindAssignments(costMatrix);
+
 		for (int i =0; i < bars.Count; i+=2)
-		{
+		{	
 			var bar = bars[i];
 			var traperzoid = bar.GetComponent<TrapezoidBarBehavior>();
-			var point = dataPoints[i/2];
+			var point = dataPoints[_barsAssignments[i/2]];
 			traperzoid._level = 1/maxValue * point.Value;
 			traperzoid.ReCalculateScale();
 
@@ -118,10 +123,11 @@ public class ConeRenderer : MonoBehaviour {
 	{
 		var lineWidth = 0.05f;
 		LineRenderer line = bar.AddComponent<LineRenderer>();
+		var traperzoid = bar.GetComponent<TrapezoidBarBehavior>();
 		line.positionCount = 2;
 		line.startWidth = lineWidth;
 		line.endWidth = lineWidth;
-		line.SetPosition(0, bar.transform.position);		
+		line.SetPosition(0, traperzoid.BottomBar().transform.position);		
 		line.SetPosition(1, point.WorldPosition);
 	}
 
@@ -131,12 +137,30 @@ public class ConeRenderer : MonoBehaviour {
 		for (int i =0; i < bars.Count; i+=2)
 		{
 			var bar = bars[i];
+			var traperzoid = bar.GetComponent<TrapezoidBarBehavior>();
 			var line = bar.GetComponent<LineRenderer>();
 
 			if (!line)
 				return;
 
-        	line.SetPosition(0, bar.transform.position);
+        	line.SetPosition(0, traperzoid.BottomBar().transform.position);
 		}
+	}
+
+	float[, ] buildCostMatrix(List<MapDataPoint> dataPoints)
+	{
+		var costs = new float[dataPoints.Count, dataPoints.Count];
+
+		for (int i=0; i < bars.Count; i+=2)
+		{
+			var bar = bars[i];
+
+			for (int j=0; j < dataPoints.Count; j++)
+			{
+				var point = dataPoints[j]; 
+				costs[i/2, j] = Vector3.Distance(bar.transform.position, point.WorldPosition);
+			}
+		}
+		return costs;
 	}
 }

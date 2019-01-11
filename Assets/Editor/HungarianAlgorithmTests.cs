@@ -4,52 +4,39 @@ using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 
+using HungarianAlgorith;
+
 public class HungarianAlgorithmTests {
 
     [Test]
-    public void HungarianAlgorithmTestsSimplePasses() {
-        // Use the Assert class to test conditions.
-		List<GameObject> bars = new List<GameObject>();
-        GameObject bar1 = new GameObject("Bar1");
-        GameObject bar2 = new GameObject("Bar2");
-        GameObject bar3 = new GameObject("Bar3");
-        GameObject bar4 = new GameObject("Bar4");
-        bar1.transform.position = Vector3.zero;
-        bar2.transform.position = new Vector3(0, 0, 0);
+    public void HungarianAlgorithm_Tests() {
+        int[, ] costs = new int[4, 4];
+        costs[0, 0] = 82;
+        costs[0, 1] = 83;
+        costs[0, 2] = 69;
+        costs[0, 3] = 92;
 
-        bars.Add(bar1);
-        bars.Add(bar2);
-        bars.Add(bar3);
-        bars.Add(bar4);
+        costs[1, 0] = 77;
+        costs[1, 1] = 37;
+        costs[1, 2] = 49;
+        costs[1, 3] = 92;
 
-        bar1.transform.position = new Vector3(0, 0, 0);
+        costs[2, 0] = 11;
+        costs[2, 1] = 69;
+        costs[2, 2] = 5;
+        costs[2, 3] = 86;
 
-		List<MapDataPoint> dataPoints = new List<MapDataPoint>();
-        MapDataPoint point1 = new MapDataPoint();
-        MapDataPoint point2 = new MapDataPoint();
-        MapDataPoint point3 = new MapDataPoint();
-        MapDataPoint point4 = new MapDataPoint();
+        costs[3, 0] = 8;
+        costs[3, 1] = 9;
+        costs[3, 2] = 98;
+        costs[3, 3] = 23;
 
-        dataPoints.Add(point1);
-        dataPoints.Add(point2);
-        dataPoints.Add(point3);
-        dataPoints.Add(point4);
+        int[] results = HungarianAlgorithm.FindAssignments(costs);
 
-        point1.WorldPosition = new Vector3(82, 0, 0);
-        point2.WorldPosition = new Vector3(83, 0, 0);
-        point3.WorldPosition = new Vector3(69, 0, 0);
-        point4.WorldPosition = new Vector3(92, 0, 0);
-
-		HungarianAlgorithm.Allocate(bars, dataPoints);
-		Assume.That(1, Is.EqualTo(2));
-    }
-
-    // A UnityTest behaves like a coroutine in PlayMode
-    // and allows you to yield null to skip a frame in EditMode
-    [UnityTest]
-    public IEnumerator HungarianAlgorithmTestsWithEnumeratorPasses() {
-        // Use the Assert class to test conditions.
-        // yield to skip a frame
-        yield return null;
+        Assume.That(results.Length, Is.EqualTo(4));
+        Assume.That(results[0], Is.EqualTo(2));
+        Assume.That(results[1], Is.EqualTo(1));
+        Assume.That(results[2], Is.EqualTo(0));
+        Assume.That(results[3], Is.EqualTo(3));
     }
 }

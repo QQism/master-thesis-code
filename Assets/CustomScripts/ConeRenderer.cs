@@ -132,7 +132,7 @@ public class ConeRenderer : MonoBehaviour {
 		line.positionCount = 2;
 		lineWidth = 0.005514949f * 2;
 		line.startWidth = lineWidth;
-		line.endWidth = lineWidth * Vector3.Distance(traperzoid.BottomBar().transform.position, point.WorldPosition) / 2.0f;
+		line.endWidth = lineWidth * Vector3.Distance(traperzoid.BottomBar().transform.position, point.WorldPosition) / 8.0f;
 		line.SetPosition(0, traperzoid.BottomBar().transform.position);		
 		line.SetPosition(1, point.WorldPosition);
 	}

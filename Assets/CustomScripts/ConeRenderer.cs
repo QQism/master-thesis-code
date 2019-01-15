@@ -132,8 +132,7 @@ public class ConeRenderer : MonoBehaviour {
 		line.positionCount = 2;
 		lineWidth = 0.005514949f * 2;
 		line.startWidth = lineWidth;
-		//line.endWidth = lineWidth;
-		line.endWidth = lineWidth * Vector3.Distance(traperzoid.BottomBar().transform.position, point.WorldPosition);
+		line.endWidth = lineWidth * Vector3.Distance(traperzoid.BottomBar().transform.position, point.WorldPosition) / 2.0f;
 		line.SetPosition(0, traperzoid.BottomBar().transform.position);		
 		line.SetPosition(1, point.WorldPosition);
 	}
@@ -157,13 +156,11 @@ public class ConeRenderer : MonoBehaviour {
 			var traperzoid = bar.GetComponent<TrapezoidBarBehavior>();
 			var line = bar.GetComponentInChildren<LineRenderer>();
 
-			if (!line.enabled)
+			if (line && !line.enabled)
 				continue;
 
 			var bottomBar = traperzoid.BottomBar();
-			var topZ = bottomBar.transform.localPosition.z + bottomBar.transform.localScale.z;
 			var lineStartPosition = bottomBar.transform.TransformPoint(new Vector3(0, 0, 1));
-        	//line.SetPosition(0, bottomBar.transform.position);
         	line.SetPosition(0, lineStartPosition);
 		}
 	}

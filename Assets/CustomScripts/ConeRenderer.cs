@@ -7,6 +7,10 @@ public class ConeRenderer : MonoBehaviour {
 	public GameObject _quad;
 
 	[Header("Shape")]
+	public static int DEFAULT_QUADS_COUNT = 1024;
+	[Range(3, 1024)]
+	public int _newQuadsCount = DEFAULT_QUADS_COUNT;
+	private int _quadsCount = DEFAULT_QUADS_COUNT;
 	[Range(0, 90)]
 	public float _miterAngle = 64;
 
@@ -31,8 +35,6 @@ public class ConeRenderer : MonoBehaviour {
 	public float _tickTransparency = 1.0f;
 	private Vector3 _originPosition = Vector3.zero;
 
-	private int _quadsCount = 1024;
-
 	private float _faceHeight = 0;
 
 	private List<GameObject> bars = new List<GameObject>();
@@ -42,9 +44,22 @@ public class ConeRenderer : MonoBehaviour {
 	private float _projectionLineWidth = 0.05f;
 
 	private List<MapDataPoint> _dataPoints;
+	private float _maxDataPointValue;
+
+	void Start()
+	{
+		initializeWithData(new List<MapDataPoint>(), 0);
+	}
 
 	void OnValidate()
 	{
+		if (_newQuadsCount != _quadsCount)
+		{
+			clearData();
+			_quadsCount = _newQuadsCount;
+			initializeWithData(_dataPoints, _maxDataPointValue);
+		}
+
 		if (bars.Count == _quadsCount)
 			UpdateBars();
 	}
@@ -52,9 +67,11 @@ public class ConeRenderer : MonoBehaviour {
 	public void initializeWithData(List<MapDataPoint> dataPoints, float maxValue)
 	{
 		_dataPoints = dataPoints;
+		_maxDataPointValue = maxValue;
 
 		float rotateYAngle = 360.0f / _quadsCount;
 		_faceHeight = _upperFaceHeight + _lowerFaceHeight;
+		bars.Clear();
         for (int i = 0; i < _quadsCount; i++)
         {
             GameObject bar = Instantiate(_quad, transform.position, Quaternion.identity);
@@ -65,7 +82,19 @@ public class ConeRenderer : MonoBehaviour {
 			bars.Add(bar);
         }
 		UpdateBars();
-		mapDataPointsToBars(maxValue);
+
+		if (_dataPoints.Count == 0)
+			return;
+
+		mapDataPointsToBars();
+	}
+
+	private void clearData()
+	{
+		foreach(var bar in bars)
+			Destroy(bar);
+
+		bars.Clear();
 	}
 
 	void UpdateBars()
@@ -105,7 +134,7 @@ public class ConeRenderer : MonoBehaviour {
 		}
 	}
 
-	void mapDataPointsToBars(float maxValue)
+	void mapDataPointsToBars()
 	{
 		var costMatrix = buildCostMatrix(_dataPoints);
 		_barsAssignments = HungarianAlgorithm.FindAssignments(costMatrix);
@@ -116,7 +145,7 @@ public class ConeRenderer : MonoBehaviour {
 			var bar = bars[_barsAssignments[i]*2];
 			var traperzoid = bar.GetComponent<TrapezoidBarBehavior>();
 
-			traperzoid._level = 1/maxValue * point.Value;
+			traperzoid._level = 1/_maxDataPointValue * point.Value;
 			traperzoid.ReCalculateScale();
 
 			drawProjectionLine(point, bar);

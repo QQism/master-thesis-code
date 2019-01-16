@@ -17,7 +17,7 @@ public class ConeRenderer : MonoBehaviour {
 	//[Range(0, 2)]
 	private float _upperFaceHeight = 1.0f;
 
-	[Range(0, 1)]
+	//[Range(0, 1)]
 	public float _lowerFaceHeight = 1.0f;
 
 	[Header("Appearance")]
@@ -25,6 +25,8 @@ public class ConeRenderer : MonoBehaviour {
 	public float _topTransparency = 0.5f;
 	[Range(0, 1)]
 	public float _bottomTransparency = 0.5f;
+
+	public float _height;
 
 	[Header("Tick")]
 	[Range(0, 10)]
@@ -55,7 +57,6 @@ public class ConeRenderer : MonoBehaviour {
 	{
 		if (_newQuadsCount != _quadsCount)
 		{
-			clearData();
 			_quadsCount = _newQuadsCount;
 			initializeWithData(_dataPoints, _maxDataPointValue);
 		}
@@ -69,9 +70,7 @@ public class ConeRenderer : MonoBehaviour {
 		_dataPoints = dataPoints;
 		_maxDataPointValue = maxValue;
 
-		float rotateYAngle = 360.0f / _quadsCount;
-		_faceHeight = _upperFaceHeight + _lowerFaceHeight;
-		bars.Clear();
+		clearData();
         for (int i = 0; i < _quadsCount; i++)
         {
             GameObject bar = Instantiate(_quad, transform.position, Quaternion.identity);
@@ -106,7 +105,7 @@ public class ConeRenderer : MonoBehaviour {
 			float miterRadAngle = _miterAngle * Mathf.Deg2Rad;
 			float upperBaseRadius = _faceHeight * Mathf.Sin(miterRadAngle);
 			float lowerBaseRadius = _lowerFaceHeight * Mathf.Sin(miterRadAngle);
-			float height = _faceHeight * Mathf.Sin(Mathf.PI/2 - miterRadAngle);
+			_height = _faceHeight * Mathf.Sin(Mathf.PI/2 - miterRadAngle);
 
 			float rotateYRadAngle = rotateYAngle * Mathf.Deg2Rad;
 

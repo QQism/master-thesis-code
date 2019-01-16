@@ -108,6 +108,7 @@ public class LoadDataSet : MonoBehaviour {
             point.Name = stringData;
             point.GeoPosition = position;
             point.WorldPosition = _map.GeoToWorldPosition(position, true);
+            //Debug.Log(point.WorldPosition.ToString("f4"));
             point.Value = float.Parse(lineData[1]);
 
             dataPoints.Add(point);

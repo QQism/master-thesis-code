@@ -15,7 +15,7 @@ public class ConeRenderer : MonoBehaviour {
 	public float _miterAngle = 64;
 
 	//[Range(0, 2)]
-	private float _upperFaceHeight = 1.0f;
+	public float _upperFaceHeight = 1.0f;
 
 	//[Range(0, 1)]
 	public float _lowerFaceHeight = 1.0f;
@@ -55,10 +55,13 @@ public class ConeRenderer : MonoBehaviour {
 
 	void OnValidate()
 	{
+		//if (Application.isEditor)
+		//	return;
+
 		if (_newQuadsCount != _quadsCount)
 		{
 			_quadsCount = _newQuadsCount;
-			initializeWithData(_dataPoints, _maxDataPointValue);
+			//initializeWithData(_dataPoints, _maxDataPointValue);
 		}
 
 		if (bars.Count == _quadsCount)
@@ -69,6 +72,7 @@ public class ConeRenderer : MonoBehaviour {
 	{
 		_dataPoints = dataPoints;
 		_maxDataPointValue = maxValue;
+		//return;
 
 		clearData();
         for (int i = 0; i < _quadsCount; i++)
@@ -91,7 +95,7 @@ public class ConeRenderer : MonoBehaviour {
 	private void clearData()
 	{
 		foreach(var bar in bars)
-			Destroy(bar);
+			DestroyImmediate(bar);
 
 		bars.Clear();
 	}

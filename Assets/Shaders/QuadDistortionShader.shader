@@ -145,6 +145,11 @@
 
 				//col = tex2D(_MainTex, i.uv) * _CustomColor;
 				//col.a = _Transparency;
+
+				// Experiment.....
+				// Apply texture - Begin
+				col = tex2D(_MainTex, i.uv);
+				// Apply texture - End
 				
 				return col;
 			}

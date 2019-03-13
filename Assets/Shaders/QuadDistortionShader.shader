@@ -45,6 +45,8 @@
 			};
 
 			sampler2D _MainTex;
+			sampler2D _CustomTex;
+			float4 _MainTex_ST;
 			float _UpperScale;
 			float _LowerScale;
 			float4 _CustomColor; 
@@ -65,6 +67,7 @@
 				v.vertex.x *=  avg + (v.vertex.z * (_UpperScale - avg));
 
 				o.vertex = UnityObjectToClipPos(v.vertex);
+				//o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 				o.uv = v.uv;
 				o.og_vertex = v.vertex;
 				return o;
@@ -129,7 +132,7 @@
 				//col = tex2D(_MainTex, i.uv) * _CustomColor;
 				col = tex2D(_MainTex, i.uv) * color;
 				col.a = transparency;
-							
+
 				/*
 				if ((topOffset < full_range && bottomOffset > 0) &&
 					(tick_pos >= (step - _TickThickness) || tick_pos <= _TickThickness))
@@ -148,7 +151,7 @@
 
 				// Experiment.....
 				// Apply texture - Begin
-				col = tex2D(_MainTex, i.uv);
+				//col = tex2D(_MainTex, i.uv);
 				// Apply texture - End
 				
 				return col;

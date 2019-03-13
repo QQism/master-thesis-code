@@ -4,7 +4,7 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: MapboxStylesRoofs
   m_Shader: {fileID: 4800000, guid: a58a57c7d09bd4d5a9dd79ebd542fea4, type: 3}

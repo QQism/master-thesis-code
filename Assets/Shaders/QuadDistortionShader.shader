@@ -66,9 +66,12 @@
 
 				v.vertex.x *=  avg + (v.vertex.z * (_UpperScale - avg));
 
+				//v.vertex.x /=  avg + (v.vertex.z * (_UpperScale - avg));
+				//new_uv.x /=  avg + (new_uv.y * (_UpperScale - avg));
 				o.vertex = UnityObjectToClipPos(v.vertex);
-				//o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-				o.uv = v.uv;
+				//o.uv = 1-v.uv;
+				o.uv = TRANSFORM_TEX(1-v.uv, _MainTex);
+				//o.uv.x /=  avg + (v.uv.y * (_UpperScale - avg));
 				o.og_vertex = v.vertex;
 				return o;
 			}
@@ -151,7 +154,10 @@
 
 				// Experiment.....
 				// Apply texture - Begin
-				//col = tex2D(_MainTex, i.uv);
+				float avg = (_UpperScale + _LowerScale)/2.0;
+				fixed2 new_uv = i.uv;
+				new_uv.x /=  avg + (new_uv.y * (_UpperScale - avg));
+				col = tex2D(_MainTex, new_uv);
 				// Apply texture - End
 				
 				return col;

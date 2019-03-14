@@ -1,4 +1,6 @@
-﻿Shader "Custom/GeoMapShader"
+﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
+Shader "Custom/GeoMapShader"
 {
 	Properties
 	{
@@ -17,6 +19,8 @@
 			
 			#include "UnityCG.cginc"
 
+			float4 _MainTex_ST;
+
 			struct appdata
 			{
 				float4 vertex : POSITION;
@@ -34,6 +38,9 @@
 				v2f o;
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv = v.uv;
+				//float2 worldXY = mul(unity_ObjectToWorld, v.vertex).xz; 
+				//o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+				//o.uv = TRANSFORM_TEX(worldXY, _MainTex);
 				return o;
 			}
 			
@@ -41,11 +48,9 @@
 
 			fixed4 frag (v2f i) : SV_Target
 			{
-				fixed4 col = tex2D(_MainTex, i.uv);
-				if (i.uv.x > 0.75)
-					col = (0, 0, 0, 0);
-				// just invert the colors
-				//col.rgb = 1 - col.rgb;
+				fixed4 col = tex2D(_MainTex, 1-i.uv);
+				//if (i.uv.x > 0.75 || i.uv.y > 0.75 || i.uv.x < 0.25 || i.uv.y < 0.25)
+				//	col = (0, 0, 0, 0);
 				return col;
 			}
 			ENDCG

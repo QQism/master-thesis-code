@@ -125,6 +125,8 @@ public class ConeRenderer : MonoBehaviour {
 			traperzoid._ticksCount = _ticksCount;
 			traperzoid._tickThickness = _tickThickness;
 			traperzoid._tickTransparency = _tickTransparency;
+			traperzoid._angle = rotateYAngle;
+			traperzoid._no = i;
 			traperzoid.ReCalculateScale();
 
 			// Reset the bar rotation and position before rotating and translating

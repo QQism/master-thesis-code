@@ -13,6 +13,8 @@
 		_LevelScale("Scale Level", Range(0, 1)) = 0.5
 		_TickStep("Tick Step", Range(0, 1)) = 0.25
 		_OnTop("On Top?", Int) = 0
+		_Angle("Angle", Float) = 0
+		_QuadAngle("Quad Angle", Float) = 0
 	}
 	SubShader
 	{
@@ -57,6 +59,8 @@
 			float _LevelScale;
 			int _OnTop;
 			float _TickStep;
+			float _Angle;
+			float _QuadAngle;
 
 			v2f vert (appdata v)
 			{
@@ -66,12 +70,22 @@
 
 				v.vertex.x *=  avg + (v.vertex.z * (_UpperScale - avg));
 
-				//v.vertex.x /=  avg + (v.vertex.z * (_UpperScale - avg));
-				//new_uv.x /=  avg + (new_uv.y * (_UpperScale - avg));
 				o.vertex = UnityObjectToClipPos(v.vertex);
-				//o.uv = 1-v.uv;
+				/*
+				float rot = v.uv.x * _Angle + _QuadAngle;
+				float r = v.uv.y * 0.5;
+				v.uv.x = sin(rot) * r;
+				v.uv.y = cos(rot) * r;
+				*/
+
+				float2 midpoint = float2(0.5, 0.5);
+				v.uv.y += midpoint.y;
+				//if (v.uv.y <= 1.5 && v.uv.y >= 1.0)
+				//	v.uv.y = 0;
+				//v.uv.y = 1/2 * v.uv.y + 1/4;
+				//v.uv.x *= avg + (v.uv.y * (_UpperScale - avg));
+
 				o.uv = TRANSFORM_TEX(1-v.uv, _MainTex);
-				//o.uv.x /=  avg + (v.uv.y * (_UpperScale - avg));
 				o.og_vertex = v.vertex;
 				return o;
 			}
@@ -154,9 +168,7 @@
 
 				// Experiment.....
 				// Apply texture - Begin
-				float avg = (_UpperScale + _LowerScale)/2.0;
 				fixed2 new_uv = i.uv;
-				new_uv.x /=  avg + (new_uv.y * (_UpperScale - avg));
 				col = tex2D(_MainTex, new_uv);
 				// Apply texture - End
 				

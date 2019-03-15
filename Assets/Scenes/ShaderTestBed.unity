@@ -326,7 +326,7 @@ Prefab:
     - target: {fileID: 114629207514297140, guid: 12f3881ac0554864aa7b76c90faa598d,
         type: 2}
       propertyPath: _newQuadsCount
-      value: 256
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12f3881ac0554864aa7b76c90faa598d, type: 2}
@@ -770,7 +770,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: f2b4bbcac39c6004c9acc42b36808c89, type: 2}
+  - {fileID: 2100000, guid: f5e394a942fae453583e8e6009ee49a1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

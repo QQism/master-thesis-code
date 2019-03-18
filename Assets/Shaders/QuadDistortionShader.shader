@@ -44,6 +44,8 @@
 				float2 uv : TEXCOORD0;
 				float4 vertex : SV_POSITION;
 				float4 og_vertex : TEXCOORD1;
+				float3 worldPos : TEXCOORD2;
+				float3 worldNormal: TEXCOORD3;
 			};
 
 			sampler2D _MainTex;
@@ -79,13 +81,19 @@
 				*/
 
 				float2 midpoint = float2(0.5, 0.5);
-				v.uv.y += midpoint.y;
+				//v.uv.y = (v.uv.y / 2);
+				//v.uv.y = (v.uv.y  + 1) / 2 ;
+				//v.uv += midpoint;
 				//if (v.uv.y <= 1.5 && v.uv.y >= 1.0)
 				//	v.uv.y = 0;
 				//v.uv.y = 1/2 * v.uv.y + 1/4;
 				//v.uv.x *= avg + (v.uv.y * (_UpperScale - avg));
 
-				o.uv = TRANSFORM_TEX(1-v.uv, _MainTex);
+				// Get the xy position of the vertex in worldspace
+				o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+				//o.worldNormal = mul(unity_ObjectToWorld, float4(v.normal, 0.0)).xyz;
+				o.uv = v.uv;
+				//o.uv = TRANSFORM_TEX(worldXYZ, _MainTex);
 				o.og_vertex = v.vertex;
 				return o;
 			}
@@ -169,9 +177,22 @@
 				// Experiment.....
 				// Apply texture - Begin
 				fixed2 new_uv = i.uv;
-				col = tex2D(_MainTex, new_uv);
+				float3 c1 = tex2D(_MainTex, i.worldPos.xy).rgb;
+				float3 c2 = tex2D(_MainTex, i.worldPos.zx).rgb;
+				float3 c3 = tex2D(_MainTex, i.worldPos.zy).rgb;
+
+				//float alpha21 = abs(i.worldNormal.x);
+				//float alpha23 = abs(i.worldNormal.z);
+
+				float3 c21 = lerp(c2, c1, 0.5).rgb;
+				float3 c23 = lerp(c21, c3, 0.5).rgb;
 				// Apply texture - End
 				
+				col = tex2D(_MainTex, new_uv);
+				col.x = c23.r;
+				col.y = c23.g;
+				col.z = c23.b;
+				col.x = 1;
 				return col;
 			}
 			ENDCG

@@ -120,5 +120,6 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 
 		topMaterial.SetFloat("_Angle", Mathf.Deg2Rad * _angle);
 		topMaterial.SetFloat("_QuadAngle", Mathf.Deg2Rad * _angle * _no);
+		topMaterial.SetFloat("_RotationAngle", _angle * _no);
 	}
 }

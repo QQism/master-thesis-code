@@ -15,6 +15,7 @@
 		_OnTop("On Top?", Int) = 0
 		_Angle("Angle", Float) = 0
 		_QuadAngle("Quad Angle", Float) = 0
+		_RotationAngle("Rotation Angle Degree", Range(0, 360)) = 0
 	}
 	SubShader
 	{
@@ -44,8 +45,6 @@
 				float2 uv : TEXCOORD0;
 				float4 vertex : SV_POSITION;
 				float4 og_vertex : TEXCOORD1;
-				float3 worldPos : TEXCOORD2;
-				float3 worldNormal: TEXCOORD3;
 			};
 
 			sampler2D _MainTex;
@@ -63,37 +62,34 @@
 			float _TickStep;
 			float _Angle;
 			float _QuadAngle;
+			float _RotationAngle;
 
 			v2f vert (appdata v)
 			{
-				v2f o;
+				// To avoid warning "not completely initialized"
+				v2f o = (v2f)0;
 
 				float avg = (_UpperScale + _LowerScale)/2.0;
-
 				v.vertex.x *=  avg + (v.vertex.z * (_UpperScale - avg));
 
 				o.vertex = UnityObjectToClipPos(v.vertex);
-				/*
-				float rot = v.uv.x * _Angle + _QuadAngle;
-				float r = v.uv.y * 0.5;
-				v.uv.x = sin(rot) * r;
-				v.uv.y = cos(rot) * r;
-				*/
 
-				float2 midpoint = float2(0.5, 0.5);
-				//v.uv.y = (v.uv.y / 2);
-				//v.uv.y = (v.uv.y  + 1) / 2 ;
-				//v.uv += midpoint;
-				//if (v.uv.y <= 1.5 && v.uv.y >= 1.0)
-				//	v.uv.y = 0;
-				//v.uv.y = 1/2 * v.uv.y + 1/4;
-				//v.uv.x *= avg + (v.uv.y * (_UpperScale - avg));
+				float4 midpoint4 = float4(0.5, 0.5, 0.5, 0);
+				float4 og_vertex = (v.vertex/2 + midpoint4);
+				
+				//o.uv = TRANSFORM_TEX(og_vertex, _MainTex);
+				// This is equivalent to TRANSFORM_TEX but use xz because the quad imported from Blender has z-up (instead of y-up)
+				o.uv = og_vertex.xz * _MainTex_ST.xy + _MainTex_ST.zw;
 
-				// Get the xy position of the vertex in worldspace
-				o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
-				//o.worldNormal = mul(unity_ObjectToWorld, float4(v.normal, 0.0)).xyz;
-				o.uv = v.uv;
-				//o.uv = TRANSFORM_TEX(worldXYZ, _MainTex);
+				float rotationRad = radians(_RotationAngle);
+
+				float s = sin(rotationRad);
+				float c = cos(rotationRad);
+
+				float2x2 rotationMatrix = float2x2(c, -s, s, c);
+				o.uv.xy -=midpoint4;
+				o.uv.xy = mul(o.uv.xy, rotationMatrix);
+				o.uv.xy +=midpoint4;
 				o.og_vertex = v.vertex;
 				return o;
 			}
@@ -177,22 +173,9 @@
 				// Experiment.....
 				// Apply texture - Begin
 				fixed2 new_uv = i.uv;
-				float3 c1 = tex2D(_MainTex, i.worldPos.xy).rgb;
-				float3 c2 = tex2D(_MainTex, i.worldPos.zx).rgb;
-				float3 c3 = tex2D(_MainTex, i.worldPos.zy).rgb;
-
-				//float alpha21 = abs(i.worldNormal.x);
-				//float alpha23 = abs(i.worldNormal.z);
-
-				float3 c21 = lerp(c2, c1, 0.5).rgb;
-				float3 c23 = lerp(c21, c3, 0.5).rgb;
 				// Apply texture - End
 				
 				col = tex2D(_MainTex, new_uv);
-				col.x = c23.r;
-				col.y = c23.g;
-				col.z = c23.b;
-				col.x = 1;
 				return col;
 			}
 			ENDCG

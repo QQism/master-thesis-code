@@ -76,9 +76,11 @@
 				float4 midpoint4 = float4(0.5, 0.5, 0.5, 0);
 				// Scale the texture 2 times to fill in a single quad
 				// Scale the texture 4 times to fill in the whole cone
-				// Move the origin of the uv map to the center of the texture (0.5, 0.5)
-				float4 scaled_vertex = (v.vertex/4/(sin(radians(_MiterAngle)))  + midpoint4);
+				float4 scaled_vertex = v.vertex/(4 * (sin(radians(_MiterAngle))));
 				
+				// Move the origin of the uv map to the center of the texture (0.5, 0.5)
+				scaled_vertex += midpoint4;
+
 				// This is equivalent to TRANSFORM_TEX(og_vertex, _MainTex)
 				// but use xz because the quad imported from Blender has z-up (instead of y-up)
 				o.uv = scaled_vertex.xz * _MainTex_ST.xy + _MainTex_ST.zw;

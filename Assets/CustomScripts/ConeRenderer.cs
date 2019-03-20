@@ -126,6 +126,7 @@ public class ConeRenderer : MonoBehaviour {
 			traperzoid._tickThickness = _tickThickness;
 			traperzoid._tickTransparency = _tickTransparency;
 			traperzoid._angle = rotateYAngle;
+			traperzoid._miterAngle = _miterAngle;
 			traperzoid._no = i;
 			traperzoid.ReCalculateScale();
 

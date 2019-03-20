@@ -13,9 +13,8 @@
 		_LevelScale("Scale Level", Range(0, 1)) = 0.5
 		_TickStep("Tick Step", Range(0, 1)) = 0.25
 		_OnTop("On Top?", Int) = 0
-		_Angle("Angle", Float) = 0
-		_QuadAngle("Quad Angle", Float) = 0
 		_RotationAngle("Rotation Angle Degree", Range(0, 360)) = 0
+		_MiterAngle("Miter Angle Degree", Range(0, 360)) = 90
 	}
 	SubShader
 	{
@@ -60,27 +59,32 @@
 			float _LevelScale;
 			int _OnTop;
 			float _TickStep;
-			float _Angle;
-			float _QuadAngle;
 			float _RotationAngle;
+			float _MiterAngle;
 
 			v2f vert (appdata v)
 			{
 				// To avoid warning "not completely initialized"
 				v2f o = (v2f)0;
 
+				// Distorting the quad to become a traperzoid
 				float avg = (_UpperScale + _LowerScale)/2.0;
 				v.vertex.x *=  avg + (v.vertex.z * (_UpperScale - avg));
 
 				o.vertex = UnityObjectToClipPos(v.vertex);
 
 				float4 midpoint4 = float4(0.5, 0.5, 0.5, 0);
-				float4 og_vertex = (v.vertex/2 + midpoint4);
+				// Scale the texture 2 times to fill in a single quad
+				// Scale the texture 4 times to fill in the whole cone
+				// Move the origin of the uv map to the center of the texture (0.5, 0.5)
+				float4 scaled_vertex = (v.vertex/4/(sin(radians(_MiterAngle)))  + midpoint4);
 				
-				//o.uv = TRANSFORM_TEX(og_vertex, _MainTex);
-				// This is equivalent to TRANSFORM_TEX but use xz because the quad imported from Blender has z-up (instead of y-up)
-				o.uv = og_vertex.xz * _MainTex_ST.xy + _MainTex_ST.zw;
+				// This is equivalent to TRANSFORM_TEX(og_vertex, _MainTex)
+				// but use xz because the quad imported from Blender has z-up (instead of y-up)
+				o.uv = scaled_vertex.xz * _MainTex_ST.xy + _MainTex_ST.zw;
+				o.uv.y += 0.25;
 
+				// Rotate the texture according to the rotation angle of the quad
 				float rotationRad = radians(_RotationAngle);
 
 				float s = sin(rotationRad);
@@ -90,6 +94,7 @@
 				o.uv.xy -=midpoint4;
 				o.uv.xy = mul(o.uv.xy, rotationMatrix);
 				o.uv.xy +=midpoint4;
+
 				o.og_vertex = v.vertex;
 				return o;
 			}
@@ -172,10 +177,9 @@
 
 				// Experiment.....
 				// Apply texture - Begin
-				fixed2 new_uv = i.uv;
+				col = tex2D(_MainTex, i.uv);
 				// Apply texture - End
 				
-				col = tex2D(_MainTex, new_uv);
 				return col;
 			}
 			ENDCG

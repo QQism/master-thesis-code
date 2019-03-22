@@ -62,7 +62,7 @@
 			float _TickStep;
 			float _RotationAngle;
 			float _MiterAngle;
-			int _QuadsCount;
+			uint _QuadsCount;
 
 			v2f vert (appdata v)
 			{
@@ -70,9 +70,14 @@
 				v2f o = (v2f)0;
 
 				// compute angle of vertex relative to center of texture
+
 				float quadAngle = radians(360/_QuadsCount);
+				float vx, vy;
+				vx = v.vertex.x;
+				vy = v.vertex.z;
+				//float alpha = asin(vx/sqrt(vx*vx + vy*vy));
 				float alpha = v.vertex.x * (quadAngle / 2);
-				float rotationRad = -alpha - radians(_RotationAngle - 90);
+				float rotationRad = -(alpha + radians(_RotationAngle - 90));
 				
 				float s = sin(rotationRad);
 				float c = cos(rotationRad);					
@@ -91,7 +96,7 @@
 				float dy = y;
 				// radius in polar coordinate system
 				// scale radius to range between 0 and 0.5
-				float r = v.vertex.x / sin(alpha) / 4;//sqrt(dx * dx + dy * dy) * 0.5;
+				float r = v.vertex.x / sin(alpha);//4/sin(radians(_MiterAngle)) ;//sqrt(dx * dx + dy * dy) * 0.5;
 				o.uv.x = 0.5 + r * c;
 				o.uv.y = 0.5 + r * s;
 				//o.uv = TRANSFORM_TEX(o.uv, _MainTex);
@@ -213,12 +218,12 @@
 				// Experiment.....
 				// Apply texture - Begin
 				col = tex2D(_MainTex, i.uv);
-				/*float diffx = abs(i.uv.x - 0.5);
+				float diffx = abs(i.uv.x - 0.5);
 				float diffy = abs(i.uv.y - 0.5);
 
 				if (diffx < 0.05 && diffy < 0.05) 
 					col = fixed4(1, 0, 0, 1);
-*/
+
 				// Apply texture - End
 				
 				return col;

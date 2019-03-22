@@ -326,7 +326,7 @@ Prefab:
     - target: {fileID: 114629207514297140, guid: 12f3881ac0554864aa7b76c90faa598d,
         type: 2}
       propertyPath: _newQuadsCount
-      value: 16
+      value: 128
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12f3881ac0554864aa7b76c90faa598d, type: 2}

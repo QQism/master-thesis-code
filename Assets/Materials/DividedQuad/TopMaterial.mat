@@ -63,6 +63,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _Alignment: 0
     - _Angle: 0.785375
     - _BumpScale: 1
     - _Cutoff: 0.5
@@ -72,8 +73,9 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _LevelScale: 0
-    - _LowerScale: 1
+    - _LowerScale: 0
     - _Metallic: 0
+    - _MiterAngle: 90
     - _Mode: 0
     - _OcclusionStrength: 1
     - _OnTop: 0
@@ -88,7 +90,7 @@ Material:
     - _TickTransparency: 1
     - _Transparency: 0.8
     - _UVSec: 0
-    - _UpperScale: 1
+    - _UpperScale: 2
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}

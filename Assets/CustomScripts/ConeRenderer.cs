@@ -128,6 +128,7 @@ public class ConeRenderer : MonoBehaviour {
 			traperzoid._angle = rotateYAngle;
 			traperzoid._miterAngle = _miterAngle;
 			traperzoid._no = i;
+			traperzoid._quadsCount = _quadsCount;
 			traperzoid.ReCalculateScale();
 
 			// Reset the bar rotation and position before rotating and translating

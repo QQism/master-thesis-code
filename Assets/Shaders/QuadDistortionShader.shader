@@ -15,6 +15,7 @@
 		_OnTop("On Top?", Int) = 0
 		_RotationAngle("Rotation Angle Degree", Range(0, 360)) = 0
 		_MiterAngle("Miter Angle Degree", Range(0, 360)) = 90
+		_QuadsCount("Quads Count", Int) = 4
 	}
 	SubShader
 	{
@@ -61,11 +62,20 @@
 			float _TickStep;
 			float _RotationAngle;
 			float _MiterAngle;
+			int _QuadsCount;
 
 			v2f vert (appdata v)
 			{
 				// To avoid warning "not completely initialized"
 				v2f o = (v2f)0;
+
+				// compute angle of vertex relative to center of texture
+				float quadAngle = radians(360/_QuadsCount);
+				float alpha = v.vertex.x * (quadAngle / 2);
+				float rotationRad = -alpha - radians(_RotationAngle - 90);
+				
+				float s = sin(rotationRad);
+				float c = cos(rotationRad);					
 
 				// Distorting the quad to become a traperzoid
 				float avg = (_UpperScale + _LowerScale)/2.0;
@@ -73,16 +83,32 @@
 
 				o.vertex = UnityObjectToClipPos(v.vertex);
 
+				float dx = v.vertex.x;
+				// quad coordinates are relative to center of quad
+				// move y coordinate origin to lower border of the quad
+				// scale y coordinate to the range between 0 and 1
+				float y = 0.5 * v.vertex.z + 0.5;
+				float dy = y;
+				// radius in polar coordinate system
+				// scale radius to range between 0 and 0.5
+				float r = v.vertex.x / sin(alpha) / 4;//sqrt(dx * dx + dy * dy) * 0.5;
+				o.uv.x = 0.5 + r * c;
+				o.uv.y = 0.5 + r * s;
+				//o.uv = TRANSFORM_TEX(o.uv, _MainTex);
+/*
 				float4 midpoint4 = float4(0.5, 0.5, 0.5, 0);
 				// Scale the texture 2 times to fill in a single quad
 				// Scale the texture 4 times to fill in the whole cone
-				float4 scaled_vertex = v.vertex/(4 * (sin(radians(_MiterAngle))));
+				//float4 scaled_vertex = v.vertex/(4 * (sin(radians(_MiterAngle))));
+				float4 scaled_vertex = v.vertex;
 				
 				// Move the origin of the uv map to the center of the texture (0.5, 0.5)
 				scaled_vertex += midpoint4;
 
+				o.uv = TRANSFORM_TEX(v.uv, _MainTex)
 				// This is equivalent to TRANSFORM_TEX(og_vertex, _MainTex)
-				// but use xz because the quad imported from Blender has z-up (instead of y-up)
+				// but xz instead of xy because the quad imported from Blender has z-up (instead of y-up)
+				//o.uv = scaled_vertex.xz * _MainTex_ST.xy + _MainTex_ST.zw;
 				o.uv = scaled_vertex.xz * _MainTex_ST.xy + _MainTex_ST.zw;
 				o.uv.y += 0.25;
 
@@ -96,7 +122,14 @@
 				o.uv.xy -=midpoint4;
 				o.uv.xy = mul(o.uv.xy, rotationMatrix);
 				o.uv.xy +=midpoint4;
+				//o.uv = mul(o.uv.xy, 1-v.uv);
 
+				//float2 uv = TRANSFORM_TEX(v.uv, _MainTex);
+				//o.uv = (1-uv);
+				//o.uv = (1-uv);
+
+				//o.uv *= sin(radians(_MiterAngle));
+*/
 				o.og_vertex = v.vertex;
 				return o;
 			}
@@ -158,8 +191,8 @@
 				float transparency = (_TickTransparency * condition + _Transparency * !condition);
 
 				//col = tex2D(_MainTex, i.uv) * _CustomColor;
-				col = tex2D(_MainTex, i.uv) * color;
-				col.a = transparency;
+				//col = tex2D(_MainTex, i.uv) * color;
+				//col.a = transparency;
 
 				/*
 				if ((topOffset < full_range && bottomOffset > 0) &&
@@ -180,6 +213,12 @@
 				// Experiment.....
 				// Apply texture - Begin
 				col = tex2D(_MainTex, i.uv);
+				/*float diffx = abs(i.uv.x - 0.5);
+				float diffy = abs(i.uv.y - 0.5);
+
+				if (diffx < 0.05 && diffy < 0.05) 
+					col = fixed4(1, 0, 0, 1);
+*/
 				// Apply texture - End
 				
 				return col;

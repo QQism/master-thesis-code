@@ -38,6 +38,8 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 
 	public float _miterAngle = 90;
 
+	public int _quadsCount = 0;
+
 	void Awake()
 	{
 		GameObject container = transform.Find("RotationContainer").gameObject;
@@ -121,5 +123,7 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 
 		topMaterial.SetFloat("_RotationAngle", _angle * _no);
 		topMaterial.SetFloat("_MiterAngle", _miterAngle);
+
+		topMaterial.SetInt("_QuadsCount", _quadsCount);
 	}
 }

@@ -96,7 +96,7 @@
 				float dy = y;
 				// radius in polar coordinate system
 				// scale radius to range between 0 and 0.5
-				float r = v.vertex.x / sin(alpha);//4/sin(radians(_MiterAngle)) ;//sqrt(dx * dx + dy * dy) * 0.5;
+				float r = v.vertex.x / sin(alpha) / 4;//4/sin(radians(_MiterAngle)) ;//sqrt(dx * dx + dy * dy) * 0.5;
 				o.uv.x = 0.5 + r * c;
 				o.uv.y = 0.5 + r * s;
 				//o.uv = TRANSFORM_TEX(o.uv, _MainTex);

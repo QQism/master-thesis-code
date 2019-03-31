@@ -22,7 +22,7 @@ public class RingRotation : MonoBehaviour {
 		for (int i=0; i < transform.childCount; i++)
 		{
 			var child = transform.GetChild(i);
-			Debug.Log(child.localPosition.ToString() + " " + Vector3.Angle(child.localPosition, Vector3.right)); 
+			//Debug.Log(child.localPosition.ToString() + " " + Vector3.Angle(child.localPosition, Vector3.right)); 
 
 			//child.localPosition = Quatern(_angle, Vector3.right) * child.localPosition;
 			//child.localPosition = Quaternion.AngleAxis(_angle, Vector3.right) * child.localPosition;

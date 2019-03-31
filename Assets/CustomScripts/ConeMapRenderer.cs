@@ -38,13 +38,11 @@ public class ConeMapRenderer : MonoBehaviour {
 	void Start()
 	{
 		initializeWithData(new List<MapDataPoint>(), 0);
+		mapBarToQuad(new Vector2(0.5f, 0.5f));
 	}
 
 	void OnValidate()
 	{
-		//if (Application.isEditor)
-		//	return;
-
 		if (_newQuadsCount != _quadsCount)
 		{
 			_quadsCount = _newQuadsCount;
@@ -59,7 +57,6 @@ public class ConeMapRenderer : MonoBehaviour {
 	{
 		_dataPoints = dataPoints;
 		_maxDataPointValue = maxValue;
-		//return;
 
 		clearData();
         for (int i = 0; i < _quadsCount; i++)
@@ -124,5 +121,29 @@ public class ConeMapRenderer : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
+	}
+
+	void mapBarToQuad(Vector2 barPosition)
+	{
+		barPosition = new Vector2(.5f, -.6f);
+		Vector2 ox = new Vector2(1, 0);
+		float signedAngle = (Mathf.Atan2(barPosition.y, barPosition.x) - Mathf.Atan2(ox.y, ox.x)) * Mathf.Rad2Deg;
+
+		Debug.Log(signedAngle);
+
+		if (signedAngle < 0)
+			signedAngle = signedAngle + 4 * 90; // Conver the negative angle to all positive if it is negative
+
+		Debug.Log(signedAngle);
+
+		float rotateYAngle = 360.0f / _quadsCount;
+		int quadNo = (int)((signedAngle+rotateYAngle/2)/rotateYAngle);
+
+		if (quadNo >= _quadsCount)
+			quadNo = 0;
+
+		Debug.Log(quadNo);
+
+		//TODO: Given the angle & the distance, calculate the position of the bar on top of the quad
 	}
 }

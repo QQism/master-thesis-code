@@ -67,4 +67,11 @@ public class TrapezoidMapBehavior : MonoBehaviour {
 		material.SetFloat("_MiterAngle", _miterAngle);
 		material.SetInt("_QuadsCount", _quadsCount);
 	}
+
+	public void addObjectOnSurface(GameObject obj, float angle, float distance)
+	{
+		obj.transform.SetParent(_quad.transform);
+		obj.transform.localScale /= 5;
+		obj.transform.localPosition = new Vector3(0, obj.transform.localScale.y/2, 0);
+	}
 }

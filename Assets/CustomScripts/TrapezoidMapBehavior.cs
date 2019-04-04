@@ -71,7 +71,9 @@ public class TrapezoidMapBehavior : MonoBehaviour {
 	public void addObjectOnSurface(GameObject obj, float angle, float distance)
 	{
 		obj.transform.SetParent(_quad.transform);
-		obj.transform.localScale /= 5;
-		obj.transform.localPosition = new Vector3(0, obj.transform.localScale.y/2, 0);
+        obj.transform.localPosition = new Vector3(
+			distance * Mathf.Cos(angle * Mathf.Deg2Rad), 
+			obj.transform.localScale.y / 2, 
+			distance * Mathf.Sin(angle * Mathf.Deg2Rad));
 	}
 }

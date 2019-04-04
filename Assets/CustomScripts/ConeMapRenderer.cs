@@ -39,6 +39,9 @@ public class ConeMapRenderer : MonoBehaviour {
 	public Vector2 _testingDotPosition;
 	public GameObject _testingDot;
 
+	[Range(0, 180)]
+	public float _testingAngle;
+
 	void Start()
 	{
 		initializeWithData(new List<MapDataPoint>(), 0);
@@ -55,6 +58,8 @@ public class ConeMapRenderer : MonoBehaviour {
 
 		if (bars.Count == _quadsCount)
 			UpdateBars();
+
+		mapBarToQuad(new Vector2(0.5f, 0.5f));
 	}
 
 	public void initializeWithData(List<MapDataPoint> dataPoints, float maxValue)
@@ -149,11 +154,9 @@ public class ConeMapRenderer : MonoBehaviour {
 		Debug.Log(quadNo);
 
 		//TODO: Given the angle & the distance, calculate the position of the bar on top of the quad
-		GameObject dot = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-		dot.GetComponent<Renderer>().material = _testingDot.GetComponent<Renderer>().sharedMaterial;
 		var quad = bars[quadNo];
 		var traperzoid = quad.GetComponent<TrapezoidMapBehavior>();
-		traperzoid.addObjectOnSurface(dot, 0, 0);
+		traperzoid.addObjectOnSurface(_testingDot, _testingAngle, 1);
 
 	}
 }

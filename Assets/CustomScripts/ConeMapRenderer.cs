@@ -132,7 +132,7 @@ public class ConeMapRenderer : MonoBehaviour {
 		Debug.Log(signedAngle);
 
 		if (signedAngle < 0)
-			signedAngle = signedAngle + 4 * 90; // Conver the negative angle to all positive if it is negative
+			signedAngle = signedAngle + 4 * 90; // Convert the negative angle to all positive if it is negative
 
 		Debug.Log(signedAngle);
 
@@ -145,5 +145,6 @@ public class ConeMapRenderer : MonoBehaviour {
 		Debug.Log(quadNo);
 
 		//TODO: Given the angle & the distance, calculate the position of the bar on top of the quad
+		
 	}
 }

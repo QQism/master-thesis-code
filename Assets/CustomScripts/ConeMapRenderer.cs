@@ -36,7 +36,11 @@ public class ConeMapRenderer : MonoBehaviour {
 	private List<MapDataPoint> _dataPoints;
 	private float _maxDataPointValue;
 
-	public Vector2 _testingDotPosition;
+	//public Vector2 _testingDotPosition;
+	[Range(-1, 1)]
+	public float _testingX = 0;
+	[Range(-1, 1)]
+	public float _testingY = 0;
 	public GameObject _testingDot;
 
 	[Range(0, 180)]
@@ -134,29 +138,35 @@ public class ConeMapRenderer : MonoBehaviour {
 
 	void mapBarToQuad(Vector2 barPosition)
 	{
-		barPosition = new Vector2(.5f, 0f);
+		barPosition = new Vector2(_testingX, _testingY);
 		Vector2 ox = new Vector2(1, 0);
 		float signedAngle = (Mathf.Atan2(barPosition.y, barPosition.x) - Mathf.Atan2(ox.y, ox.x)) * Mathf.Rad2Deg;
 
-		Debug.Log(signedAngle);
-
+		var positiveAngle = signedAngle;
 		if (signedAngle < 0)
-			signedAngle = signedAngle + 4 * 90; // Convert the negative angle to all positive if it is negative
+			positiveAngle = signedAngle + 4 * 90; // Convert the negative angle to all positive if it is negative
 
-		Debug.Log(signedAngle);
+		Debug.Log("Signed Angle: " + signedAngle);
+		Debug.Log("Positive Angle: " + positiveAngle);
 
 		float rotateYAngle = 360.0f / _quadsCount;
-		int quadNo = (int)((signedAngle+rotateYAngle/2)/rotateYAngle);
+		int quadNo = (int)((positiveAngle+rotateYAngle/2)/rotateYAngle);
 
 		if (quadNo >= _quadsCount)
 			quadNo = 0;
 
-		Debug.Log(quadNo);
+		Debug.Log("Quad: " + quadNo);
 
 		//TODO: Given the angle & the distance, calculate the position of the bar on top of the quad
 		var quad = bars[quadNo];
 		var traperzoid = quad.GetComponent<TrapezoidMapBehavior>();
-		traperzoid.addObjectOnSurface(_testingDot, _testingAngle, 1);
+
+		// Determine the angle relative to the quad
+		var quadAngle = quadNo * rotateYAngle;
+		var angleDiff = 90 - quadAngle;
+		Debug.Log("Angle Diff: " + angleDiff);
+		Debug.Log("quadAngle: " + quadAngle);
+		traperzoid.addObjectOnSurface(_testingDot, signedAngle + angleDiff , barPosition.magnitude);
 
 	}
 }

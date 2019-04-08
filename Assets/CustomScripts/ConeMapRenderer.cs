@@ -155,6 +155,11 @@ public class ConeMapRenderer : MonoBehaviour {
 		if (quadNo >= _quadsCount)
 			quadNo = 0;
 
+		int startQuad = 90/(int)rotateYAngle;
+		quadNo = startQuad - quadNo;
+		if (quadNo < 0)
+			quadNo = _quadsCount + quadNo;
+
 		Debug.Log("Quad: " + quadNo);
 
 		//TODO: Given the angle & the distance, calculate the position of the bar on top of the quad
@@ -163,10 +168,13 @@ public class ConeMapRenderer : MonoBehaviour {
 
 		// Determine the angle relative to the quad
 		var quadAngle = quadNo * rotateYAngle;
-		var angleDiff = 90 - quadAngle;
-		Debug.Log("Angle Diff: " + angleDiff);
+		var convertedQuadAngle = quadAngle - 90;
+		var quadSign = Mathf.Sin(convertedQuadAngle);
+		//var angleDiff = 90 - quadAngle;
+		//Debug.Log("Angle Diff: " + angleDiff);
 		Debug.Log("quadAngle: " + quadAngle);
-		traperzoid.addObjectOnSurface(_testingDot, signedAngle + angleDiff , barPosition.magnitude);
-
+		var convertedSignedAngle = signedAngle ;
+		//traperzoid.addObjectOnSurface(_testingDot, signedAngle + angleDiff , barPosition.magnitude);
+		traperzoid.addObjectOnSurface(_testingDot, quadAngle, barPosition.magnitude);
 	}
 }

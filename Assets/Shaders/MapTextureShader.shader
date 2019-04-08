@@ -57,15 +57,14 @@
 				v2f o = (v2f)0;
 
 				// compute angle of vertex relative to center of texture
-
 				float quadAngle = radians(360/_QuadsCount);
 				float vx, vy;
 				vx = v.vertex.x;
 				vy = v.vertex.z;
-				//float alpha = asin(vx/sqrt(vx*vx + vy*vy));
-				float alpha = v.vertex.x * (quadAngle / 2);
-				float rotationRad = -(alpha + radians(_RotationAngle - 90));
-				
+
+				float alpha = v.vertex.x * quadAngle;
+
+				float rotationRad = -(alpha + radians(_RotationAngle - 90));				
 				float s = sin(rotationRad);
 				float c = cos(rotationRad);					
 
@@ -79,14 +78,12 @@
 				// quad coordinates are relative to center of quad
 				// move y coordinate origin to lower border of the quad
 				// scale y coordinate to the range between 0 and 1
-				float y = 0.5 * v.vertex.z + 0.5;
-				float dy = y;
+				float dy = 0.5 * v.vertex.z + 0.5;
 				// radius in polar coordinate system
 				// scale radius to range between 0 and 0.5
-				float r = v.vertex.x / sin(alpha) / 4;//4/sin(radians(_MiterAngle)) ;//sqrt(dx * dx + dy * dy) * 0.5;
+				float r = sqrt(dx * dx + dy * dy) * 0.5;
 				o.uv.x = 0.5 + r * c;
 				o.uv.y = 0.5 + r * s;
-				//o.uv = TRANSFORM_TEX(o.uv, _MainTex);
 				return o;
 			}
 			
@@ -96,8 +93,9 @@
 				float diffx = abs(i.uv.x - 0.5);
 				float diffy = abs(i.uv.y - 0.5);
 
-				if (diffx < 0.05 && diffy < 0.05) 
-					col = fixed4(1, 0, 0, 1);
+				//float radius = 0.1;
+				//if (diffx < radius && diffy < radius) 
+				//	col = fixed4(1, 0, 0, 1);
 
 				return col;
 			}

@@ -162,19 +162,15 @@ public class ConeMapRenderer : MonoBehaviour {
 
 		Debug.Log("Quad: " + quadNo);
 
-		//TODO: Given the angle & the distance, calculate the position of the bar on top of the quad
 		var quad = bars[quadNo];
 		var traperzoid = quad.GetComponent<TrapezoidMapBehavior>();
 
 		// Determine the angle relative to the quad
-		var quadAngle = quadNo * rotateYAngle;
-		var convertedQuadAngle = quadAngle - 90;
-		var quadSign = Mathf.Sin(convertedQuadAngle);
-		//var angleDiff = 90 - quadAngle;
-		//Debug.Log("Angle Diff: " + angleDiff);
+		var quadAngle = (startQuad - quadNo) * rotateYAngle;
 		Debug.Log("quadAngle: " + quadAngle);
-		var convertedSignedAngle = signedAngle ;
-		//traperzoid.addObjectOnSurface(_testingDot, signedAngle + angleDiff , barPosition.magnitude);
-		traperzoid.addObjectOnSurface(_testingDot, quadAngle, barPosition.magnitude);
+
+		var convertedSignedAngle = signedAngle + (90 - quadAngle);
+
+		traperzoid.addObjectOnSurface(_testingDot, convertedSignedAngle, barPosition.magnitude);
 	}
 }

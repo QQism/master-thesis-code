@@ -71,6 +71,7 @@ public class TrapezoidMapBehavior : MonoBehaviour {
 	public void addObjectOnSurface(GameObject obj, float angle, float distance)
 	{
 		float scaleDiff = _upperScale - _lowerScale;
+		//TODO: need to fix the vector magniture according to the milter angle, number of quads, and inner circle
 		obj.transform.SetParent(_quad.transform);
         obj.transform.localPosition = new Vector3(
 			(distance * scaleDiff * Mathf.Cos(angle * Mathf.Deg2Rad)), 

@@ -146,8 +146,8 @@ public class ConeMapRenderer : MonoBehaviour {
 		if (signedAngle < 0)
 			positiveAngle = signedAngle + 4 * 90; // Convert the negative angle to all positive if it is negative
 
-		Debug.Log("Signed Angle: " + signedAngle);
-		Debug.Log("Positive Angle: " + positiveAngle);
+		//Debug.Log("Signed Angle: " + signedAngle);
+		//Debug.Log("Positive Angle: " + positiveAngle);
 
 		float rotateYAngle = 360.0f / _quadsCount;
 		int quadNo = (int)((positiveAngle+rotateYAngle/2)/rotateYAngle);
@@ -155,21 +155,22 @@ public class ConeMapRenderer : MonoBehaviour {
 		if (quadNo >= _quadsCount)
 			quadNo = 0;
 
-		int startQuad = 90/(int)rotateYAngle;
+		int startQuad = _quadsCount/4;
 		quadNo = startQuad - quadNo;
 		if (quadNo < 0)
 			quadNo = _quadsCount + quadNo;
 
-		Debug.Log("Quad: " + quadNo);
+		//Debug.Log("Quad: " + quadNo);
 
 		var quad = bars[quadNo];
 		var traperzoid = quad.GetComponent<TrapezoidMapBehavior>();
 
 		// Determine the angle relative to the quad
 		var quadAngle = (startQuad - quadNo) * rotateYAngle;
-		Debug.Log("quadAngle: " + quadAngle);
+		//Debug.Log("quadAngle: " + quadAngle);
 
 		var convertedSignedAngle = signedAngle + (90 - quadAngle);
+		Debug.Log("Bar magnitude: " + barPosition.magnitude);
 
 		traperzoid.addObjectOnSurface(_testingDot, convertedSignedAngle, barPosition.magnitude);
 	}

@@ -306,7 +306,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 367490629}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12, y: 20.11, z: -72.1}
+  m_LocalPosition: {x: 12.7, y: 23.5, z: -87.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 129937186}
@@ -760,6 +760,11 @@ Prefab:
         type: 2}
       propertyPath: _options.placementOptions.snapMapToZero
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114928773677519064, guid: e6b749c6d877f4c19a5a5c3c0783d53b,
+        type: 2}
+      propertyPath: _visualisationType
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6b749c6d877f4c19a5a5c3c0783d53b, type: 2}

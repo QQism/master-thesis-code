@@ -50,7 +50,7 @@ public class ConeRenderer : MonoBehaviour {
 
 	void Start()
 	{
-		initializeWithData(new List<MapDataPoint>(), 0);
+		//initializeWithData(new List<MapDataPoint>(), 0);
 	}
 
 	void OnValidate()
@@ -68,29 +68,29 @@ public class ConeRenderer : MonoBehaviour {
 			UpdateBars();
 	}
 
-	public void initializeWithData(List<MapDataPoint> dataPoints, float maxValue)
-	{
-		_dataPoints = dataPoints;
-		_maxDataPointValue = maxValue;
-		//return;
+    public void initializeWithData(List<MapDataPoint> dataPoints, float maxValue)
+    {
+        _dataPoints = dataPoints;
+        _maxDataPointValue = maxValue;
+        //return;
 
-		clearData();
+        clearData();
         for (int i = 0; i < _quadsCount; i++)
         {
             GameObject bar = Instantiate(_quad, transform.position, Quaternion.identity);
-			bar.name = "Bar " + i.ToString();
+            bar.name = "Bar " + i.ToString();
             bar.transform.SetParent(transform);
-			var traperzoid = bar.GetComponent<TrapezoidBarBehavior>();
-			traperzoid._level = 0;
-			bars.Add(bar);
+            var traperzoid = bar.GetComponent<TrapezoidBarBehavior>();
+            traperzoid._level = 0;
+            bars.Add(bar);
         }
-		UpdateBars();
+        UpdateBars();
 
-		if (_dataPoints.Count == 0)
-			return;
+        if (_dataPoints.Count == 0)
+            return;
 
-		mapDataPointsToBars();
-	}
+        mapDataPointsToBars();
+    }
 
 	private void clearData()
 	{

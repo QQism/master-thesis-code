@@ -20,6 +20,13 @@ public enum VisualisationType
 {
     InPlaceBars,
     ProjectingCone,
+    MapCone,
+}
+
+public enum ConeType {
+    None,
+    BarCone,
+    MapCone,
 }
 
 public class LoadDataSet : MonoBehaviour {
@@ -31,6 +38,8 @@ public class LoadDataSet : MonoBehaviour {
     public GameObject _player = null;
 
     public VisualisationType _visualisationType = VisualisationType.InPlaceBars;
+
+    public ConeType _coneType = ConeType.MapCone;
 
     [Header("In-place Bars")]
     public Transform _barsContainer;
@@ -49,6 +58,8 @@ public class LoadDataSet : MonoBehaviour {
     private float _maxBarHeight = 50.0f;
     private float _barHeightBuffer = 1.2f;
     private Mesh _meshSelection;
+
+    private Dictionary<MeshSelection, Mesh> _meshes;
 
 
 	// Use this for initialization
@@ -128,16 +139,30 @@ public class LoadDataSet : MonoBehaviour {
                 break;
         }
 
-        var cone = _player.GetComponentInChildren<ConeRenderer>();
-        cone.initializeWithData(dataPoints, maxValue);
+        switch(_coneType)
+        {
+            case ConeType.BarCone:
+                var barCone = _player.GetComponentInChildren<ConeRenderer>();
+                barCone.initializeWithData(dataPoints, maxValue);
+                break;
+            case ConeType.MapCone:
+                var mapCone = _player.GetComponentInChildren<ConeMapRenderer>();
+                mapCone._camera = _camera;
+                mapCone._framedBar = _framedBar;
+                mapCone._meshes = _meshes;
+                mapCone._meshSelectionType = _meshSelectionType;
+                mapCone._barMaxValue = maxValue;
+                mapCone.initializeWithData(dataPoints, maxValue);
+                break;
+        }
     }
 
     void addInPlaceBars(List<MapDataPoint> points, float maxValue)
     {
-        Dictionary<MeshSelection, Mesh> meshes = new Dictionary<MeshSelection, Mesh>();
-        meshes.Add(MeshSelection.Cube, _cubeMesh);
-        meshes.Add(MeshSelection.Cylinder, _cylinderMesh);
-        meshes.Add(MeshSelection.Quad, _quadMesh);
+        _meshes = new Dictionary<MeshSelection, Mesh>();
+        _meshes.Add(MeshSelection.Cube, _cubeMesh);
+        _meshes.Add(MeshSelection.Cylinder, _cylinderMesh);
+        _meshes.Add(MeshSelection.Quad, _quadMesh);
 
         foreach(MapDataPoint point in points)
         {
@@ -154,7 +179,7 @@ public class LoadDataSet : MonoBehaviour {
             barDataComponent.Value = point.Value;
             barDataComponent.LatLong = point.GeoPosition;
             barDataComponent.Elevation = _map.QueryElevationInUnityUnitsAt(point.GeoPosition);
-            barDataComponent.AvailableMeshes = meshes;
+            barDataComponent.AvailableMeshes = _meshes;
             barDataComponent.MeshType = _meshSelectionType;
 
             bar.GetComponent<RotationAdjustment>().PlayerCamera = _camera;

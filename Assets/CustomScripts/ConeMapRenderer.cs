@@ -36,20 +36,19 @@ public class ConeMapRenderer : MonoBehaviour {
 	private List<MapDataPoint> _dataPoints;
 	private float _maxDataPointValue;
 
-	//public Vector2 _testingDotPosition;
-	[Range(-1, 1)]
-	public float _testingX = 0;
-	[Range(-1, 1)]
-	public float _testingY = 0;
-	public GameObject _testingDot;
+	public GameObject _framedBar;
 
-	[Range(0, 180)]
-	public float _testingAngle;
+	public Dictionary<MeshSelection, Mesh> _meshes;
+    public MeshSelection _meshSelectionType;
+
+	public Camera _camera;
+
+	public float _barMaxValue;
 
 	void Start()
 	{
-		initializeWithData(new List<MapDataPoint>(), 0);
-		mapBarToQuad(new Vector2(0.5f, 0.5f));
+		//initializeWithData(new List<MapDataPoint>(), 0);
+		//mapBarToQuad(new Vector2(0.5f, 0.5f));
 	}
 
 	void OnValidate()
@@ -63,7 +62,7 @@ public class ConeMapRenderer : MonoBehaviour {
 		if (bars.Count == _quadsCount)
 			UpdateBars();
 
-		mapBarToQuad(new Vector2(0.5f, 0.5f));
+		//mapBarToQuad(new Vector2(0.5f, 0.5f));
 	}
 
 	public void initializeWithData(List<MapDataPoint> dataPoints, float maxValue)
@@ -81,6 +80,8 @@ public class ConeMapRenderer : MonoBehaviour {
 			bars.Add(bar);
         }
 		UpdateBars();
+		calculateDataPointPositionsOnCone();
+		placeDataPointsOnCone();
 
 		if (_dataPoints.Count == 0)
 			return;
@@ -131,14 +132,77 @@ public class ConeMapRenderer : MonoBehaviour {
 		}
 	}
 
+	void calculateDataPointPositionsOnCone()
+	{
+		Vector2 cone2DPosition = new Vector2(transform.position.x, transform.position.z);
+		float maxMagnitude = 0;
+		MapDataPoint furthestPoint = new MapDataPoint();
+		foreach(MapDataPoint dataPoint in _dataPoints)
+		{
+			// Calculate the position of datapoint relative to the cone position
+			Vector2 point2DPosition = new Vector2(dataPoint.WorldPosition.x, dataPoint.WorldPosition.z);
+			//Debug.Log("Bar position (to 0xy): " + point2DPosition);
+			dataPoint.ConePosition = point2DPosition - cone2DPosition;
+			//Debug.Log("Bar position (to Cone): " + dataPoint.ConePosition);
+
+			// Find the furthest datapoint
+			float magnitude = dataPoint.ConePosition.magnitude;
+			if (maxMagnitude < magnitude) 
+			{ 
+				maxMagnitude = magnitude;
+				furthestPoint = dataPoint;
+			}
+		}
+
+		//Debug.Log("Max magnitude: " + maxMagnitude);
+		//Debug.Log("Furthest point: " + furthestPoint.Name + furthestPoint.ConePosition);
+		scaleDataPoints(maxMagnitude);
+	}
+
+	void scaleDataPoints(float maxMagnitude)
+	{
+		float buffer = 1.2f;
+		maxMagnitude *= buffer;
+		foreach(MapDataPoint dataPoint in _dataPoints)
+		{
+			dataPoint.ConePosition /= maxMagnitude;
+			//Debug.Log("Bar position (to Cone, after scale): " + dataPoint.ConePosition);
+		}
+	}
+
+	void placeDataPointsOnCone()
+	{
+		foreach(MapDataPoint point in _dataPoints)
+		{
+            GameObject bar = Instantiate(_framedBar, point.WorldPosition, Quaternion.identity);
+            //bar.transform.SetParent(_barsContainer, true);
+            bar.transform.name = "Bar " + point.Name;
+
+            FramedBarData barDataComponent = bar.GetComponent<FramedBarData>();
+            barDataComponent.PlayerCamera = _camera;
+            barDataComponent.Value = point.Value;
+            barDataComponent.LatLong = point.GeoPosition;
+            barDataComponent.Elevation = 0;
+            barDataComponent.AvailableMeshes = _meshes;
+            barDataComponent.MeshType = _meshSelectionType;
+			barDataComponent.MaxValue = _barMaxValue;
+			barDataComponent._static = true;
+
+            bar.GetComponent<RotationAdjustment>().PlayerCamera = _camera;
+            barDataComponent.updateBars();
+			barDataComponent.transform.localScale /= 100;
+			mapBarToQuad(bar, point.ConePosition);
+        }
+	}
+
 	// Update is called once per frame
 	void Update ()
 	{
 	}
 
-	void mapBarToQuad(Vector2 barPosition)
+	void mapBarToQuad(GameObject bar, Vector2 barPosition)
 	{
-		barPosition = new Vector2(_testingX, _testingY);
+		//barPosition = new Vector2(_testingX, _testingY);
 		Vector2 ox = new Vector2(1, 0);
 		float signedAngle = (Mathf.Atan2(barPosition.y, barPosition.x) - Mathf.Atan2(ox.y, ox.x)) * Mathf.Rad2Deg;
 
@@ -160,18 +224,17 @@ public class ConeMapRenderer : MonoBehaviour {
 		if (quadNo < 0)
 			quadNo = _quadsCount + quadNo;
 
-		//Debug.Log("Quad: " + quadNo);
+		Debug.Log("Quad: " + quadNo);
 
 		var quad = bars[quadNo];
 		var traperzoid = quad.GetComponent<TrapezoidMapBehavior>();
 
 		// Determine the angle relative to the quad
 		var quadAngle = (startQuad - quadNo) * rotateYAngle;
-		//Debug.Log("quadAngle: " + quadAngle);
+		Debug.Log("quadAngle: " + quadAngle);
 
 		var convertedSignedAngle = signedAngle + (90 - quadAngle);
 		Debug.Log("Bar magnitude: " + barPosition.magnitude);
-
-		traperzoid.addObjectOnSurface(_testingDot, convertedSignedAngle, barPosition.magnitude);
+		traperzoid.addObjectOnSurface(bar, convertedSignedAngle, barPosition.magnitude);
 	}
 }

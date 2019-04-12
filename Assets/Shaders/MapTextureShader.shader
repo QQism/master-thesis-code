@@ -92,6 +92,7 @@
 				fixed4 col = tex2D(_MainTex, i.uv);
 				float diffx = abs(i.uv.x - 0.5);
 				float diffy = abs(i.uv.y - 0.5);
+				col.a = _Transparency;
 
 				//float radius = 0.1;
 				//if (diffx < radius && diffy < radius) 

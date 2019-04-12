@@ -45,6 +45,8 @@ public class FramedBarData : MonoBehaviour {
 
     public Camera PlayerCamera { get; set; }
 
+    public bool _static = false;
+
     private Vector3 _originalScale;
 
     void Start()
@@ -106,6 +108,9 @@ public class FramedBarData : MonoBehaviour {
 
     void Update()
     {
+        if (_static == true)
+            return;
+
         if (_perspectiveScaling)
         {
             //updatePerspectiveScale();

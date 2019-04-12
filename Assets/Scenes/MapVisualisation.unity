@@ -767,6 +767,11 @@ Prefab:
       propertyPath: _visualisationType
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114928773677519064, guid: e6b749c6d877f4c19a5a5c3c0783d53b,
+        type: 2}
+      propertyPath: _coneType
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6b749c6d877f4c19a5a5c3c0783d53b, type: 2}
   m_IsPrefabAsset: 0

@@ -97,7 +97,7 @@ public class LoadDataSet : MonoBehaviour {
             if (lineData.Length < 5)
                 continue;
 
-            bool filtered = false;
+            bool filtered = true;
             string stringData = normalisedTextData(lineData[5]);
 
             foreach (string filter in filters)

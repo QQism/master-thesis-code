@@ -43,8 +43,6 @@ public class FramedBarData : MonoBehaviour {
 
     public MeshSelection MeshType { get { return _meshType; } set { _meshType = value; } }
 
-    public Camera PlayerCamera { get; set; }
-
     public bool _static = false;
 
     private Vector3 _originalScale;
@@ -121,8 +119,8 @@ public class FramedBarData : MonoBehaviour {
 
     void updatePerspectiveScale()
     {
-        float distance = (PlayerCamera.transform.position - transform.position).magnitude;
-        float size = distance * 0.0001f * PlayerCamera.fieldOfView;
+        float distance = (Camera.main.transform.position - transform.position).magnitude;
+        float size = distance * 0.0001f * Camera.main.fieldOfView;
         transform.localScale = _originalScale * size;
     }
 
@@ -160,10 +158,10 @@ public class FramedBarData : MonoBehaviour {
 
     public float calculateLandscapeWidth()
     {
-        float distance = PlayerCamera.WorldToScreenPoint(Vector3.Scale(transform.position, new Vector3(1, 0, 1))).y;
-        //float distance = Vector3.Distance(PlayerCamera.transform.position, transform.position);
+        float distance = Camera.main.WorldToScreenPoint(Vector3.Scale(transform.position, new Vector3(1, 0, 1))).y;
+        //float distance = Vector3.Distance(Camera.main.transform.position, transform.position);
         _distanceToScreenY = distance;
-        float radFov = PlayerCamera.fieldOfView * Mathf.Deg2Rad;
+        float radFov = Camera.main.fieldOfView * Mathf.Deg2Rad;
         return distance * 2 * Mathf.Sin(Mathf.PI/2.0f - radFov) / Mathf.Sin(radFov);
     }
 

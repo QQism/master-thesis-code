@@ -41,8 +41,6 @@ public class ConeMapRenderer : MonoBehaviour {
 	public Dictionary<MeshSelection, Mesh> _meshes;
     public MeshSelection _meshSelectionType;
 
-	public Camera _camera;
-
 	public float _barMaxValue;
 
 	void Start()
@@ -179,7 +177,6 @@ public class ConeMapRenderer : MonoBehaviour {
             bar.transform.name = "Bar " + point.Name;
 
             FramedBarData barDataComponent = bar.GetComponent<FramedBarData>();
-            barDataComponent.PlayerCamera = _camera;
             barDataComponent.Value = point.Value;
             barDataComponent.LatLong = point.GeoPosition;
             barDataComponent.Elevation = 0;
@@ -188,7 +185,6 @@ public class ConeMapRenderer : MonoBehaviour {
 			barDataComponent.MaxValue = _barMaxValue;
 			barDataComponent._static = true;
 
-            bar.GetComponent<RotationAdjustment>().PlayerCamera = _camera;
             barDataComponent.updateBars();
 			barDataComponent.transform.localScale /= 100;
 			mapBarToQuad(bar, point.ConePosition);

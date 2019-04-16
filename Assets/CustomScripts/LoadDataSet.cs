@@ -31,7 +31,6 @@ public enum ConeType {
 
 public class LoadDataSet : MonoBehaviour {
     public AbstractMap _map;
-    public Camera _camera;
     private String datasetFile = "\\Datasets\\vic_wateruse_2008_2009.csv";
 
     [SerializeField]
@@ -147,7 +146,6 @@ public class LoadDataSet : MonoBehaviour {
                 break;
             case ConeType.MapCone:
                 var mapCone = _player.GetComponentInChildren<ConeMapRenderer>();
-                mapCone._camera = _camera;
                 mapCone._framedBar = _framedBar;
                 mapCone._meshes = _meshes;
                 mapCone._meshSelectionType = _meshSelectionType;
@@ -175,14 +173,12 @@ public class LoadDataSet : MonoBehaviour {
             bar.transform.name = "Bar " + point.Name;
 
             FramedBarData barDataComponent = bar.GetComponent<FramedBarData>();
-            barDataComponent.PlayerCamera = _camera;
             barDataComponent.Value = point.Value;
             barDataComponent.LatLong = point.GeoPosition;
             barDataComponent.Elevation = _map.QueryElevationInUnityUnitsAt(point.GeoPosition);
             barDataComponent.AvailableMeshes = _meshes;
             barDataComponent.MeshType = _meshSelectionType;
 
-            bar.GetComponent<RotationAdjustment>().PlayerCamera = _camera;
             _bars.Add(bar);
         }
 

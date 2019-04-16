@@ -9,7 +9,7 @@
 		Tags { "RenderType"="Transparent" "Queue"="Transparent" }
 		Cull Off
 		ZWrite Off
-		ZTest Always
+		//ZTest Always
 		Blend SrcAlpha OneMinusSrcAlpha
 		//LOD 100
 

@@ -108,7 +108,7 @@ public class LoadDataSet : MonoBehaviour {
             if (lineData.Length < 5)
                 continue;
 
-            bool filtered = true;
+            bool filtered = false;
             string stringData = normalisedTextData(lineData[5]);
 
             foreach (string filter in filters)
@@ -157,7 +157,6 @@ public class LoadDataSet : MonoBehaviour {
                 break;
             case ConeType.MapCone:
                 var mapCone = _player.GetComponentInChildren<ConeMapRenderer>();
-                mapCone._framedBar = _framedBar;
                 mapCone._meshes = _meshes;
                 mapCone._meshSelectionType = _meshSelectionType;
                 mapCone._barMaxValue = maxValue;

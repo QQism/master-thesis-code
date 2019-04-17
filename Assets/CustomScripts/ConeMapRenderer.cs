@@ -36,9 +36,10 @@ public class ConeMapRenderer : MonoBehaviour {
 	private List<MapDataPoint> _dataPoints;
 	private float _maxDataPointValue;
 
-	public GameObject _framedBar;
+    [SerializeField]
+    public GameObject _framedBar;
 
-	public Dictionary<MeshSelection, Mesh> _meshes;
+    public Dictionary<MeshSelection, Mesh> _meshes;
     public MeshSelection _meshSelectionType;
 
 	public float _barMaxValue;

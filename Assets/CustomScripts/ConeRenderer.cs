@@ -221,4 +221,9 @@ public class ConeRenderer : MonoBehaviour {
 		}
 		return costs;
 	}
+
+	public void controlerUpdate(ControllerBehavior controller) 
+	{
+
+	}
 }

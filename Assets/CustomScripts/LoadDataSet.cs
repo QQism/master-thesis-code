@@ -63,6 +63,8 @@ public class LoadDataSet : MonoBehaviour {
 
     private Dictionary<MeshSelection, Mesh> _meshes;
 
+    [Header("Interaction")]
+    public ControllerBehavior _controller;
 
 	// Use this for initialization
 	void Start () { }
@@ -153,10 +155,12 @@ public class LoadDataSet : MonoBehaviour {
         {
             case ConeType.BarCone:
                 var barCone = _player.GetComponentInChildren<ConeRenderer>();
+                _controller._attachedCone = barCone;
                 barCone.initializeWithData(dataPoints, maxValue);
                 break;
             case ConeType.MapCone:
                 var mapCone = _player.GetComponentInChildren<ConeMapRenderer>();
+                _controller._attachedCone = mapCone;
                 mapCone._meshes = _meshes;
                 mapCone._meshSelectionType = _meshSelectionType;
                 mapCone._barMaxValue = maxValue;

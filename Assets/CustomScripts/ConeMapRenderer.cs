@@ -234,4 +234,30 @@ public class ConeMapRenderer : MonoBehaviour {
 		//Debug.Log("Bar magnitude: " + barPosition.magnitude);
 		traperzoid.addObjectOnSurface(bar, convertedSignedAngle, barPosition.magnitude);
 	}
+
+	public void controlerUpdate(ControllerBehavior controller) 
+	{
+		if (controller.isIncreasingAngle())
+		{
+			Debug.Log("Increase Angle");
+			_miterAngle += 1;
+			OnValidate();
+		}
+
+		//TODO: fix the long press
+		/* 
+		if (controller.isIncreasingAngleLongPress())
+		{
+			Debug.Log("Increase Angle Long Press");
+			_miterAngle += 0.5f;
+			OnValidate();
+		}*/
+
+		if (controller.isDecreasingAngle())
+		{
+			Debug.Log("Decrease Angle");
+			_miterAngle -= 1;
+			OnValidate();
+		}
+	}
 }

@@ -2,13 +2,13 @@
   "source": "Unity",
   "applications": [
     {
-      "app_key": "application.generated.unity.mapexamples.exe",
+      "app_key": "application.generated.unity.mapinfovis.exe",
       "launch_type": "url",
       "url": "steam://launch/",
       "action_manifest_path": "C:\\Users\\FIT Staff\\QQ\\minorthesisvisualisation\\actions.json",
       "strings": {
         "en_us": {
-          "name": "MapExamples [Testing]"
+          "name": "MapInfoVis [Testing]"
         }
       }
     }

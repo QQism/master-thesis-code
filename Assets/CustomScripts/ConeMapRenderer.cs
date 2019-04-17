@@ -221,17 +221,17 @@ public class ConeMapRenderer : MonoBehaviour {
 		if (quadNo < 0)
 			quadNo = _quadsCount + quadNo;
 
-		Debug.Log("Quad: " + quadNo);
+		//Debug.Log("Quad: " + quadNo);
 
 		var quad = bars[quadNo];
 		var traperzoid = quad.GetComponent<TrapezoidMapBehavior>();
 
 		// Determine the angle relative to the quad
 		var quadAngle = (startQuad - quadNo) * rotateYAngle;
-		Debug.Log("quadAngle: " + quadAngle);
+		//Debug.Log("quadAngle: " + quadAngle);
 
 		var convertedSignedAngle = signedAngle + (90 - quadAngle);
-		Debug.Log("Bar magnitude: " + barPosition.magnitude);
+		//Debug.Log("Bar magnitude: " + barPosition.magnitude);
 		traperzoid.addObjectOnSurface(bar, convertedSignedAngle, barPosition.magnitude);
 	}
 }

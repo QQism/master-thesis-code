@@ -31,7 +31,10 @@ public enum ConeType {
 
 public class LoadDataSet : MonoBehaviour {
     public AbstractMap _map;
-    private String datasetFile = "\\Datasets\\vic_wateruse_2008_2009.csv";
+
+    private String datasetDir = "Datasets";
+
+    private String datasetFile = "vic_wateruse_2008_2009.csv";
 
     [SerializeField]
     public GameObject _player = null;
@@ -84,7 +87,15 @@ public class LoadDataSet : MonoBehaviour {
 
     void loadCSVData()
     {
-        string data = System.IO.File.ReadAllText(Application.dataPath + datasetFile);
+        string filePath = String.Join(System.IO.Path.DirectorySeparatorChar.ToString(), new string[] {
+            Application.dataPath,
+            datasetDir,
+            datasetFile
+        });
+
+        Debug.Log("File path:" + filePath);
+
+        string data = System.IO.File.ReadAllText(filePath);
         string[] lines = data.Split('\n');
         List<MapDataPoint> dataPoints = new List<MapDataPoint>();
 

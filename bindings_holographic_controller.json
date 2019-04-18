@@ -79,6 +79,22 @@
          ]
       },
       "/actions/default" : {
+         "chords" : [
+            {
+               "inputs" : [
+                  [ "/user/hand/left/input/grip", "click" ],
+                  [ "/user/hand/left/input/trackpad", "up" ]
+               ],
+               "output" : "/actions/default/in/increaseconeheight"
+            },
+            {
+               "inputs" : [
+                  [ "/user/hand/left/input/grip", "click" ],
+                  [ "/user/hand/left/input/trackpad", "down" ]
+               ],
+               "output" : "/actions/default/in/decreaseconeheight"
+            }
+         ],
          "haptics" : [
             {
                "output" : "/actions/default/out/haptic",
@@ -129,20 +145,12 @@
                "path" : "/user/hand/right/input/trigger"
             },
             {
-               "inputs" : {
-                  "click" : {
-                     "output" : "/actions/default/in/changeconeheight"
-                  }
-               },
+               "inputs" : {},
                "mode" : "button",
                "path" : "/user/hand/left/input/grip"
             },
             {
-               "inputs" : {
-                  "click" : {
-                     "output" : "/actions/default/in/changeconeheight"
-                  }
-               },
+               "inputs" : {},
                "mode" : "button",
                "path" : "/user/hand/right/input/grip"
             },
@@ -186,11 +194,17 @@
             },
             {
                "inputs" : {
+                  "east" : {
+                     "output" : "/actions/default/in/increaseconeheight"
+                  },
                   "north" : {
                      "output" : "/actions/default/in/increaseconeangle"
                   },
                   "south" : {
                      "output" : "/actions/default/in/decreaseconeangle"
+                  },
+                  "west" : {
+                     "output" : "/actions/default/in/decreaseconeheight"
                   }
                },
                "mode" : "dpad",
@@ -201,8 +215,14 @@
             },
             {
                "inputs" : {
+                  "east" : {
+                     "output" : "/actions/default/in/increaseconeheight"
+                  },
                   "north" : {
                      "output" : "/actions/default/in/increaseconeangle"
+                  },
+                  "west" : {
+                     "output" : "/actions/default/in/decreaseconeheight"
                   }
                },
                "mode" : "dpad",
@@ -252,7 +272,7 @@
    },
    "controller_type" : "holographic_controller",
    "description" : "",
-   "name" : "[MinorThesisMapVis] Default bindings for Windows Mixed Reality Controllers",
+   "name" : "Default bindings for Windows Mixed Reality Controllers",
    "options" : {},
    "simulated_actions" : []
 }

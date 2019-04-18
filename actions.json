@@ -14,15 +14,19 @@
       "requirement": "optional"
     },
     {
-      "name": "/actions/default/in/ChangeConeHeight",
-      "type": "boolean"
-    },
-    {
       "name": "/actions/default/in/IncreaseConeAngle",
       "type": "boolean"
     },
     {
       "name": "/actions/default/in/DecreaseConeAngle",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/IncreaseConeHeight",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/DecreaseConeHeight",
       "type": "boolean"
     },
     {
@@ -123,9 +127,10 @@
       "/actions/default/in/Pose": "Pose",
       "/actions/default/out/Haptic": "Haptic",
       "/actions/platformer/in/Jump": "Jump",
-      "/actions/default/in/ChangeConeHeight": "Change Cone Height",
       "/actions/default/in/IncreaseConeAngle": "Increase Cone Angle",
-      "/actions/default/in/DecreaseConeAngle": "Decrease Cone Angle"
+      "/actions/default/in/DecreaseConeAngle": "Decrease Cone Angle",
+      "/actions/default/in/IncreaseConeHeight": "Increase Cone Height",
+      "/actions/default/in/DecreaseConeHeight": "Decrease Cone Height"
     }
   ]
 }

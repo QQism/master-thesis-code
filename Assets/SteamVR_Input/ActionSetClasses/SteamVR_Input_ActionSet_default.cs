@@ -41,14 +41,6 @@ namespace Valve.VR
             }
         }
         
-        public virtual SteamVR_Action_Boolean ChangeConeHeight
-        {
-            get
-            {
-                return SteamVR_Actions.default_ChangeConeHeight;
-            }
-        }
-        
         public virtual SteamVR_Action_Boolean IncreaseConeAngle
         {
             get
@@ -62,6 +54,22 @@ namespace Valve.VR
             get
             {
                 return SteamVR_Actions.default_DecreaseConeAngle;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean IncreaseConeHeight
+        {
+            get
+            {
+                return SteamVR_Actions.default_IncreaseConeHeight;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean DecreaseConeHeight
+        {
+            get
+            {
+                return SteamVR_Actions.default_DecreaseConeHeight;
             }
         }
         

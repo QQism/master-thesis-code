@@ -44,10 +44,13 @@ public class ConeMapRenderer : MonoBehaviour {
 
 	public float _barMaxValue;
 
+	private CameraAttachedBehavior _cameraBehavior;
+
 	void Start()
 	{
 		//initializeWithData(new List<MapDataPoint>(), 0);
 		//mapBarToQuad(new Vector2(0.5f, 0.5f));
+		_cameraBehavior = GetComponent<CameraAttachedBehavior>();
 	}
 
 	void OnValidate()
@@ -240,7 +243,8 @@ public class ConeMapRenderer : MonoBehaviour {
 		if (controller.isIncreasingAngle())
 		{
 			Debug.Log("Increase Angle");
-			_miterAngle += 1;
+			if (_miterAngle < 90)
+				_miterAngle += 1;
 			OnValidate();
 		}
 
@@ -257,7 +261,21 @@ public class ConeMapRenderer : MonoBehaviour {
 		{
 			Debug.Log("Decrease Angle");
 			_miterAngle -= 1;
+			if (_miterAngle > 0)
+				_miterAngle -= 1;
 			OnValidate();
+		}
+
+		if (controller.isIncreasingHeight())
+		{
+			Debug.Log("Increase Height");
+			_cameraBehavior._coneHeight += 0.01f;
+		}
+
+		if (controller.isDecreasingHeight())
+		{
+			Debug.Log("Decrease Height");
+			_cameraBehavior._coneHeight -= 0.01f;
 		}
 	}
 }

@@ -240,12 +240,18 @@ public class ConeMapRenderer : MonoBehaviour {
 
 	public void controlerUpdate(ControllerBehavior controller) 
 	{
+		bool changed = false;
 		if (controller.isIncreasingAngle())
 		{
 			Debug.Log("Increase Angle");
 			if (_miterAngle < 90)
+			{
 				_miterAngle += 1;
-			OnValidate();
+				changed = true;
+			} else
+			{ 
+				controller.triggerHapticPulse(2);
+			}
 		}
 
 		//TODO: fix the long press
@@ -260,11 +266,16 @@ public class ConeMapRenderer : MonoBehaviour {
 		if (controller.isDecreasingAngle())
 		{
 			Debug.Log("Decrease Angle");
-			_miterAngle -= 1;
 			if (_miterAngle > 0)
+			{
 				_miterAngle -= 1;
-			OnValidate();
+				changed = true;
+			} else
+			{
+				controller.triggerHapticPulse(2);
+			}
 		}
+
 
 		if (controller.isIncreasingHeight())
 		{
@@ -277,5 +288,8 @@ public class ConeMapRenderer : MonoBehaviour {
 			Debug.Log("Decrease Height");
 			_cameraBehavior._coneHeight -= 0.01f;
 		}
+
+		if (changed)
+			OnValidate();
 	}
 }

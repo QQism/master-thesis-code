@@ -57,19 +57,11 @@ namespace Valve.VR
             }
         }
         
-        public virtual SteamVR_Action_Boolean IncreaseConeHeight
+        public virtual SteamVR_Action_Boolean HoldingGrip
         {
             get
             {
-                return SteamVR_Actions.default_IncreaseConeHeight;
-            }
-        }
-        
-        public virtual SteamVR_Action_Boolean DecreaseConeHeight
-        {
-            get
-            {
-                return SteamVR_Actions.default_DecreaseConeHeight;
+                return SteamVR_Actions.default_HoldingGrip;
             }
         }
         

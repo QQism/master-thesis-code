@@ -27,9 +27,7 @@ namespace Valve.VR
         
         private static SteamVR_Action_Boolean p_default_DecreaseConeAngle;
         
-        private static SteamVR_Action_Boolean p_default_IncreaseConeHeight;
-        
-        private static SteamVR_Action_Boolean p_default_DecreaseConeHeight;
+        private static SteamVR_Action_Boolean p_default_HoldingGrip;
         
         private static SteamVR_Action_Vibration p_default_Haptic;
         
@@ -87,19 +85,11 @@ namespace Valve.VR
             }
         }
         
-        public static SteamVR_Action_Boolean default_IncreaseConeHeight
+        public static SteamVR_Action_Boolean default_HoldingGrip
         {
             get
             {
-                return SteamVR_Actions.p_default_IncreaseConeHeight.GetCopy <SteamVR_Action_Boolean>();
-            }
-        }
-        
-        public static SteamVR_Action_Boolean default_DecreaseConeHeight
-        {
-            get
-            {
-                return SteamVR_Actions.p_default_DecreaseConeHeight.GetCopy <SteamVR_Action_Boolean>();
+                return SteamVR_Actions.p_default_HoldingGrip.GetCopy <SteamVR_Action_Boolean>();
             }
         }
         
@@ -176,8 +166,7 @@ namespace Valve.VR
                     SteamVR_Actions.default_HeadsetOnHead,
                     SteamVR_Actions.default_IncreaseConeAngle,
                     SteamVR_Actions.default_DecreaseConeAngle,
-                    SteamVR_Actions.default_IncreaseConeHeight,
-                    SteamVR_Actions.default_DecreaseConeHeight,
+                    SteamVR_Actions.default_HoldingGrip,
                     SteamVR_Actions.default_Haptic,
                     SteamVR_Actions.platformer_Move,
                     SteamVR_Actions.platformer_Jump,
@@ -193,8 +182,7 @@ namespace Valve.VR
                     SteamVR_Actions.default_HeadsetOnHead,
                     SteamVR_Actions.default_IncreaseConeAngle,
                     SteamVR_Actions.default_DecreaseConeAngle,
-                    SteamVR_Actions.default_IncreaseConeHeight,
-                    SteamVR_Actions.default_DecreaseConeHeight,
+                    SteamVR_Actions.default_HoldingGrip,
                     SteamVR_Actions.platformer_Move,
                     SteamVR_Actions.platformer_Jump,
                     SteamVR_Actions.buggy_Steering,
@@ -218,8 +206,7 @@ namespace Valve.VR
                     SteamVR_Actions.default_HeadsetOnHead,
                     SteamVR_Actions.default_IncreaseConeAngle,
                     SteamVR_Actions.default_DecreaseConeAngle,
-                    SteamVR_Actions.default_IncreaseConeHeight,
-                    SteamVR_Actions.default_DecreaseConeHeight,
+                    SteamVR_Actions.default_HoldingGrip,
                     SteamVR_Actions.platformer_Jump,
                     SteamVR_Actions.buggy_Brake,
                     SteamVR_Actions.buggy_Reset};
@@ -238,8 +225,7 @@ namespace Valve.VR
                     SteamVR_Actions.default_HeadsetOnHead,
                     SteamVR_Actions.default_IncreaseConeAngle,
                     SteamVR_Actions.default_DecreaseConeAngle,
-                    SteamVR_Actions.default_IncreaseConeHeight,
-                    SteamVR_Actions.default_DecreaseConeHeight,
+                    SteamVR_Actions.default_HoldingGrip,
                     SteamVR_Actions.platformer_Move,
                     SteamVR_Actions.platformer_Jump,
                     SteamVR_Actions.buggy_Steering,
@@ -255,8 +241,7 @@ namespace Valve.VR
             SteamVR_Actions.p_default_HeadsetOnHead = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/default/in/HeadsetOnHead")));
             SteamVR_Actions.p_default_IncreaseConeAngle = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/default/in/IncreaseConeAngle")));
             SteamVR_Actions.p_default_DecreaseConeAngle = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/default/in/DecreaseConeAngle")));
-            SteamVR_Actions.p_default_IncreaseConeHeight = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/default/in/IncreaseConeHeight")));
-            SteamVR_Actions.p_default_DecreaseConeHeight = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/default/in/DecreaseConeHeight")));
+            SteamVR_Actions.p_default_HoldingGrip = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/default/in/HoldingGrip")));
             SteamVR_Actions.p_default_Haptic = ((SteamVR_Action_Vibration)(SteamVR_Action.Create <SteamVR_Action_Vibration>("/actions/default/out/Haptic")));
             SteamVR_Actions.p_platformer_Move = ((SteamVR_Action_Vector2)(SteamVR_Action.Create <SteamVR_Action_Vector2>("/actions/platformer/in/Move")));
             SteamVR_Actions.p_platformer_Jump = ((SteamVR_Action_Boolean)(SteamVR_Action.Create <SteamVR_Action_Boolean>("/actions/platformer/in/Jump")));

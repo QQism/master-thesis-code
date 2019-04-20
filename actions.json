@@ -22,11 +22,7 @@
       "type": "boolean"
     },
     {
-      "name": "/actions/default/in/IncreaseConeHeight",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/default/in/DecreaseConeHeight",
+      "name": "/actions/default/in/HoldingGrip",
       "type": "boolean"
     },
     {
@@ -129,8 +125,7 @@
       "/actions/platformer/in/Jump": "Jump",
       "/actions/default/in/IncreaseConeAngle": "Increase Cone Angle",
       "/actions/default/in/DecreaseConeAngle": "Decrease Cone Angle",
-      "/actions/default/in/IncreaseConeHeight": "Increase Cone Height",
-      "/actions/default/in/DecreaseConeHeight": "Decrease Cone Height"
+      "/actions/default/in/HoldingGrip": "Holding Grip"
     }
   ]
 }

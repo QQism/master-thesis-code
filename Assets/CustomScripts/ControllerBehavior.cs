@@ -13,8 +13,9 @@ public class ControllerBehavior : MonoBehaviour {
 	public SteamVR_Action_Boolean increaseAngleAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("IncreaseConeAngle");
 	public SteamVR_Action_Boolean decreaseAngleAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("DecreaseConeAngle");
 
-	public SteamVR_Action_Boolean increaseHeightAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("IncreaseConeHeight");
-	public SteamVR_Action_Boolean decreaseHeightAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("DecreaseConeHeight");
+	public SteamVR_Action_Boolean holdingGripAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("HoldingGrip");
+
+	public SteamVR_Action_Vibration hapticAction = SteamVR_Input.GetAction<SteamVR_Action_Vibration>("Haptic");
 
 	private LongPressDetector _increaseAngleLongPressDetector;
 	// Use this for initialization
@@ -29,31 +30,36 @@ public class ControllerBehavior : MonoBehaviour {
 		{
 			_attachedCone.SendMessage("controlerUpdate", this, SendMessageOptions.DontRequireReceiver);
 		}
-
 	}
 
 	public bool isIncreasingAngle()
 	{
-		return increaseAngleAction.GetStateDown(_controller);
+		return increaseAngleAction.GetStateDown(_controller) && !holdingGripAction.GetLastState(_controller);
 	}
 
 	public bool isDecreasingAngle()
 	{
-		return decreaseAngleAction.GetStateDown(_controller);
+		return decreaseAngleAction.GetStateDown(_controller) && !holdingGripAction.GetLastState(_controller);
 	}
 
+	
 	public bool isIncreasingHeight()
 	{
-		return increaseHeightAction.GetStateDown(_controller);
+		return increaseAngleAction.GetStateDown(_controller) && holdingGripAction.GetLastState(_controller);
 	}
 
 	public bool isDecreasingHeight()
 	{
-		return decreaseHeightAction.GetStateDown(_controller);
+		return decreaseAngleAction.GetStateDown(_controller) && holdingGripAction.GetLastState(_controller); 
 	}
 
 	public bool isIncreasingAngleLongPress()
 	{
 		return _increaseAngleLongPressDetector.isLongPressing(Time.time);
+	}
+
+	public void triggerHapticPulse(float duration)
+	{
+		hapticAction.Execute(0, duration, 1f/duration, 1, _controller);
 	}
 }

@@ -17,6 +17,9 @@ public class ControllerBehavior : MonoBehaviour {
 
 	public SteamVR_Action_Vibration hapticAction = SteamVR_Input.GetAction<SteamVR_Action_Vibration>("Haptic");
 
+	public GameObject debugPoseMarkerStart;
+	public GameObject debugPoseMarkerEnd;
+
 	private LongPressDetector _increaseAngleLongPressDetector;
 	// Use this for initialization
 	void Start () 
@@ -30,6 +33,37 @@ public class ControllerBehavior : MonoBehaviour {
 		{
 			_attachedCone.SendMessage("controlerUpdate", this, SendMessageOptions.DontRequireReceiver);
 		}
+
+		if (debugPoseMarkerStart != null && poseAction.GetActive(_controller))
+		{
+			Vector3 posePos = poseAction.GetLocalPosition(_controller);
+			debugPoseMarkerStart.transform.localPosition = posePos;
+			//Vector3 direction = poseAction.GetLastLocalRotation(_controller) * posePos;
+			//Vector3 direction = poseAction.GetVelocity(_controller);
+			LineRenderer line = debugPoseMarkerStart.GetComponent<LineRenderer>();
+			
+			if (line != null)
+			{
+				//line.SetPosition(0, debugPoseMarkerStart.transform.localPosition);
+				line.SetPosition(0, posePos);
+				line.transform.localRotation = poseAction.GetLocalRotation(_controller);
+
+				RaycastHit hit;
+				Vector3 direction = poseAction.GetLocalRotation(_controller) * Vector3.forward;
+				Ray ray = new Ray(line.transform.position, direction);
+				if (Physics.Raycast(ray, out hit)) 
+				{
+					Debug.Log("Hit: ");
+					debugPoseMarkerEnd.transform.position = hit.point;
+					//line.SetPosition(1, hit.point);
+				} else
+				{
+					//line.SetPosition(1, line.GetPosition(0));
+				}
+				
+			}
+		}
+
 	}
 
 	public bool isIncreasingAngle()
@@ -49,6 +83,16 @@ public class ControllerBehavior : MonoBehaviour {
 	}
 
 	public bool isDecreasingHeight()
+	{
+		return decreaseAngleAction.GetStateDown(_controller) && holdingGripAction.GetLastState(_controller); 
+	}
+
+	public bool isIncreasingInnerCirle()
+	{
+		return increaseAngleAction.GetStateDown(_controller) && holdingGripAction.GetLastState(_controller);
+	}
+
+	public bool isDecreasingInnerCircle()
 	{
 		return decreaseAngleAction.GetStateDown(_controller) && holdingGripAction.GetLastState(_controller); 
 	}

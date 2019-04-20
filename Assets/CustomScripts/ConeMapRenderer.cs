@@ -277,16 +277,41 @@ public class ConeMapRenderer : MonoBehaviour {
 		}
 
 
-		if (controller.isIncreasingHeight())
+		//if (controller.isIncreasingHeight())
+		//{
+		//	Debug.Log("Increase Height");
+		//	_cameraBehavior._coneHeight += 0.01f;
+		//}
+
+		//if (controller.isDecreasingHeight())
+		//{
+		//	Debug.Log("Decrease Height");
+		//	_cameraBehavior._coneHeight -= 0.01f;
+		//}
+
+		if (controller.isIncreasingInnerCirle())
 		{
-			Debug.Log("Increase Height");
-			_cameraBehavior._coneHeight += 0.01f;
+			Debug.Log("Increase Inner Circle");
+            if (_lowerFaceHeight < 1)
+			{
+                _lowerFaceHeight += 0.1f;
+                changed = true;
+			}
+            else {
+				controller.triggerHapticPulse(2);
+			}
 		}
 
-		if (controller.isDecreasingHeight())
+		if (controller.isDecreasingInnerCircle())
 		{
-			Debug.Log("Decrease Height");
-			_cameraBehavior._coneHeight -= 0.01f;
+			Debug.Log("Decrease Inner Circle");
+            if (_lowerFaceHeight > 0)
+            {
+                _lowerFaceHeight -= 0.1f;
+                changed = true;
+            } else {
+				controller.triggerHapticPulse(2);
+			}
 		}
 
 		if (changed)

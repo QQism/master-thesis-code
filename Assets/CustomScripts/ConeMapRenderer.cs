@@ -254,15 +254,6 @@ public class ConeMapRenderer : MonoBehaviour {
 			}
 		}
 
-		//TODO: fix the long press
-		/* 
-		if (controller.isIncreasingAngleLongPress())
-		{
-			Debug.Log("Increase Angle Long Press");
-			_miterAngle += 0.5f;
-			OnValidate();
-		}*/
-
 		if (controller.isDecreasingAngle())
 		{
 			Debug.Log("Decrease Angle");
@@ -275,7 +266,6 @@ public class ConeMapRenderer : MonoBehaviour {
 				controller.triggerHapticPulse(2);
 			}
 		}
-
 
 		//if (controller.isIncreasingHeight())
 		//{
@@ -294,7 +284,7 @@ public class ConeMapRenderer : MonoBehaviour {
 			Debug.Log("Increase Inner Circle");
             if (_lowerFaceHeight < 1)
 			{
-                _lowerFaceHeight += 0.1f;
+                _lowerFaceHeight += 0.02f;
                 changed = true;
 			}
             else {
@@ -307,7 +297,7 @@ public class ConeMapRenderer : MonoBehaviour {
 			Debug.Log("Decrease Inner Circle");
             if (_lowerFaceHeight > 0)
             {
-                _lowerFaceHeight -= 0.1f;
+                _lowerFaceHeight -= 0.02f;
                 changed = true;
             } else {
 				controller.triggerHapticPulse(2);

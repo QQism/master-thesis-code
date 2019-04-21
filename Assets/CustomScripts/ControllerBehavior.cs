@@ -20,11 +20,9 @@ public class ControllerBehavior : MonoBehaviour {
 	public GameObject debugPoseMarkerStart;
 	public GameObject debugPoseMarkerEnd;
 
-	private LongPressDetector _increaseAngleLongPressDetector;
 	// Use this for initialization
 	void Start () 
 	{
-		_increaseAngleLongPressDetector = new LongPressDetector(increaseAngleAction, _controller);
 	}
 	
 	// Update is called once per frame
@@ -69,38 +67,33 @@ public class ControllerBehavior : MonoBehaviour {
 
 	public bool isIncreasingAngle()
 	{
-		return increaseAngleAction.GetStateDown(_controller) && !holdingGripAction.GetLastState(_controller);
+		return increaseAngleAction.GetState(_controller) && !holdingGripAction.GetLastState(_controller);
 	}
 
 	public bool isDecreasingAngle()
 	{
-		return decreaseAngleAction.GetStateDown(_controller) && !holdingGripAction.GetLastState(_controller);
+		return decreaseAngleAction.GetState(_controller) && !holdingGripAction.GetLastState(_controller);
 	}
 
 	
 	public bool isIncreasingHeight()
 	{
-		return increaseAngleAction.GetStateDown(_controller) && holdingGripAction.GetLastState(_controller);
+		return increaseAngleAction.GetState(_controller) && holdingGripAction.GetLastState(_controller);
 	}
 
 	public bool isDecreasingHeight()
 	{
-		return decreaseAngleAction.GetStateDown(_controller) && holdingGripAction.GetLastState(_controller); 
+		return decreaseAngleAction.GetState(_controller) && holdingGripAction.GetLastState(_controller); 
 	}
 
 	public bool isIncreasingInnerCirle()
 	{
-		return increaseAngleAction.GetStateDown(_controller) && holdingGripAction.GetLastState(_controller);
+		return increaseAngleAction.GetState(_controller) && holdingGripAction.GetLastState(_controller);
 	}
 
 	public bool isDecreasingInnerCircle()
 	{
-		return decreaseAngleAction.GetStateDown(_controller) && holdingGripAction.GetLastState(_controller); 
-	}
-
-	public bool isIncreasingAngleLongPress()
-	{
-		return _increaseAngleLongPressDetector.isLongPressing(Time.time);
+		return decreaseAngleAction.GetState(_controller) && holdingGripAction.GetLastState(_controller); 
 	}
 
 	public void triggerHapticPulse(float duration)

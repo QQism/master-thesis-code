@@ -72,7 +72,13 @@ public class FramedBarData : MonoBehaviour {
         _dataBar.GetComponent<MeshFilter>().mesh = AvailableMeshes[_meshType];
         _frameBar.GetComponent<MeshFilter>().mesh = AvailableMeshes[_meshType];
 
-        scaleMesh(heightScaleFactor());
+        var meshHeightScaleFactor = heightScaleFactor();
+        scaleMesh(meshHeightScaleFactor);
+        var dataCollider = _dataBar.GetComponent<BoxCollider>();
+        dataCollider.size = new Vector3(dataCollider.size.x, meshHeightScaleFactor, dataCollider.size.z);
+
+        var frameCollider = _frameBar.GetComponent<BoxCollider>();
+        frameCollider.size = new Vector3(frameCollider.size.x, meshHeightScaleFactor, frameCollider.size.z);
         moveBarOffTheGround();
     }
 

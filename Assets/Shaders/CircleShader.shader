@@ -6,8 +6,8 @@
 	}
 	SubShader
 	{
-		Tags { "RenderType"="Transparent" "Queue"="Transparent" }
-		Cull Off
+		Tags { "RenderType"="Transparent" "Queue"="Transparent-1" }
+		//Cull Off
 		ZWrite Off
 		//ZTest Always
 		Blend SrcAlpha OneMinusSrcAlpha
@@ -50,8 +50,9 @@
 			{
 				float radius = 0.5;
 				// sample the texture
-				//float4 custom_color = (.75, .79, 0.8, 1);
-				fixed4 col = tex2D(_MainTex, i.uv); // * custom_color;
+				// Grey color
+				float4 custom_color = fixed4(0.5, 0.5, 0.5, 1);
+				fixed4 col = tex2D(_MainTex, i.uv) * custom_color;
 
 				float dx = (i.uv.x-0.5);
 				float dy = (i.uv.y-0.5);

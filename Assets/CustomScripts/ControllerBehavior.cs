@@ -38,8 +38,6 @@ public class ControllerBehavior : MonoBehaviour {
 		{
 			Vector3 posePos = poseAction.GetLocalPosition(_controller);
 			debugPoseMarkerStart.transform.localPosition = posePos;
-			//Vector3 direction = poseAction.GetLastLocalRotation(_controller) * posePos;
-			//Vector3 direction = poseAction.GetVelocity(_controller);
 			LineRenderer line = debugPoseMarkerStart.GetComponent<LineRenderer>();
 			line.transform.position = debugPoseMarkerStart.transform.position;
 			
@@ -55,16 +53,13 @@ public class ControllerBehavior : MonoBehaviour {
 				Ray ray = new Ray(line.transform.position, direction);
 				if (Physics.Raycast(ray, out hit)) 
 				{
-					Debug.Log("Hit!");
-					//Debug.Log("Hit: ");
-					//Debug.Log("Hit: " + hit.point);
+					//Debug.Log("Hit!");
 					debugPoseMarkerEnd.transform.position = hit.point;
 					line.SetPosition(1, hit.point);
 				} else
 				{
-					Debug.Log("No hit!");
+					//Debug.Log("Missed!");
 					debugPoseMarkerEnd.transform.position = line.transform.position + direction;
-					//line.SetPosition(1, line.GetPosition(0) * 3);
 				}
 				
 			}

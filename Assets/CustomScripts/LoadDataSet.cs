@@ -60,7 +60,6 @@ public class LoadDataSet : MonoBehaviour {
     private float _maxBarHeight = 50.0f;
     private float _barHeightBuffer = 1.2f;
     private Mesh _meshSelection;
-
     private Dictionary<MeshSelection, Mesh> _meshes;
 
     [Header("Interaction")]

@@ -45,7 +45,8 @@ public class ControllerBehavior : MonoBehaviour {
 				line.transform.localRotation = poseAction.GetLocalRotation(_controller);
 
 				RaycastHit hit;
-				Vector3 direction = poseAction.GetLocalRotation(_controller) * Vector3.forward;
+				// Shorten the default magnitude of the beam by 0.3
+				Vector3 direction = poseAction.GetLocalRotation(_controller) * Vector3.forward * 0.3f;
                 line.SetPosition(1, line.transform.position + direction);
 				debugPoseMarkerEnd.transform.position = line.transform.position + direction;
 				Ray ray = new Ray(line.transform.position, direction);

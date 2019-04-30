@@ -20,6 +20,8 @@ public class ControllerBehavior : MonoBehaviour {
 	public GameObject debugPoseMarkerStart;
 	public GameObject debugPoseMarkerEnd;
 
+	public GameObject lastHitObject = null;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -55,10 +57,12 @@ public class ControllerBehavior : MonoBehaviour {
 					//Debug.Log("Hit!");
 					debugPoseMarkerEnd.transform.position = hit.point;
 					line.SetPosition(1, hit.point);
+					handleHit(hit);
 				} else
 				{
 					//Debug.Log("Missed!");
 					debugPoseMarkerEnd.transform.position = line.transform.position + direction;
+					handleMiss();
 				}
 				
 			}
@@ -100,5 +104,41 @@ public class ControllerBehavior : MonoBehaviour {
 	public void triggerHapticPulse(float duration)
 	{
 		hapticAction.Execute(0, duration, 1f/duration, 1, _controller);
+	}
+
+	void handleHit(RaycastHit hit)
+	{
+		GameObject newHitObject = hit.transform.gameObject;
+
+		if (newHitObject == lastHitObject)
+			return;
+
+        if (lastHitObject != null)
+        {
+			var poseBehavior = lastHitObject.GetComponent<PoseBehavior>();
+			if (poseBehavior)
+				poseBehavior.poseLeave();
+        }
+
+		if (newHitObject != null)
+		{
+			var poseBehavior = newHitObject.GetComponent<PoseBehavior>();
+			if (poseBehavior)
+				poseBehavior.poseEnter();
+
+			lastHitObject = newHitObject;
+		}
+	}
+
+	void handleMiss()
+	{
+        if (lastHitObject != null)
+        {
+			var poseBehavior = lastHitObject.GetComponent<PoseBehavior>();
+			if (poseBehavior)
+				poseBehavior.poseLeave();
+
+			lastHitObject = null;
+        }
 	}
 }

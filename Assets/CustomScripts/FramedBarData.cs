@@ -47,9 +47,41 @@ public class FramedBarData : MonoBehaviour {
 
     private Vector3 _originalScale;
 
+    private Material dataMaterial;
+    private Material frameMaterial;
+
     void Start()
     {
         _originalScale = transform.localScale;
+
+        if (_dataBar && _frameBar)
+            initializeDataAndFrameComponents();
+    }
+
+    void initializeDataAndFrameComponents()
+    {
+        PoseBehavior dataPose = _dataBar.gameObject.AddComponent(typeof(PoseBehavior)) as PoseBehavior;
+        if (dataPose)
+        {
+            dataPose.onPoseEnter += onPoseEnter;
+            dataPose.onPoseLeave += onPoseLeave;
+        }
+        PoseBehavior framePose = _frameBar.gameObject.AddComponent(typeof(PoseBehavior)) as PoseBehavior;
+        if (framePose)
+        {
+            framePose.onPoseEnter += onPoseEnter;
+            framePose.onPoseLeave += onPoseLeave;
+        }
+
+        // Create copies of materials 
+        Renderer dataRenderer = _dataBar.GetComponent<Renderer>();
+        Renderer frameRenderer = _frameBar.GetComponent<Renderer>();
+
+        dataMaterial = new Material(dataRenderer.sharedMaterial);
+        frameMaterial = new Material(frameRenderer.sharedMaterial);
+
+        dataRenderer.sharedMaterial = dataMaterial;
+        frameRenderer.sharedMaterial = frameMaterial;
     }
 
     public void updateBars()
@@ -180,5 +212,19 @@ public class FramedBarData : MonoBehaviour {
             default:
                 return 1.0f;
         }
+    }
+
+    void onPoseEnter()
+    {
+        Debug.Log("Pose enter: " + name);
+        dataMaterial.SetInt("_OutlineOn", 1);
+        frameMaterial.SetInt("_OutlineOn", 1);
+    }
+
+    void onPoseLeave()
+    {
+        Debug.Log("Pose leave: " + name);
+        dataMaterial.SetInt("_OutlineOn", 0);
+        frameMaterial.SetInt("_OutlineOn", 0);
     }
 }

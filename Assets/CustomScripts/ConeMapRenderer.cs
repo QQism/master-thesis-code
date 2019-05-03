@@ -67,10 +67,10 @@ public class ConeMapRenderer : MonoBehaviour {
 		//mapBarToQuad(new Vector2(0.5f, 0.5f));
 	}
 
-	public void initializeWithData(List<MapDataPoint> dataPoints, float maxValue)
+	public void initializeWithData()
 	{
-		_dataPoints = dataPoints;
-		_maxDataPointValue = maxValue;
+        _dataPoints = DataPointsManager.Instance.mapDataPoints;
+        _maxDataPointValue = DataPointsManager.Instance.maxValue;
 
 		clearData();
         for (int i = 0; i < _quadsCount; i++)

@@ -68,10 +68,10 @@ public class ConeRenderer : MonoBehaviour {
 			UpdateBars();
 	}
 
-    public void initializeWithData(List<MapDataPoint> dataPoints, float maxValue)
+    public void initializeWithData()
     {
-        _dataPoints = dataPoints;
-        _maxDataPointValue = maxValue;
+        _dataPoints = DataPointsManager.Instance.mapDataPoints;
+        _maxDataPointValue = DataPointsManager.Instance.maxValue;
         //return;
 
         clearData();

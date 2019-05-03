@@ -65,6 +65,8 @@ public class LoadDataSet : MonoBehaviour {
     [Header("Interaction")]
     public ControllerBehavior _controller;
 
+    private DataPointsManager dataPoinstsManager;
+
 	// Use this for initialization
 	void Start () { }
 
@@ -134,17 +136,20 @@ public class LoadDataSet : MonoBehaviour {
             point.Value = float.Parse(lineData[1]);
 
             dataPoints.Add(point);
+            DataPointsManager.Instance.mapDataPoints.Add(point);
 
             if (maxValue < point.Value)
                 maxValue = point.Value;
         }
+
+        DataPointsManager.Instance.maxValue = maxValue;
 
         // Skip the header
         Debug.Log("Number of records: " + lines.Length.ToString());
         switch(_visualisationType)
         {
             case VisualisationType.InPlaceBars:
-                addInPlaceBars(dataPoints, maxValue);
+                addInPlaceBars();
                 break;
             case VisualisationType.ProjectingCone:
                 break;
@@ -155,7 +160,7 @@ public class LoadDataSet : MonoBehaviour {
             case ConeType.BarCone:
                 var barCone = _player.GetComponentInChildren<ConeRenderer>();
                 _controller._attachedCone = barCone;
-                barCone.initializeWithData(dataPoints, maxValue);
+                barCone.initializeWithData();
                 break;
             case ConeType.MapCone:
                 var mapCone = _player.GetComponentInChildren<ConeMapRenderer>();
@@ -163,18 +168,20 @@ public class LoadDataSet : MonoBehaviour {
                 mapCone._meshes = _meshes;
                 mapCone._meshSelectionType = _meshSelectionType;
                 mapCone._barMaxValue = maxValue;
-                mapCone.initializeWithData(dataPoints, maxValue);
+                mapCone.initializeWithData();
                 break;
         }
     }
 
-    void addInPlaceBars(List<MapDataPoint> points, float maxValue)
+    void addInPlaceBars()
     {
         _meshes = new Dictionary<MeshSelection, Mesh>();
         _meshes.Add(MeshSelection.Cube, _cubeMesh);
         _meshes.Add(MeshSelection.Cylinder, _cylinderMesh);
         _meshes.Add(MeshSelection.Quad, _quadMesh);
 
+        var points = DataPointsManager.Instance.mapDataPoints;
+        var maxValue = DataPointsManager.Instance.maxValue;
         foreach(MapDataPoint point in points)
         {
             //Debug.Log(name + "[Height]: " + _map.GeoToWorldPosition(position, true));

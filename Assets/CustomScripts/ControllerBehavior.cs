@@ -22,10 +22,19 @@ public class ControllerBehavior : MonoBehaviour {
 
 	public GameObject lastHitObject = null;
 
-	// Use this for initialization
-	void Start () 
-	{
-	}
+	private Vector3 vectorFoward;
+
+    // Use this for initialization
+    void Start()
+    {
+
+		// The pose is more towards to ground (30deg) than the actual pointing
+		// for the egonomic reason 
+        var alpha = 30;
+        var y = -Mathf.Sin(alpha * Mathf.Deg2Rad);
+        var z = Mathf.Cos(alpha * Mathf.Deg2Rad);
+        vectorFoward = new Vector3(0, y, z); // instead of Vector3.forward
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -48,7 +57,7 @@ public class ControllerBehavior : MonoBehaviour {
 
 				RaycastHit hit;
 				// Shorten the default magnitude of the beam by 0.3
-				Vector3 direction = poseAction.GetLocalRotation(_controller) * Vector3.forward * 0.3f;
+				Vector3 direction = poseAction.GetLocalRotation(_controller) * vectorFoward * 0.3f;
                 line.SetPosition(1, line.transform.position + direction);
 				debugPoseMarkerEnd.transform.position = line.transform.position + direction;
 				Ray ray = new Ray(line.transform.position, direction);

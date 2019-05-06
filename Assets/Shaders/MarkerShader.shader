@@ -8,6 +8,7 @@
 		_ColorOutline ("Color Outline", Color) = (1,1,1,1)
 		_OutlineWidth ("Outline Width", Range(1.0, 10.0)) = 1.1
 		_OutlineOn("Outline On", Int) = 0
+		_OutlineAlpha("Outline Transparency", Range(0, 1)) = 0.3
 	}
 	CGINCLUDE
 		#include "UnityCG.cginc"
@@ -19,6 +20,7 @@
 		float4 _ColorOutline;
 		float _OutlineWidth;
 		int _OutlineOn;
+		float _OutlineAlpha;
 			
 		struct appdata
 		{
@@ -86,6 +88,7 @@
 			{
 				c = tex2D(_MainTex, i.uv);
 				c *= _ColorOutline;
+				c.a = _OutlineAlpha;
 			}
 			else
 			{
@@ -127,6 +130,8 @@
 		{
 			Name "Outline"
 			Blend SrcAlpha OneMinusSrcAlpha
+			//Blend One One
+			//Blend OneMinusDstColor One
 			LOD 100
 			CGPROGRAM
 			#pragma vertex vertOutline

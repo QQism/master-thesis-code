@@ -44,11 +44,13 @@ public class FramedBarData : MonoBehaviour {
     public MeshSelection MeshType { get { return _meshType; } set { _meshType = value; } }
 
     public bool _static = false;
+    public MapDataPoint MapDataPoint { get; set; }
 
     private Vector3 _originalScale;
 
     private Material dataMaterial;
     private Material frameMaterial;
+
 
     void Start()
     {

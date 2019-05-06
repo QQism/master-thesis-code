@@ -33,7 +33,7 @@ public class LocationMarkerBehavior : MonoBehaviour {
 		_indicationArrow.transform.LookAt(Camera.main.transform);
 		if (_selected) {
 			_indicationArrow.SetActive(true);
-			Vector3 moving = new Vector3(0, Mathf.Sin(_animationSpeed * Time.time)/_textAnimationThreshold, 0);
+			Vector3 moving = new Vector3(0, Mathf.Sin(_animationSpeed * Time.time)/_textAnimationThreshold + 2.2f, 0);
 			_rectTextTransform.position = _startTextPosition + moving;
 			_cylinderMaterial.SetInt("_OutlineOn", 1);
 			_cylinderMaterial.SetFloat("_OutlineWidth", 1+Mathf.Sin(_animationSpeed * Time.time)/5);

@@ -21,6 +21,7 @@ public enum VisualisationType
     InPlaceBars,
     ProjectingCone,
     MapCone,
+    BarCone,
 }
 
 public enum ConeType {
@@ -50,6 +51,8 @@ public class LoadDataSet : MonoBehaviour {
     public Mesh _cylinderMesh;
     public Mesh _quadMesh;
     public MeshSelection _meshSelectionType;
+
+    public GameObject _locationMarkerBar;
 
     public delegate void OnDataLoaded();
     public static event OnDataLoaded onDataLoaded;
@@ -144,6 +147,10 @@ public class LoadDataSet : MonoBehaviour {
 
         DataPointsManager.Instance.maxValue = maxValue;
 
+        _meshes = new Dictionary<MeshSelection, Mesh>();
+        _meshes.Add(MeshSelection.Cube, _cubeMesh);
+        _meshes.Add(MeshSelection.Cylinder, _cylinderMesh);
+        _meshes.Add(MeshSelection.Quad, _quadMesh);
         // Skip the header
         Debug.Log("Number of records: " + lines.Length.ToString());
         switch(_visualisationType)
@@ -151,10 +158,24 @@ public class LoadDataSet : MonoBehaviour {
             case VisualisationType.InPlaceBars:
                 addInPlaceBars();
                 break;
-            case VisualisationType.ProjectingCone:
+            case VisualisationType.BarCone:
+                addBlankBars();
+                var barCone = _player.GetComponentInChildren<ConeRenderer>();
+                _controller._attachedCone = barCone;
+                barCone.initializeWithData();
+                break;
+            case VisualisationType.MapCone:
+                addBlankBars();
+                var mapCone = _player.GetComponentInChildren<ConeMapRenderer>();
+                _controller._attachedCone = mapCone;
+                mapCone._meshes = _meshes;
+                mapCone._meshSelectionType = _meshSelectionType;
+                mapCone._barMaxValue = maxValue;
+                mapCone.initializeWithData();
                 break;
         }
 
+        /*
         switch(_coneType)
         {
             case ConeType.BarCone:
@@ -170,6 +191,17 @@ public class LoadDataSet : MonoBehaviour {
                 mapCone._barMaxValue = maxValue;
                 mapCone.initializeWithData();
                 break;
+        }*/
+    }
+
+    void addBlankBars()
+    {
+        var points = DataPointsManager.Instance.mapDataPoints;
+        foreach(MapDataPoint point in points)
+        {
+            GameObject bar = Instantiate(_locationMarkerBar, point.WorldPosition, Quaternion.identity);
+            bar.transform.SetParent(_barsContainer, true);
+            bar.transform.name = "Bar " + point.Name;
         }
     }
 
@@ -193,6 +225,7 @@ public class LoadDataSet : MonoBehaviour {
             bar.transform.name = "Bar " + point.Name;
 
             FramedBarData barDataComponent = bar.GetComponent<FramedBarData>();
+            barDataComponent.MapDataPoint = point;
             barDataComponent.Value = point.Value;
             barDataComponent.LatLong = point.GeoPosition;
             barDataComponent.Elevation = _map.QueryElevationInUnityUnitsAt(point.GeoPosition);

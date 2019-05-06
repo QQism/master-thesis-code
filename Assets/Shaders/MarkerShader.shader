@@ -49,7 +49,7 @@
 			// sample the texture
 			fixed4 col = tex2D(_MainTex, i.uv) * _ColorMain;
 			//col.a = lerp(1, 0, i.uv.y * _Time);
-			col.a = lerp(1, 0, i.uv.y);
+			col.a = lerp(0.8, 0.5, i.uv.y);
 			//col.a = 0.5;
 			// apply fog
 			UNITY_APPLY_FOG(i.fogCoord, col);
@@ -61,7 +61,7 @@
 			// sample the texture
 			fixed4 col = tex2D(_MainTex, i.uv) * _ColorTint;
 			//col.a = lerp(1, 0, i.uv.y * _Time);
-			col.a = lerp(0.5, 0.25, i.uv.y/2 * _CosTime.w);
+			col.a = lerp(0.1, 0.25, i.uv.y/2 * _CosTime.w);
 			//col.a = 0.5;
 			// apply fog
 			UNITY_APPLY_FOG(i.fogCoord, col);

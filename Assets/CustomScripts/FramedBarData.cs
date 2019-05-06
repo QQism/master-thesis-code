@@ -44,7 +44,7 @@ public class FramedBarData : MonoBehaviour {
     public MeshSelection MeshType { get { return _meshType; } set { _meshType = value; } }
 
     public bool _static = false;
-    public MapDataPoint MapDataPoint { get; set; }
+    public MapDataPoint mapDataPoint { get; set; }
 
     private Vector3 _originalScale;
 
@@ -221,6 +221,7 @@ public class FramedBarData : MonoBehaviour {
         Debug.Log("Pose enter: " + name);
         dataMaterial.SetInt("_OutlineOn", 1);
         frameMaterial.SetInt("_OutlineOn", 1);
+        mapDataPoint.Selected = true;
     }
 
     void onPoseLeave()
@@ -228,5 +229,6 @@ public class FramedBarData : MonoBehaviour {
         Debug.Log("Pose leave: " + name);
         dataMaterial.SetInt("_OutlineOn", 0);
         frameMaterial.SetInt("_OutlineOn", 0);
+        mapDataPoint.Selected = false;
     }
 }

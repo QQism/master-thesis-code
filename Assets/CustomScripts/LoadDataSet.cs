@@ -202,6 +202,9 @@ public class LoadDataSet : MonoBehaviour {
             GameObject bar = Instantiate(_locationMarkerBar, point.WorldPosition, Quaternion.identity);
             bar.transform.SetParent(_barsContainer, true);
             bar.transform.name = "Bar " + point.Name;
+
+            LocationMarkerBehavior barBehavior = bar.GetComponent<LocationMarkerBehavior>();
+            barBehavior.mapDataPoint = point;
         }
     }
 
@@ -225,7 +228,7 @@ public class LoadDataSet : MonoBehaviour {
             bar.transform.name = "Bar " + point.Name;
 
             FramedBarData barDataComponent = bar.GetComponent<FramedBarData>();
-            barDataComponent.MapDataPoint = point;
+            barDataComponent.mapDataPoint = point;
             barDataComponent.Value = point.Value;
             barDataComponent.LatLong = point.GeoPosition;
             barDataComponent.Elevation = _map.QueryElevationInUnityUnitsAt(point.GeoPosition);

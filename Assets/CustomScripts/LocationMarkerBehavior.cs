@@ -16,6 +16,8 @@ public class LocationMarkerBehavior : MonoBehaviour {
 	private Vector3 _startTextPosition;
 
 	private Material _cylinderMaterial;
+
+	public MapDataPoint mapDataPoint {get; set;}
 	// Use this for initialization
 
 	void Awake() {
@@ -30,6 +32,7 @@ public class LocationMarkerBehavior : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		_selected = mapDataPoint.Selected;
 		_indicationArrow.transform.LookAt(Camera.main.transform);
 		if (_selected) {
 			_indicationArrow.SetActive(true);

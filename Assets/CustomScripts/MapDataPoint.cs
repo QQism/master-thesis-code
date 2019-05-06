@@ -9,4 +9,6 @@ public class MapDataPoint {
 	public Vector3 WorldPosition {get; set;} 
 	public Vector2 ConePosition {get; set;}
 	public float Value {get; set;}
+
+	public bool Selected {get; set;}
 }

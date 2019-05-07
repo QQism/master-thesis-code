@@ -149,6 +149,9 @@
             },
             {
                "inputs" : {
+                  "click" : {
+                     "output" : "/actions/default/in/presstrigger"
+                  },
                   "pull" : {
                      "output" : "/actions/default/in/squeeze"
                   }
@@ -158,6 +161,9 @@
             },
             {
                "inputs" : {
+                  "click" : {
+                     "output" : "/actions/default/in/presstrigger"
+                  },
                   "pull" : {
                      "output" : "/actions/default/in/squeeze"
                   }
@@ -166,12 +172,20 @@
                "path" : "/user/hand/right/input/trigger"
             },
             {
-               "inputs" : {},
+               "inputs" : {
+                  "long" : {
+                     "output" : "/actions/default/in/padlong"
+                  }
+               },
                "mode" : "button",
                "path" : "/user/hand/left/input/trackpad"
             },
             {
-               "inputs" : {},
+               "inputs" : {
+                  "long" : {
+                     "output" : "/actions/default/in/padlong"
+                  }
+               },
                "mode" : "button",
                "path" : "/user/hand/right/input/trackpad"
             },
@@ -188,10 +202,10 @@
             {
                "inputs" : {
                   "north" : {
-                     "output" : "/actions/default/in/increaseconeangle"
+                     "output" : "/actions/default/in/padup"
                   },
                   "south" : {
-                     "output" : "/actions/default/in/decreaseconeangle"
+                     "output" : "/actions/default/in/paddown"
                   }
                },
                "mode" : "dpad",
@@ -203,7 +217,7 @@
             {
                "inputs" : {
                   "north" : {
-                     "output" : "/actions/default/in/increaseconeangle"
+                     "output" : "/actions/default/in/padup"
                   }
                },
                "mode" : "dpad",
@@ -211,8 +225,21 @@
                   "sub_mode" : "click"
                },
                "path" : "/user/hand/right/input/trackpad"
+            },
+            {
+               "inputs" : {},
+               "mode" : "none",
+               "path" : "/user/hand/left/input/trigger"
+            },
+            {
+               "inputs" : {},
+               "mode" : "none",
+               "path" : "/user/hand/right/input/trigger"
             }
          ]
+      },
+      "/actions/mixedreality" : {
+         "sources" : []
       },
       "/actions/platformer" : {
          "sources" : [

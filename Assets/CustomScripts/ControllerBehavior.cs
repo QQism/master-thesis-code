@@ -4,14 +4,26 @@ using UnityEngine;
 using UnityEngine.Events;
 using Valve.VR;
 
+public enum ControllerMode {
+	AdjustCone,
+	AnswerBoard,
+	ShootingAnswer
+}
 public class ControllerBehavior : MonoBehaviour {
 
 	public MonoBehaviour _attachedCone;
+	public MonoBehaviour _attachedPanel;
 	public SteamVR_Input_Sources _controller;
     public SteamVR_Action_Pose poseAction = SteamVR_Input.GetAction<SteamVR_Action_Pose>("Pose");
 
-	public SteamVR_Action_Boolean increaseAngleAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("IncreaseConeAngle");
-	public SteamVR_Action_Boolean decreaseAngleAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("DecreaseConeAngle");
+	public SteamVR_Action_Boolean increaseAngleAction;// = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("IncreaseConeAngle");
+	public SteamVR_Action_Boolean decreaseAngleAction;// = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("DecreaseConeAngle");
+
+	public SteamVR_Action_Boolean increaseValue;
+	public SteamVR_Action_Boolean decreaseValue;
+	public SteamVR_Action_Boolean confirmAnswer;
+
+	public SteamVR_Action_Boolean pressDpadLong;
 
 	public SteamVR_Action_Boolean holdingGripAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("HoldingGrip");
 
@@ -21,6 +33,8 @@ public class ControllerBehavior : MonoBehaviour {
 	public GameObject debugPoseMarkerEnd;
 
 	public GameObject lastHitObject = null;
+
+	public ControllerMode _controllerMode = ControllerMode.AnswerBoard;
 
 	private Vector3 vectorFoward;
 
@@ -37,10 +51,18 @@ public class ControllerBehavior : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
-		if (_attachedCone != null)
+	void Update () 
+	{ 
+		if (_attachedCone != null && _controllerMode == ControllerMode.AdjustCone)
 		{
 			_attachedCone.SendMessage("controlerUpdate", this, SendMessageOptions.DontRequireReceiver);
+		} else if (_attachedPanel != null && _controllerMode == ControllerMode.AnswerBoard)
+		{
+			if (pressDpadLong.GetState(_controller))
+			{
+				Debug.Log("Press Long");
+			}
+			_attachedPanel.SendMessage("controlerUpdate", this, SendMessageOptions.DontRequireReceiver);
 		}
 
 		if (debugPoseMarkerStart != null && poseAction.GetActive(_controller))
@@ -113,6 +135,31 @@ public class ControllerBehavior : MonoBehaviour {
 	public void triggerHapticPulse(float duration)
 	{
 		hapticAction.Execute(0, duration, 1f/duration, 1, _controller);
+	}
+
+
+	public bool isIncreasingValue()
+	{
+		return increaseValue.GetStateDown(_controller);
+	}
+	public bool isDecreasingValue()
+	{
+		return decreaseValue.GetStateDown(_controller);
+	}
+
+	public bool isLongPressingDpad()
+	{
+		return pressDpadLong.GetState(_controller);
+	}
+
+	public bool isIncreasingValueFaster()
+	{
+		return isLongPressingDpad() && increaseValue.GetState(_controller);
+	}
+
+	public bool isDecreasingValueFaster()
+	{
+		return isLongPressingDpad() && decreaseValue.GetState(_controller);
 	}
 
 	void handleHit(RaycastHit hit)

@@ -41,19 +41,19 @@ namespace Valve.VR
             }
         }
         
-        public virtual SteamVR_Action_Boolean IncreaseConeAngle
+        public virtual SteamVR_Action_Boolean PadUp
         {
             get
             {
-                return SteamVR_Actions.default_IncreaseConeAngle;
+                return SteamVR_Actions.default_PadUp;
             }
         }
         
-        public virtual SteamVR_Action_Boolean DecreaseConeAngle
+        public virtual SteamVR_Action_Boolean PadDown
         {
             get
             {
-                return SteamVR_Actions.default_DecreaseConeAngle;
+                return SteamVR_Actions.default_PadDown;
             }
         }
         
@@ -62,6 +62,22 @@ namespace Valve.VR
             get
             {
                 return SteamVR_Actions.default_HoldingGrip;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean PressTrigger
+        {
+            get
+            {
+                return SteamVR_Actions.default_PressTrigger;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean PadLong
+        {
+            get
+            {
+                return SteamVR_Actions.default_PadLong;
             }
         }
         

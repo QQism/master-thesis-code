@@ -14,15 +14,23 @@
       "requirement": "optional"
     },
     {
-      "name": "/actions/default/in/IncreaseConeAngle",
+      "name": "/actions/default/in/PadUp",
       "type": "boolean"
     },
     {
-      "name": "/actions/default/in/DecreaseConeAngle",
+      "name": "/actions/default/in/PadDown",
       "type": "boolean"
     },
     {
       "name": "/actions/default/in/HoldingGrip",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/PressTrigger",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/PadLong",
       "type": "boolean"
     },
     {
@@ -123,8 +131,6 @@
       "/actions/default/in/Pose": "Pose",
       "/actions/default/out/Haptic": "Haptic",
       "/actions/platformer/in/Jump": "Jump",
-      "/actions/default/in/IncreaseConeAngle": "Increase Cone Angle",
-      "/actions/default/in/DecreaseConeAngle": "Decrease Cone Angle",
       "/actions/default/in/HoldingGrip": "Holding Grip"
     }
   ]

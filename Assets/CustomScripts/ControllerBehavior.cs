@@ -62,14 +62,32 @@ public class ControllerBehavior : MonoBehaviour {
 			_attachedCone.SendMessage("controlerUpdate", this, SendMessageOptions.DontRequireReceiver);
 		}
 
-		if (_attachedNumericPanel != null && _controllerMode == ControllerMode.NumericAnswerBoard)
+		if (_attachedNumericPanel != null)
 		{
-			_attachedNumericPanel.SendMessage("controlerUpdate", this, SendMessageOptions.DontRequireReceiver);
+			if (_controllerMode == ControllerMode.NumericAnswerBoard)
+			{
+				_attachedNumericPanel.gameObject.SetActive(true);
+				_attachedNumericPanel.SendMessage("controlerUpdate", this, SendMessageOptions.DontRequireReceiver);
+			}
+			else
+			{
+				_attachedNumericPanel.SendMessage("resetState", SendMessageOptions.DontRequireReceiver);
+				_attachedNumericPanel.gameObject.SetActive(false);
+			}
 		}
 
-		if (_attachedOptionPanel != null && _controllerMode == ControllerMode.OptionAnswerBoard)
+		if (_attachedOptionPanel != null)
 		{
-			_attachedOptionPanel.SendMessage("controlerUpdate", this, SendMessageOptions.DontRequireReceiver);
+            if (_controllerMode == ControllerMode.OptionAnswerBoard)
+            {
+				_attachedOptionPanel.gameObject.SetActive(true);
+                _attachedOptionPanel.SendMessage("controlerUpdate", this, SendMessageOptions.DontRequireReceiver);
+            }
+			else
+			{
+				_attachedOptionPanel.SendMessage("resetState", SendMessageOptions.DontRequireReceiver);
+				_attachedOptionPanel.gameObject.SetActive(false);
+			}
 		}
 
 		handlePose();

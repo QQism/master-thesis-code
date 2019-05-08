@@ -11,6 +11,7 @@ public class OptionAnswerPanelBehavior : MonoBehaviour {
 	public GameObject downTick;
 
 	public int optionSelected = 1;
+	private int defaultOption = 1;
 
 	private Transform upTickTransform;
 	private Transform downTickTransform;
@@ -27,7 +28,9 @@ public class OptionAnswerPanelBehavior : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () { }
+	void Update () 
+	{ 
+	}
 
 	public void controlerUpdate(ControllerBehavior controller) 
 	{
@@ -35,30 +38,45 @@ public class OptionAnswerPanelBehavior : MonoBehaviour {
 		{
             if (optionSelected != 1)
             {
-                optionSelected = 1;
+				selectOption(1);
             }
             else
             {
                 controller.triggerHapticPulse(2);
             }
-			moveTransform(upTickTransform, true);
-			moveTransform(downTickTransform, true);
         }
 
         if (controller.isSelectingRight())
 		{
 			if (optionSelected != 2)
 			{ 
-				optionSelected = 2;
+				selectOption(2);
 			}
 			else
 			{	
 				controller.triggerHapticPulse(2);
 			}
 
+		}
+	}
+
+	private void selectOption(int value)
+    {
+        optionSelected = value;
+		if (optionSelected == 1)
+		{
+			moveTransform(upTickTransform, true);
+			moveTransform(downTickTransform, true);
+		} else if (optionSelected == 2)
+		{ 
 			moveTransform(upTickTransform, false);
 			moveTransform(downTickTransform, false);
 		}
+    }
+
+	public void resetState()
+	{
+		selectOption(defaultOption);
 	}
 
     private void moveTransform(Transform transform, bool isLeft)

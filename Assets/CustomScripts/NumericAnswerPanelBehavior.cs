@@ -7,6 +7,7 @@ using UnityEngine;
 public class NumericAnswerPanelBehavior : MonoBehaviour {
 
 	public int answerValue = 50;
+	private int defaultAnswerValue = 50;
 
 	[SerializeField]
 	public GameObject upText;
@@ -82,5 +83,9 @@ public class NumericAnswerPanelBehavior : MonoBehaviour {
 			_downTextMesh.color = _defaultTextColor;
 		}
 	}
-	
+
+	public void resetState()
+	{
+		answerValue = defaultAnswerValue;
+	}	
 }

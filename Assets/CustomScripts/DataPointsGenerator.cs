@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DataPointsGenerator : MonoBehaviour {
+public class DataPointsGenerator {
 
 	private int numberDataPoints = 0;
 	private int closestDistance = 0;

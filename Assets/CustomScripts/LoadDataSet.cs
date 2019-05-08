@@ -62,9 +62,6 @@ public class LoadDataSet : MonoBehaviour {
 
     private DataPointsManager dataPoinstsManager;
 
-	// Use this for initialization
-	void Start () { }
-
     private void Awake()
     {
         //_map.OnInitialized += placeBarChart;
@@ -220,12 +217,12 @@ public class LoadDataSet : MonoBehaviour {
         var currentQuestion = StudyPlot.Instance.currentQuestion();
         if (currentQuestion.task == Task.EstimateSinglePoint)
         {
-            var bar = _bars[currentQuestion.dataPoint1Index];
+            var bar = _bars[currentQuestion.dataPoint1Idx];
         }
         else if (currentQuestion.task == Task.PickLargerDataPoint)
         { 
-            var bar1 = _bars[currentQuestion.dataPoint1Index];
-            var bar2 = _bars[currentQuestion.dataPoint2Index];
+            var bar1 = _bars[currentQuestion.dataPoint1Idx];
+            var bar2 = _bars[currentQuestion.dataPoint2Idx];
         }
     }
 
@@ -236,5 +233,56 @@ public class LoadDataSet : MonoBehaviour {
         builder.Replace(@"\u00A0", " ");
 
         return builder.ToString().Trim();
+    }
+
+    void Update()
+    {
+        switch (StudyPlot.Instance.state)
+        {
+            case PlotState.NotStarted:
+                StudyPlot.Instance.setStartQuestionIdx(0);
+                var firstQuestion = StudyPlot.Instance.startPlot();
+                handleQuestion(firstQuestion);
+                break;
+            case PlotState.OnDoingQuestion:
+                break;
+            case PlotState.OnCompletedQuestion:
+                var nextQuestion = StudyPlot.Instance.nextQuestion();
+                handleQuestion(nextQuestion);
+                break;
+            case PlotState.OnFinished:
+                break;
+            default:
+                break;
+        }
+    }
+
+    void handleQuestion(Question question)
+    {
+        if (question == null)
+            return;
+        switch(question.task)
+        {
+            case Task.EstimateSinglePoint:
+                handleEstimateQuestion(question);
+                break;
+            case Task.PickLargerDataPoint:
+                handleOptionQuestion(question);
+                break;
+            default:
+                break;
+        }
+    }
+
+    void handleEstimateQuestion(Question question)
+    {
+        // Highlight a single bar
+        // Switch controller to Numeric answer mode
+    }
+
+    void handleOptionQuestion(Question question)
+    {
+        // Highlight two bars
+        // Switch controller to option answer mode
     }
 }

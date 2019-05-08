@@ -11,12 +11,12 @@ public class UserResponse
 	public float completionTime {get; set;}
 	public int answer {get; set;}
 
-	public void start() 
+	public UserResponse(Question question)
 	{
-		
+		this.question = question;
 	}
-	
-	public void complete()
+
+	public void save()
 	{
 
 	}

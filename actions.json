@@ -30,7 +30,11 @@
       "type": "boolean"
     },
     {
-      "name": "/actions/default/in/PadLong",
+      "name": "/actions/default/in/PadLeft",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/PadRight",
       "type": "boolean"
     },
     {

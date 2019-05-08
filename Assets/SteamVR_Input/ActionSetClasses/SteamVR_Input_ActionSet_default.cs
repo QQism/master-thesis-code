@@ -73,11 +73,19 @@ namespace Valve.VR
             }
         }
         
-        public virtual SteamVR_Action_Boolean PadLong
+        public virtual SteamVR_Action_Boolean PadLeft
         {
             get
             {
-                return SteamVR_Actions.default_PadLong;
+                return SteamVR_Actions.default_PadLeft;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean PadRight
+        {
+            get
+            {
+                return SteamVR_Actions.default_PadRight;
             }
         }
         

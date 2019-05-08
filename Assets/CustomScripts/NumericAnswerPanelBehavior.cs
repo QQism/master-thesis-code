@@ -4,7 +4,7 @@ using TMPro;
 
 using UnityEngine;
 
-public class AnswerPanelBehavior : MonoBehaviour {
+public class NumericAnswerPanelBehavior : MonoBehaviour {
 
 	public int answerValue = 50;
 

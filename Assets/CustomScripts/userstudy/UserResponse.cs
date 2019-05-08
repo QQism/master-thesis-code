@@ -10,4 +10,14 @@ public class UserResponse
 	public float startTime {get; set;}
 	public float completionTime {get; set;}
 	public int answer {get; set;}
+
+	public void start() 
+	{
+		
+	}
+	
+	public void complete()
+	{
+
+	}
 }

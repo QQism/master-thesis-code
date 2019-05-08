@@ -8,12 +8,11 @@ public class StudyPlot
 	private static StudyPlot instance = null;
 	private static readonly object padlock = new object();
 
-	public List<MapDataPoint> mapDataPoints {get; set;}
-	public float maxValue {get; set;}
+	private List<Question> _quesitons {get; set;}
 
-	StudyPlot()
-	{
-	}
+	private int _currentQuestionId;
+
+	public int userId;
 
 	public static StudyPlot Instance
 	{
@@ -28,15 +27,35 @@ public class StudyPlot
 			}
 		}
 	}
+	StudyPlot()
+	{
+		_quesitons = new List<Question>() {
+			new Question(1, Task.EstimateSinglePoint, VisualisationType.MapCone, 10),
+			new Question(2, Task.PickLargerDataPoint, VisualisationType.MapCone, 10, 20)
+		};
+	}
 
-	public void setStartQuestionIndex(int questionId)
+	public void setStartQuestionIdx(int questionIdx)
+	{
+		_currentQuestionId = questionIdx;
+	}
+
+	public void startResponse()
 	{
 
 	}
 
+	public Question currentQuestion()
+	{
+		return _quesitons[_currentQuestionId];
+	}
+
 	public Question nextQuestion()
 	{
-		return null;
+		if (_currentQuestionId >= _quesitons.Count)
+			return null;
+
+		return _quesitons[++_currentQuestionId];
 	}
 
 	public UserResponse nextResponse()

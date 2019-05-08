@@ -24,12 +24,6 @@ public enum VisualisationType
     BarCone,
 }
 
-public enum ConeType {
-    None,
-    BarCone,
-    MapCone,
-}
-
 public class LoadDataSet : MonoBehaviour {
     public AbstractMap _map;
 
@@ -41,8 +35,6 @@ public class LoadDataSet : MonoBehaviour {
     public GameObject _player = null;
 
     public VisualisationType _visualisationType = VisualisationType.InPlaceBars;
-
-    public ConeType _coneType = ConeType.MapCone;
 
     [Header("In-place Bars")]
     public Transform _barsContainer;
@@ -174,24 +166,6 @@ public class LoadDataSet : MonoBehaviour {
                 mapCone.initializeWithData();
                 break;
         }
-
-        /*
-        switch(_coneType)
-        {
-            case ConeType.BarCone:
-                var barCone = _player.GetComponentInChildren<ConeRenderer>();
-                _controller._attachedCone = barCone;
-                barCone.initializeWithData();
-                break;
-            case ConeType.MapCone:
-                var mapCone = _player.GetComponentInChildren<ConeMapRenderer>();
-                _controller._attachedCone = mapCone;
-                mapCone._meshes = _meshes;
-                mapCone._meshSelectionType = _meshSelectionType;
-                mapCone._barMaxValue = maxValue;
-                mapCone.initializeWithData();
-                break;
-        }*/
     }
 
     void addBlankBars()
@@ -219,10 +193,6 @@ public class LoadDataSet : MonoBehaviour {
         var maxValue = DataPointsManager.Instance.maxValue;
         foreach(MapDataPoint point in points)
         {
-            //Debug.Log(name + "[Height]: " + _map.GeoToWorldPosition(position, true));
-            //Debug.Log(name + "[No Height]: " + _map.GeoToWorldPosition(position, false));
-            //Debug.Log(name + "[Default]: " + _map.GeoToWorldPosition(position));
-
             GameObject bar = Instantiate(_framedBar, point.WorldPosition, Quaternion.identity);
             bar.transform.SetParent(_barsContainer, true);
             bar.transform.name = "Bar " + point.Name;
@@ -244,6 +214,18 @@ public class LoadDataSet : MonoBehaviour {
             barDataComponent.MaxValue = maxValue;
             barDataComponent.updateBars();
             barDataComponent.shear();
+        }
+
+        // Highlight options bars to choose
+        var currentQuestion = StudyPlot.Instance.currentQuestion();
+        if (currentQuestion.task == Task.EstimateSinglePoint)
+        {
+            var bar = _bars[currentQuestion.dataPoint1Index];
+        }
+        else if (currentQuestion.task == Task.PickLargerDataPoint)
+        { 
+            var bar1 = _bars[currentQuestion.dataPoint1Index];
+            var bar2 = _bars[currentQuestion.dataPoint2Index];
         }
     }
 

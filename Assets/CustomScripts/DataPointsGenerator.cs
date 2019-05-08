@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DataPointsGenerator {
+public class DataPointsGenerator: MonoBehaviour {
 
 	private int numberDataPoints = 0;
 	private int closestDistance = 0;
@@ -10,9 +10,9 @@ public class DataPointsGenerator {
 	private float diff = 0.5f;
 
 	// Use this for initialization
-	void Start ()
+	void Start() 
 	{
-		
+			
 	}
 	
 	// Update is called once per frame

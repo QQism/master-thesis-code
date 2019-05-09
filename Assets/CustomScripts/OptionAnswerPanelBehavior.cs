@@ -10,8 +10,8 @@ public class OptionAnswerPanelBehavior : MonoBehaviour {
 	[SerializeField]
 	public GameObject downTick;
 
-	public int optionSelected = 1;
-	private int defaultOption = 1;
+	public int optionSelected = BarOption.Bar1;
+	private int defaultOption = BarOption.Bar1;
 
 	private Transform upTickTransform;
 	private Transform downTickTransform;
@@ -34,11 +34,16 @@ public class OptionAnswerPanelBehavior : MonoBehaviour {
 
 	public void controlerUpdate(ControllerBehavior controller) 
 	{
+		if (controller.confirmAnswer())
+		{
+			StudyPlot.Instance.answer(optionSelected);
+		}
+
 		if (controller.isSelectingLeft())
 		{
-            if (optionSelected != 1)
+            if (optionSelected != BarOption.Bar1)
             {
-				selectOption(1);
+				selectOption(BarOption.Bar1);
             }
             else
             {
@@ -48,9 +53,9 @@ public class OptionAnswerPanelBehavior : MonoBehaviour {
 
         if (controller.isSelectingRight())
 		{
-			if (optionSelected != 2)
+			if (optionSelected != BarOption.Bar2)
 			{ 
-				selectOption(2);
+				selectOption(BarOption.Bar2);
 			}
 			else
 			{	
@@ -63,11 +68,11 @@ public class OptionAnswerPanelBehavior : MonoBehaviour {
 	private void selectOption(int value)
     {
         optionSelected = value;
-		if (optionSelected == 1)
+		if (optionSelected == BarOption.Bar1)
 		{
 			moveTransform(upTickTransform, true);
 			moveTransform(downTickTransform, true);
-		} else if (optionSelected == 2)
+		} else if (optionSelected == BarOption.Bar2)
 		{ 
 			moveTransform(upTickTransform, false);
 			moveTransform(downTickTransform, false);

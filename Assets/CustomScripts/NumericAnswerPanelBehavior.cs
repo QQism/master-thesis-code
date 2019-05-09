@@ -46,6 +46,11 @@ public class NumericAnswerPanelBehavior : MonoBehaviour {
 
 	public void controlerUpdate(ControllerBehavior controller) 
 	{
+		if (controller.confirmAnswer())
+		{
+			StudyPlot.Instance.answer(answerValue);
+		}
+
 		if (controller.isIncreasingValueFaster() || controller.isIncreasingValue()) 
 		{
 
@@ -69,11 +74,6 @@ public class NumericAnswerPanelBehavior : MonoBehaviour {
 				controller.triggerHapticPulse(2);
 			}
 			_changedLastTime = -1;
-		}
-
-		if (controller.confirmAnswer())
-		{
-			StudyPlot.Instance.answer(answerValue);
 		}
 
 		if (_changedLastTime != 0)

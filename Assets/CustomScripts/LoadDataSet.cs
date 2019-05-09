@@ -257,6 +257,8 @@ public class LoadDataSet : MonoBehaviour {
                 handleQuestion(nextQuestion);
                 break;
             case PlotState.OnFinished:
+                Debug.Log("Finish....");
+                Application.Quit();
                 break;
             default:
                 break;
@@ -266,7 +268,9 @@ public class LoadDataSet : MonoBehaviour {
     void handleQuestion(Question question)
     {
         if (question == null)
+        {
             return;
+        }
         switch(question.task)
         {
             case Task.EstimateSinglePoint:

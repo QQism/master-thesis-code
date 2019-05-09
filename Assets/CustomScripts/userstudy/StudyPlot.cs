@@ -70,9 +70,17 @@ public class StudyPlot
 	public void answer(int value)
 	{
 		_currentResponse.answer = value;
+		_currentResponse.completionTime = Time.time;
 		_currentResponse.save();
 
-		state = PlotState.OnCompletedQuestion;
+		if (_currentQuestionId >= _quesitons.Count-1)
+		{
+			state = PlotState.OnFinished;
+		}
+        else
+        {
+            state = PlotState.OnCompletedQuestion;
+        }
 	}
 
 	public Question currentQuestion()
@@ -92,6 +100,7 @@ public class StudyPlot
 		_currentResponse = new UserResponse(nextQuestion);
 		_allResponses.Add(_currentResponse);
 
+		_currentResponse.startTime = Time.time;
 		state = PlotState.OnDoingQuestion;
 
 		return nextQuestion;

@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class FramedBarData : MonoBehaviour {
 
@@ -119,8 +118,6 @@ public class FramedBarData : MonoBehaviour {
         var frameCollider = _frameBar.GetComponent<BoxCollider>();
         frameCollider.size = new Vector3(frameCollider.size.x, meshHeightScaleFactor, frameCollider.size.z);
         moveBarOffTheGround();
-
-        updateArrowIndication();
     }
 
     public void shear()
@@ -162,14 +159,6 @@ public class FramedBarData : MonoBehaviour {
             //updateBars();
             // shear();
         }
-    }
-
-    void updateArrowIndication()
-    {
-        var rectTransform = _indicationArrow.GetComponent<RectTransform>();
-        float rectScale = 1;
-        rectTransform.localScale = new Vector3(rectScale, rectScale / 8, rectScale);
-        rectTransform.localPosition = new Vector3(0, 0.5f + (rectScale / 8) / 2, 0);
     }
 
     void updatePerspectiveScale()

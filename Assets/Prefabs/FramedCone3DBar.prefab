@@ -253,3 +253,6 @@ MonoBehaviour:
   _frameBar: {fileID: 1924695585344114}
   _meshType: 0
   _static: 0
+  _cubeMesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  _cylinderMesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  _quadMesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}

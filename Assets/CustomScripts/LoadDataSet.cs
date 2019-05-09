@@ -200,7 +200,6 @@ public class LoadDataSet : MonoBehaviour {
             barDataComponent.Value = point.Value;
             barDataComponent.LatLong = point.GeoPosition;
             barDataComponent.Elevation = _map.QueryElevationInUnityUnitsAt(point.GeoPosition);
-            barDataComponent.AvailableMeshes = _meshes;
             barDataComponent.MeshType = _meshSelectionType;
 
             _bars.Add(bar);

@@ -28,8 +28,6 @@ public class FramedBarData : MonoBehaviour {
     [SerializeField]
     public GameObject _frameBar;
 
-    public Dictionary<MeshSelection, Mesh> AvailableMeshes { get; set; }
-
     public float Value { get { return _value; } set { _value = value; } }
 
     public Vector2d LatLong { get { return _latLong; } set { _latLong = value; } }
@@ -45,6 +43,10 @@ public class FramedBarData : MonoBehaviour {
 
     public bool _static = false;
     public MapDataPoint mapDataPoint { get; set; }
+
+    public Mesh _cubeMesh;
+    public Mesh _cylinderMesh;
+    public Mesh _quadMesh;
 
     private Vector3 _originalScale;
 
@@ -100,11 +102,8 @@ public class FramedBarData : MonoBehaviour {
             _frameBarFilter.sharedMesh == null)
             return;
 
-        if (AvailableMeshes == null)
-            return;
-
-        _dataBar.GetComponent<MeshFilter>().mesh = AvailableMeshes[_meshType];
-        _frameBar.GetComponent<MeshFilter>().mesh = AvailableMeshes[_meshType];
+        _dataBar.GetComponent<MeshFilter>().mesh = getMesh();
+        _frameBar.GetComponent<MeshFilter>().mesh = getMesh();
 
         var meshHeightScaleFactor = heightScaleFactor();
         scaleMesh(meshHeightScaleFactor);
@@ -230,5 +229,24 @@ public class FramedBarData : MonoBehaviour {
         dataMaterial.SetInt("_OutlineOn", 0);
         frameMaterial.SetInt("_OutlineOn", 0);
         mapDataPoint.Selected = false;
+    }
+
+    Mesh getMesh()
+    {
+        Mesh mesh;
+        switch(_meshType)
+        {
+            case MeshSelection.Cube:
+                mesh = _cubeMesh;
+                break;
+            case MeshSelection.Quad:
+                mesh = _quadMesh;
+                break;
+            case MeshSelection.Cylinder:
+            default:
+                mesh = _cylinderMesh;
+                break;
+        }
+        return mesh;
     }
 }

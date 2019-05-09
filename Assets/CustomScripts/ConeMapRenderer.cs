@@ -185,7 +185,6 @@ public class ConeMapRenderer : MonoBehaviour {
             barDataComponent.Value = point.Value;
             barDataComponent.LatLong = point.GeoPosition;
             barDataComponent.Elevation = 0;
-            barDataComponent.AvailableMeshes = _meshes;
             barDataComponent.MeshType = _meshSelectionType;
 			barDataComponent.MaxValue = _barMaxValue;
 			barDataComponent._static = true;

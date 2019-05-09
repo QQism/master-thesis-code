@@ -202,8 +202,6 @@ public class ControllerBehavior : MonoBehaviour {
         {
             float deltaTime = 0.25f;
             float duration = Time.time - sinceUp;
-			//if (duration > deltaTime)
-			//	Debug.Log("Long Press");
 			return duration > deltaTime;
         }
 		return false;
@@ -226,6 +224,11 @@ public class ControllerBehavior : MonoBehaviour {
 	public bool isSelectingRight()
 	{
 		return padRightAction.GetStateDown(_controller);
+	}
+
+	public bool confirmAnswer()
+	{
+		return pressTrigger.GetStateDown(_controller);
 	}
 
 	void handleHit(RaycastHit hit)

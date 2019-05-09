@@ -18,6 +18,6 @@ public class UserResponse
 
 	public void save()
 	{
-
+		Debug.Log("Save Question: " + id + " - StartTime: " + startTime + " - EndTime: " + completionTime);
 	}
 }

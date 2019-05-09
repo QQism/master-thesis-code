@@ -10,7 +10,7 @@ public class ArrowIndicationBehavior : MonoBehaviour {
 	private TextMeshPro _textMesh;
 	private float _distanceToCamera;
 
-	public float _animationSpeed = 10.0f;
+	public float _animationSpeed = 7.0f;
 	public float _textAnimationThreshold = 2.5f;
 
 	private Vector3 _startPosition;
@@ -21,7 +21,7 @@ public class ArrowIndicationBehavior : MonoBehaviour {
 		_textMesh = GetComponent<TextMeshPro>();
 		_distanceToCamera = Vector3.Distance(Camera.main.transform.position, transform.position);
 		//Debug.Log("Distance: " + _distanceToCamera);
-		float baseDistance = 700;
+		float baseDistance = 300;
 		if (_distanceToCamera > baseDistance)
 		{
 			_scale = (_distanceToCamera/baseDistance * 4.0f);

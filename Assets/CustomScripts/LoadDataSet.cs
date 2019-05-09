@@ -303,8 +303,8 @@ public class LoadDataSet : MonoBehaviour {
         barData1._selectedIdx = BarOption.Bar1;
         barData1.updateBars();
 
-        var bar2 = _bars[question.dataPoint1Idx];
-        var barData2 = bar1.GetComponent<FramedBarData>();
+        var bar2 = _bars[question.dataPoint2Idx];
+        var barData2 = bar2.GetComponent<FramedBarData>();
         barData2._selectedIdx = BarOption.Bar2;
         barData2.updateBars();
 

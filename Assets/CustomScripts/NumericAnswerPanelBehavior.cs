@@ -30,7 +30,7 @@ public class NumericAnswerPanelBehavior : MonoBehaviour {
 
 	void Awake()
 	{
-		_activeTextColor = new Color32(224,255,255, 255);
+		_activeTextColor = new Color32(153, 50, 204, 255);
 		_valueTextMesh = valueText.GetComponent<TextMeshProUGUI>();
 		_upTextMesh = upText.GetComponent<TextMeshProUGUI>();
 		_downTextMesh = downText.GetComponent<TextMeshProUGUI>();
@@ -71,6 +71,11 @@ public class NumericAnswerPanelBehavior : MonoBehaviour {
 			_changedLastTime = -1;
 		}
 
+		if (controller.confirmAnswer())
+		{
+			StudyPlot.Instance.answer(answerValue);
+		}
+
 		if (_changedLastTime != 0)
 		{
 			if (_changedLastTime > 0)
@@ -78,7 +83,8 @@ public class NumericAnswerPanelBehavior : MonoBehaviour {
 			else
 				_downTextMesh.color = _activeTextColor;
 			_changedLastTime = 0;
-		} else {
+		} else 
+		{
 			_upTextMesh.color = _defaultTextColor;
 			_downTextMesh.color = _defaultTextColor;
 		}

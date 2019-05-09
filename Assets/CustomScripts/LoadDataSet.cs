@@ -24,6 +24,12 @@ public enum VisualisationType
     BarCone,
 }
 
+public enum MapSelection
+{
+    Map1,
+    Map2
+}
+
 public class LoadDataSet : MonoBehaviour {
     public AbstractMap _map;
 
@@ -278,13 +284,32 @@ public class LoadDataSet : MonoBehaviour {
     {
         // Highlight a single bar
         var bar = _bars[question.dataPoint1Idx];
-        //bar.tran
+        var barData = bar.GetComponent<FramedBarData>();
+        barData._selectedIdx = BarOption.Bar1;
+        barData.updateBars();
+
+        Debug.Log(bar);
+
         // Switch controller to Numeric answer mode
+        var controllerBehavior = _controller.GetComponent<ControllerBehavior>();
+        controllerBehavior._controllerMode = ControllerMode.NumericAnswerBoard;
     }
 
     void handleOptionQuestion(Question question)
     {
         // Highlight two bars
+        var bar1 = _bars[question.dataPoint1Idx];
+        var barData1 = bar1.GetComponent<FramedBarData>();
+        barData1._selectedIdx = BarOption.Bar1;
+        barData1.updateBars();
+
+        var bar2 = _bars[question.dataPoint1Idx];
+        var barData2 = bar1.GetComponent<FramedBarData>();
+        barData2._selectedIdx = BarOption.Bar2;
+        barData2.updateBars();
+
         // Switch controller to option answer mode
+        var controllerBehavior = _controller.GetComponent<ControllerBehavior>();
+        controllerBehavior._controllerMode = ControllerMode.OptionAnswerBoard;
     }
 }

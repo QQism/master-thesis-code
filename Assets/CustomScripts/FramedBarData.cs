@@ -118,6 +118,9 @@ public class FramedBarData : MonoBehaviour {
         var frameCollider = _frameBar.GetComponent<BoxCollider>();
         frameCollider.size = new Vector3(frameCollider.size.x, meshHeightScaleFactor, frameCollider.size.z);
         moveBarOffTheGround();
+
+        var arrow = _indicationArrow.GetComponent<ArrowIndicationBehavior>();
+        arrow._selectedIdx = _selectedIdx;
     }
 
     public void shear()

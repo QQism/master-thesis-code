@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 23597409651441782}
   - component: {fileID: 222918017840293438}
   - component: {fileID: 114350063280556584}
+  - component: {fileID: 114739024036415878}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Untagged
@@ -103,7 +104,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1891501243333526}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.1941719, y: 15, z: -3.65}
+  m_LocalPosition: {x: -8.2, y: 15, z: 132}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children:
   - {fileID: 4553368206563142}
@@ -400,6 +401,17 @@ MonoBehaviour:
   m_meshFilter: {fileID: 33587567426602934}
   m_boxCollider: {fileID: 0}
   m_TextComponent: {fileID: 114350063280556584}
+--- !u!114 &114739024036415878
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1265862316325824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b512d84a6794efd46ba97a26ec00faa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &136916607258403560
 CapsuleCollider:
   m_ObjectHideFlags: 1

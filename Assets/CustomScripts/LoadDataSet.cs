@@ -210,7 +210,7 @@ public class LoadDataSet : MonoBehaviour {
             FramedBarData barDataComponent = bar.GetComponent<FramedBarData>();
             barDataComponent.MaxValue = maxValue;
             barDataComponent.updateBars();
-            barDataComponent.shear();
+            //barDataComponent.shear();
         }
 
         // Highlight options bars to choose

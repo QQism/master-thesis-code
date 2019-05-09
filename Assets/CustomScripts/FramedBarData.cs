@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class FramedBarData : MonoBehaviour {
 
@@ -28,6 +29,9 @@ public class FramedBarData : MonoBehaviour {
     [SerializeField]
     public GameObject _frameBar;
 
+    [SerializeField]
+    public GameObject _indicationArrow;
+
     public float Value { get { return _value; } set { _value = value; } }
 
     public Vector2d LatLong { get { return _latLong; } set { _latLong = value; } }
@@ -48,11 +52,13 @@ public class FramedBarData : MonoBehaviour {
     public Mesh _cylinderMesh;
     public Mesh _quadMesh;
 
+    [Range(0, 2)]
+    public int _selectedIdx;
+
     private Vector3 _originalScale;
 
     private Material dataMaterial;
     private Material frameMaterial;
-
 
     void Start()
     {
@@ -113,6 +119,8 @@ public class FramedBarData : MonoBehaviour {
         var frameCollider = _frameBar.GetComponent<BoxCollider>();
         frameCollider.size = new Vector3(frameCollider.size.x, meshHeightScaleFactor, frameCollider.size.z);
         moveBarOffTheGround();
+
+        updateArrowIndication();
     }
 
     public void shear()
@@ -151,9 +159,17 @@ public class FramedBarData : MonoBehaviour {
         if (_perspectiveScaling)
         {
             //updatePerspectiveScale();
-            updateBars();
+            //updateBars();
             // shear();
         }
+    }
+
+    void updateArrowIndication()
+    {
+        var rectTransform = _indicationArrow.GetComponent<RectTransform>();
+        float rectScale = 1;
+        rectTransform.localScale = new Vector3(rectScale, rectScale / 8, rectScale);
+        rectTransform.localPosition = new Vector3(0, 0.5f + (rectScale / 8) / 2, 0);
     }
 
     void updatePerspectiveScale()

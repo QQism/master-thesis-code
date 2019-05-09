@@ -35,7 +35,7 @@ public class LocationMarkerBehavior : MonoBehaviour {
 		if (mapDataPoint != null)
             _selected = mapDataPoint.Selected;
 
-		_indicationArrow.transform.LookAt(Camera.main.transform);
+		//_indicationArrow.transform.LookAt(Camera.main.transform);
 		if (_selected) {
 			_indicationArrow.SetActive(true);
 			Vector3 moving = new Vector3(0, Mathf.Sin(_animationSpeed * Time.time)/_textAnimationThreshold + 2.2f, 0);

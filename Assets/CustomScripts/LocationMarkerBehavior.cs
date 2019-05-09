@@ -32,7 +32,9 @@ public class LocationMarkerBehavior : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		_selected = mapDataPoint.Selected;
+		if (mapDataPoint != null)
+            _selected = mapDataPoint.Selected;
+
 		_indicationArrow.transform.LookAt(Camera.main.transform);
 		if (_selected) {
 			_indicationArrow.SetActive(true);

@@ -176,6 +176,7 @@ public class LoadDataSet : MonoBehaviour {
 
             LocationMarkerBehavior barBehavior = bar.GetComponent<LocationMarkerBehavior>();
             barBehavior.mapDataPoint = point;
+            _bars.Add(bar);
         }
     }
 
@@ -277,6 +278,8 @@ public class LoadDataSet : MonoBehaviour {
     void handleEstimateQuestion(Question question)
     {
         // Highlight a single bar
+        var bar = _bars[question.dataPoint1Idx];
+        //bar.tran
         // Switch controller to Numeric answer mode
     }
 

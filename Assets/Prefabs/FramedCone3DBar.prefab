@@ -19,8 +19,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4600707562930144}
-  - component: {fileID: 114961520442391128}
   - component: {fileID: 114350646584960524}
+  - component: {fileID: 114952607883594782}
   m_Layer: 0
   m_Name: FramedCone3DBar
   m_TagString: Untagged
@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lookingAtCamera: 0
---- !u!114 &114961520442391128
+--- !u!114 &114952607883594782
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -233,7 +233,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1019800495448966}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23cb59641e946a04f87b363ec6311193, type: 3}
+  m_Script: {fileID: 11500000, guid: 12f302b3632ad554b999b952bbf972bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _value: 0
@@ -244,12 +244,12 @@ MonoBehaviour:
   _barHeightBuffer: 1.2
   _elevation: 0
   _maxValue: 1
-  _perspectiveWidthScaleFactor: 0.023529412
-  _perspectiveHeightScaleFactor: 0.3764706
+  _perspectiveWidthScaleFactor: 0.022905272
+  _perspectiveHeightScaleFactor: 0.18324217
   _landscapeWidth: 0
-  _perspectiveScaling: 1
+  _perspectiveScaling: 0
   _distanceToScreenY: 0
   _dataBar: {fileID: 1315859709506506}
   _frameBar: {fileID: 1924695585344114}
-  _meshType: 1
+  _meshType: 0
   _static: 0

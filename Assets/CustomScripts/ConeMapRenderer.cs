@@ -180,7 +180,7 @@ public class ConeMapRenderer : MonoBehaviour {
             //bar.transform.SetParent(_barsContainer, true);
             bar.transform.name = "Bar " + point.Name;
 
-            FramedBarData barDataComponent = bar.GetComponent<FramedBarData>();
+            FramedConeBarData barDataComponent = bar.GetComponent<FramedConeBarData>();
 			barDataComponent.mapDataPoint = point;
             barDataComponent.Value = point.Value;
             barDataComponent.LatLong = point.GeoPosition;

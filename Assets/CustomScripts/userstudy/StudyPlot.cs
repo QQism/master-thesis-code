@@ -83,7 +83,10 @@ public class StudyPlot
 	public Question nextQuestion()
 	{
 		if (_currentQuestionId >= _quesitons.Count-1)
+		{
+			state = PlotState.OnFinished;
 			return null;
+		}
 
 		var nextQuestion = _quesitons[++_currentQuestionId];
 		_currentResponse = new UserResponse(nextQuestion);

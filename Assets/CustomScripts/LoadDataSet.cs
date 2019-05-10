@@ -274,10 +274,10 @@ public class LoadDataSet : MonoBehaviour {
         switch(question.task)
         {
             case Task.EstimateSinglePoint:
-                handleEstimateQuestion(question);
+                //handleEstimateQuestion(question);
                 break;
             case Task.PickLargerDataPoint:
-                handleOptionQuestion(question);
+                //handleOptionQuestion(question);
                 break;
             default:
                 break;

@@ -18,6 +18,9 @@ public class LocationMarkerBehavior : MonoBehaviour {
 	private Material _cylinderMaterial;
 
 	public MapDataPoint mapDataPoint {get; set;}
+
+    [Range(0, 2)]
+    public int _selectedIdx;
 	// Use this for initialization
 
 	void Awake() {

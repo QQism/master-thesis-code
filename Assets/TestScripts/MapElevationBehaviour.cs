@@ -19,7 +19,7 @@ public class MapElevationBehaviour : MonoBehaviour {
 	}
 	
 	void Update() {
-		//onLoadMap();	
+		onLoadMap();	
 	}
 
 	void onLoadMap()
@@ -37,10 +37,10 @@ public class MapElevationBehaviour : MonoBehaviour {
         //                                            point.WorldPosition.z);
 
 		_sphere.transform.position = point.WorldPosition;
-        _sphere.transform.position = new Vector3(point.WorldPosition.x,
-                                                    _sphere.transform.localScale.y,
-                                                    point.WorldPosition.z);
+        //_sphere.transform.position = new Vector3(point.WorldPosition.x,
+        //                                            _sphere.transform.localScale.y,
+        //                                            point.WorldPosition.z);
 
-		Debug.Log("Mt hood World Position: " + point.WorldPosition);
+		//Debug.Log("Mt hood World Position: " + point.WorldPosition);
 	}	
 }

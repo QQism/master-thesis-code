@@ -53,15 +53,16 @@
 			float _TickTransparency;
 			float _TickThickness;
 			float _LevelScale;
-			int _OnTop;
 			float _TickStep;
+			int _OnTop;
 
 			v2f vert (appdata v)
 			{
-				v2f o;
+				// To avoid warning "not completely initialized"
+				v2f o = (v2f)0;
 
+				// Distorting the quad to become a traperzoid
 				float avg = (_UpperScale + _LowerScale)/2.0;
-
 				v.vertex.x *=  avg + (v.vertex.z * (_UpperScale - avg));
 
 				o.vertex = UnityObjectToClipPos(v.vertex);
@@ -114,8 +115,7 @@
 				tick_pos = (i.og_vertex.z + bottom_end) % step;
 				topOffset = i.og_vertex.z + bottom_end + _TickThickness;
 				bottomOffset = i.og_vertex.z + bottom_end - _TickThickness;
-
-				
+	
 				// 1 if is tick, 0 if not 
 				float condition = and(and(
 										when_lt(topOffset, full_range),
@@ -129,7 +129,7 @@
 				//col = tex2D(_MainTex, i.uv) * _CustomColor;
 				col = tex2D(_MainTex, i.uv) * color;
 				col.a = transparency;
-							
+
 				/*
 				if ((topOffset < full_range && bottomOffset > 0) &&
 					(tick_pos >= (step - _TickThickness) || tick_pos <= _TickThickness))
@@ -145,7 +145,6 @@
 
 				//col = tex2D(_MainTex, i.uv) * _CustomColor;
 				//col.a = _Transparency;
-				
 				return col;
 			}
 			ENDCG

@@ -32,6 +32,13 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 	[Range(0, 1)]
 	public float _tickTransparency = 0.8f;
 
+	public float _angle = 0;
+
+	public float _no = 0;
+
+	public float _miterAngle = 90;
+
+	public int _quadsCount = 0;
 
 	void Awake()
 	{
@@ -113,5 +120,10 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 
 		topMaterial.SetFloat("_TickTransparency", _tickTransparency);
 		bottomMaterial.SetFloat("_TickTransparency", _tickTransparency);
+
+		topMaterial.SetFloat("_RotationAngle", _angle * _no);
+		topMaterial.SetFloat("_MiterAngle", _miterAngle);
+
+		topMaterial.SetInt("_QuadsCount", _quadsCount);
 	}
 }

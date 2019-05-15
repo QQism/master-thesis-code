@@ -50,7 +50,7 @@ public class ConeRenderer : MonoBehaviour {
 
 	void Start()
 	{
-		initializeWithData(new List<MapDataPoint>(), 0);
+		//initializeWithData(new List<MapDataPoint>(), 0);
 	}
 
 	void OnValidate()
@@ -68,29 +68,29 @@ public class ConeRenderer : MonoBehaviour {
 			UpdateBars();
 	}
 
-	public void initializeWithData(List<MapDataPoint> dataPoints, float maxValue)
-	{
-		_dataPoints = dataPoints;
-		_maxDataPointValue = maxValue;
-		//return;
+    public void initializeWithData()
+    {
+        _dataPoints = DataPointsManager.Instance.mapDataPoints;
+        _maxDataPointValue = DataPointsManager.Instance.maxValue;
+        //return;
 
-		clearData();
+        clearData();
         for (int i = 0; i < _quadsCount; i++)
         {
             GameObject bar = Instantiate(_quad, transform.position, Quaternion.identity);
-			bar.name = "Bar " + i.ToString();
+            bar.name = "Bar " + i.ToString();
             bar.transform.SetParent(transform);
-			var traperzoid = bar.GetComponent<TrapezoidBarBehavior>();
-			traperzoid._level = 0;
-			bars.Add(bar);
+            var traperzoid = bar.GetComponent<TrapezoidBarBehavior>();
+            traperzoid._level = 0;
+            bars.Add(bar);
         }
-		UpdateBars();
+        UpdateBars();
 
-		if (_dataPoints.Count == 0)
-			return;
+        if (_dataPoints.Count == 0)
+            return;
 
-		mapDataPointsToBars();
-	}
+        mapDataPointsToBars();
+    }
 
 	private void clearData()
 	{
@@ -125,6 +125,10 @@ public class ConeRenderer : MonoBehaviour {
 			traperzoid._ticksCount = _ticksCount;
 			traperzoid._tickThickness = _tickThickness;
 			traperzoid._tickTransparency = _tickTransparency;
+			traperzoid._angle = rotateYAngle;
+			traperzoid._miterAngle = _miterAngle;
+			traperzoid._no = i;
+			traperzoid._quadsCount = _quadsCount;
 			traperzoid.ReCalculateScale();
 
 			// Reset the bar rotation and position before rotating and translating
@@ -216,5 +220,10 @@ public class ConeRenderer : MonoBehaviour {
 			}
 		}
 		return costs;
+	}
+
+	public void controlerUpdate(ControllerBehavior controller) 
+	{
+
 	}
 }

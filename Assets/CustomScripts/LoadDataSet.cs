@@ -6,6 +6,7 @@ using Mapbox.Unity.Map.TileProviders;
 using Mapbox.Unity.Utilities;
 using Mapbox.Utils;
 using Mapbox.Unity.Location;
+using Mapbox.Unity.MeshGeneration.Data;
 using System.Text;
 using System;
 
@@ -36,6 +37,7 @@ public class LoadDataSet : MonoBehaviour {
     private String datasetDir = "Datasets";
 
     private String datasetFile = "vic_wateruse_2008_2009.csv";
+    private String testDatasetFile = "data_20190515141314.csv";
 
     [SerializeField]
     public GameObject _player = null;
@@ -68,11 +70,21 @@ public class LoadDataSet : MonoBehaviour {
 
     private DataPointsManager dataPoinstsManager;
 
+    private bool mapFullyLoaded = false;
+
+    private float mapMaxX = -Mathf.Infinity;
+    private float mapMaxY = -Mathf.Infinity;
+
+    private float mapMinX = Mathf.Infinity;
+    private float mapMinY = Mathf.Infinity;
+
     private void Awake()
     {
         //_map.OnInitialized += placeBarChart;
 
         _map.OnInitialized += loadCSVData;
+        _map.OnMapRedrawn += mapRedraw;
+        _map.OnUpdated += mapUpdate;
 
         if (_meshSelectionType == MeshSelection.Cube)
         {
@@ -88,6 +100,8 @@ public class LoadDataSet : MonoBehaviour {
 
     void loadCSVData()
     {
+        float maxValue = 0;
+        /*
         string filePath = String.Join(System.IO.Path.DirectorySeparatorChar.ToString(), new string[] {
             Application.dataPath,
             datasetDir,
@@ -102,7 +116,6 @@ public class LoadDataSet : MonoBehaviour {
         string[] lines = data.Split('\n');
         List<MapDataPoint> dataPoints = new List<MapDataPoint>();
 
-        float maxValue = 0;
         string[] filters = { "Melbourne Cbd", "Caulfield North", "Clayton" };
         for (int i = 1; i < lines.Length; i++)
         {
@@ -142,14 +155,15 @@ public class LoadDataSet : MonoBehaviour {
                 maxValue = point.Value;
         }
 
-        DataPointsManager.Instance.maxValue = maxValue;
+        Debug.Log("Number of records: " + lines.Length.ToString());
+        
 
+        DataPointsManager.Instance.maxValue = maxValue;
         _meshes = new Dictionary<MeshSelection, Mesh>();
         _meshes.Add(MeshSelection.Cube, _cubeMesh);
         _meshes.Add(MeshSelection.Cylinder, _cylinderMesh);
         _meshes.Add(MeshSelection.Quad, _quadMesh);
         // Skip the header
-        Debug.Log("Number of records: " + lines.Length.ToString());
         switch(_visualisationType)
         {
             case VisualisationType.InPlaceBars:
@@ -171,6 +185,7 @@ public class LoadDataSet : MonoBehaviour {
                 mapCone.initializeWithData();
                 break;
         }
+        */
     }
 
     void addBlankBars()
@@ -245,6 +260,15 @@ public class LoadDataSet : MonoBehaviour {
 
     void Update()
     {
+        if (!mapFullyLoaded)
+        {
+            Dictionary<Mapbox.Map.UnwrappedTileId, UnityTile> dict = _map.MapVisualizer.ActiveTiles;
+            Debug.Log("Tile count: " + dict.Count);
+            readSizeOfMap();
+            loadTestDataset(testDatasetFile);
+            mapFullyLoaded = true;
+        }
+
         switch (StudyPlot.Instance.state)
         {
             case PlotState.NotStarted:
@@ -317,5 +341,114 @@ public class LoadDataSet : MonoBehaviour {
         // Switch controller to option answer mode
         var controllerBehavior = _controller.GetComponent<ControllerBehavior>();
         controllerBehavior._controllerMode = ControllerMode.OptionAnswerBoard;
+    }
+
+    void readSizeOfMap() {
+        // Convert to the furthest
+        // find the smallest/largest x and y
+
+        UnityTile[] tiles = GetComponentsInChildren<UnityTile>(true);
+        Debug.Log("Number of tiles: " + tiles.Length);
+        for(int i=0; i < tiles.Length; i++) {
+            UnityTile tile = tiles[i];
+            float x = tile.transform.position.x;
+            float y = tile.transform.position.z;
+            if (x > mapMaxX)
+                mapMaxX = x;
+
+            if (x < mapMinX)
+                mapMinX = x;
+
+            if (y > mapMaxY)
+                mapMaxY = y;
+
+            if (y < mapMinY)
+                mapMinY = y;
+        }
+
+        float tileLength = 50;
+        mapMaxX += tileLength;
+        mapMaxY += tileLength;
+        mapMinX -= tileLength;
+        mapMinY -= tileLength;
+
+        Debug.Log("Max X: " + mapMaxX);
+        Debug.Log("Max Y: " + mapMaxY);
+        Debug.Log("Min X: " + mapMinX);
+        Debug.Log("Min Y: " + mapMinY);
+    }
+
+    void loadTestDataset(string filename) 
+    {
+        string filePath = String.Join(System.IO.Path.DirectorySeparatorChar.ToString(), new string[] {
+            Application.dataPath,
+            datasetDir,
+            filename
+        });
+
+        string data = System.IO.File.ReadAllText(filePath);
+        string[] lines = data.Split('\n');
+        List<MapDataPoint> dataPoints = new List<MapDataPoint>();
+
+        float maxValue = 1;
+
+        for (int i = 1; i < lines.Length; i++)
+        {
+            string[] lineData = lines[i].Split(',');
+            
+            if (lineData.Length < 3) continue;
+
+            MapDataPoint point = new MapDataPoint();
+            point.Name = "Point " + i;
+            point.Value = float.Parse(lineData[2]);
+
+            float x = ((float.Parse(lineData[0]) + 1) * (Mathf.Abs(mapMaxX) + Mathf.Abs(mapMinX)) / 2) - Mathf.Abs(mapMinX);
+            float z = ((float.Parse(lineData[1]) + 1) * (Mathf.Abs(mapMaxY) + Mathf.Abs(mapMinY)) / 2) - Mathf.Abs(mapMinY);
+
+            Vector2d latLong = _map.WorldToGeoPosition(new Vector3(x, 0, z));
+            float height = _map.QueryElevationInUnityUnitsAt(latLong);
+            point.GeoPosition = latLong;
+            point.WorldPosition = new Vector3(x, height, z);
+            Debug.Log("Pos " + i + " : " + point.WorldPosition.ToString());
+            DataPointsManager.Instance.mapDataPoints.Add(point);
+        }
+
+        DataPointsManager.Instance.maxValue = maxValue;
+        _meshes = new Dictionary<MeshSelection, Mesh>();
+        _meshes.Add(MeshSelection.Cube, _cubeMesh);
+        _meshes.Add(MeshSelection.Cylinder, _cylinderMesh);
+        _meshes.Add(MeshSelection.Quad, _quadMesh);
+        // Skip the header
+        switch(_visualisationType)
+        {
+            case VisualisationType.InPlaceBars:
+                addInPlaceBars();
+                break;
+            case VisualisationType.BarCone:
+                addBlankBars();
+                var barCone = _player.GetComponentInChildren<ConeRenderer>();
+                _controller._attachedCone = barCone;
+                barCone.initializeWithData();
+                break;
+            case VisualisationType.MapCone:
+                addBlankBars();
+                var mapCone = _player.GetComponentInChildren<ConeMapRenderer>();
+                _controller._attachedCone = mapCone;
+                mapCone._meshes = _meshes;
+                mapCone._meshSelectionType = _meshSelectionType;
+                mapCone._barMaxValue = maxValue;
+                mapCone.initializeWithData();
+                break;
+        }
+    }
+
+    void mapRedraw()
+    {
+        Debug.Log("Map redrawn");
+    }
+
+    void mapUpdate()
+    {
+        Debug.Log("map update");
     }
 }

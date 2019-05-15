@@ -8,7 +8,9 @@ public class DataPointsManager {
 	private static readonly object padlock = new object();
 
 	public List<MapDataPoint> mapDataPoints {get; set;}
+	public List<MapDataPoint> mapTestDataPoints {get; set;}
 	public float maxValue {get; set;}
+	public float testMaxValue {get; set;}
 
 	DataPointsManager()
 	{
@@ -32,5 +34,6 @@ public class DataPointsManager {
 	void initializeData()
 	{
 		mapDataPoints = new List<MapDataPoint>();
+		mapTestDataPoints = new List<MapDataPoint>();
 	}
 }

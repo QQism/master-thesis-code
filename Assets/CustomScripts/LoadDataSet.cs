@@ -96,6 +96,8 @@ public class LoadDataSet : MonoBehaviour {
 
         Debug.Log("File path:" + filePath);
 
+        Debug.Log("User position: " + _map.WorldToGeoPosition(new Vector3(13.65f, 23.1f, -87.2f)));
+
         string data = System.IO.File.ReadAllText(filePath);
         string[] lines = data.Split('\n');
         List<MapDataPoint> dataPoints = new List<MapDataPoint>();

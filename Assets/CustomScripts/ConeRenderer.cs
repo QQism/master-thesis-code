@@ -151,7 +151,7 @@ public class ConeRenderer : MonoBehaviour {
 			var point = _dataPoints[i];
 			var bar = bars[_barsAssignments[i]*2];
 			var traperzoid = bar.GetComponent<TrapezoidBarBehavior>();
-
+			traperzoid.mapDataPoint = point;
 			traperzoid._level = 1/_maxDataPointValue * point.Value;
 			traperzoid.ReCalculateScale();
 

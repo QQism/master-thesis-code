@@ -13,8 +13,10 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 	[Header("Data Volume")]
 	[Range(0, 1)]
 	public float _level = 0.5f;
-	private GameObject _topBar;
-	private GameObject _bottomBar;
+	private GameObject _frameBar;
+	private GameObject _dataBar;
+    [SerializeField]
+    public GameObject _indicationArrow;
 
 	[Header("Main Colors")]
 	[Range(0, 1)]
@@ -40,21 +42,55 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 
 	public int _quadsCount = 0;
 
+	private Material dataMaterial;
+	private Material frameMaterial;
+
+	private MapDataPoint _mapDataPoint;
+
+	public MapDataPoint mapDataPoint
+	{
+		get
+		{
+			return _mapDataPoint;
+		}
+		set
+		{
+            _mapDataPoint = value;
+            var arrow = _indicationArrow.GetComponent<SmallArrowIndicationBehavior>();
+            arrow.mapDataPoint = value;
+            _mapDataPoint.OnPoseEnter += onPoseEnter;
+            _mapDataPoint.OnPoseLeave += onPoseLeave;
+
+            PoseBehavior dataPose = _dataBar.gameObject.AddComponent(typeof(PoseBehavior)) as PoseBehavior;
+            if (dataPose)
+            {
+                dataPose.onPoseEnter += _mapDataPoint.poseEnter;
+                dataPose.onPoseLeave += _mapDataPoint.poseLeave;
+            }
+            PoseBehavior framePose = _frameBar.gameObject.AddComponent(typeof(PoseBehavior)) as PoseBehavior;
+            if (framePose)
+            {
+                framePose.onPoseEnter += _mapDataPoint.poseEnter;
+                framePose.onPoseLeave += _mapDataPoint.poseLeave;
+            }
+		}
+	}
+
 	void Awake()
 	{
 		GameObject container = transform.Find("RotationContainer").gameObject;
-		_topBar = container.transform.Find("Top").gameObject;
-		_bottomBar = container.transform.Find("Bottom").gameObject;
+		_frameBar = container.transform.Find("Top").gameObject;
+		_dataBar = container.transform.Find("Bottom").gameObject;
 
 		// Create copies of materials 
-		Renderer topRenderer =  _topBar.GetComponent<Renderer>();
-		Renderer bottomRenderer =  _bottomBar.GetComponent<Renderer>();
+		Renderer topRenderer =  _frameBar.GetComponent<Renderer>();
+		Renderer bottomRenderer =  _dataBar.GetComponent<Renderer>();
 
-        Material topMaterial = new Material(topRenderer.sharedMaterial);
-        Material bottomMaterial = new Material(bottomRenderer.sharedMaterial);
+        frameMaterial = new Material(topRenderer.sharedMaterial);
+        dataMaterial = new Material(bottomRenderer.sharedMaterial);
 
-		topRenderer.sharedMaterial = topMaterial;
-		bottomRenderer.sharedMaterial = bottomMaterial;
+		topRenderer.sharedMaterial = frameMaterial;
+		bottomRenderer.sharedMaterial = dataMaterial;
 	}
 
 	void OnValidate()
@@ -64,7 +100,7 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 
 	public GameObject BottomBar()
 	{
-		return _bottomBar;
+		return _dataBar;
 	}
 	
 	// Update is called once per frame
@@ -74,23 +110,23 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 
 	public void ReCalculateScale()
 	{
-		if (_topBar == null || _bottomBar == null)
+		if (_frameBar == null || _dataBar == null)
 			return;
 
 		float bottomScale = _level;
 		float topScale = 1 - _level;
 
-		_bottomBar.transform.localScale = new Vector3(1, 1, bottomScale);
-		_topBar.transform.localScale = new Vector3(1, 1, topScale);
+		_dataBar.transform.localScale = new Vector3(1, 1, bottomScale);
+		_frameBar.transform.localScale = new Vector3(1, 1, topScale);
 
-		Vector3 oldBottomPosition = _bottomBar.transform.localPosition;
-		Vector3 oldTopPosition = _topBar.transform.localPosition;
+		Vector3 oldBottomPosition = _dataBar.transform.localPosition;
+		Vector3 oldTopPosition = _frameBar.transform.localPosition;
 
-		_bottomBar.transform.localPosition = new Vector3(oldBottomPosition.x, oldBottomPosition.y, _level - 1);
-		_topBar.transform.localPosition = new Vector3(oldTopPosition.x, oldTopPosition.y, _level);
+		_dataBar.transform.localPosition = new Vector3(oldBottomPosition.x, oldBottomPosition.y, _level - 1);
+		_frameBar.transform.localPosition = new Vector3(oldTopPosition.x, oldTopPosition.y, _level);
 
-		Material topMaterial =  _topBar.GetComponent<Renderer>().sharedMaterial;
-		Material bottomMaterial =  _bottomBar.GetComponent<Renderer>().sharedMaterial;
+		Material topMaterial =  _frameBar.GetComponent<Renderer>().sharedMaterial;
+		Material bottomMaterial =  _dataBar.GetComponent<Renderer>().sharedMaterial;
 
 		if (topMaterial == null || bottomMaterial == null)
 			return;
@@ -126,4 +162,20 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 
 		topMaterial.SetInt("_QuadsCount", _quadsCount);
 	}
+
+    void onPoseEnter()
+    {
+        Debug.Log("Pose enter: " + name);
+        dataMaterial.SetInt("_OutlineOn", 1);
+        frameMaterial.SetInt("_OutlineOn", 1);
+        mapDataPoint.Selected = true;
+    }
+
+    void onPoseLeave()
+    {
+        Debug.Log("Pose leave: " + name);
+        dataMaterial.SetInt("_OutlineOn", 0);
+        frameMaterial.SetInt("_OutlineOn", 0);
+        mapDataPoint.Selected = false;
+    }
 }

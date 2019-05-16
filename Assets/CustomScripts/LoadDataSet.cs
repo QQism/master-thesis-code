@@ -83,8 +83,6 @@ public class LoadDataSet : MonoBehaviour {
         //_map.OnInitialized += placeBarChart;
 
         _map.OnInitialized += loadCSVData;
-        _map.OnMapRedrawn += mapRedraw;
-        _map.OnUpdated += mapUpdate;
 
         if (_meshSelectionType == MeshSelection.Cube)
         {
@@ -300,10 +298,10 @@ public class LoadDataSet : MonoBehaviour {
         switch(question.task)
         {
             case Task.EstimateSinglePoint:
-                //handleEstimateQuestion(question);
+                handleEstimateQuestion(question);
                 break;
             case Task.PickLargerDataPoint:
-                //handleOptionQuestion(question);
+                handleOptionQuestion(question);
                 break;
             default:
                 break;
@@ -312,13 +310,29 @@ public class LoadDataSet : MonoBehaviour {
 
     void handleEstimateQuestion(Question question)
     {
-        // Highlight a single bar
-        var bar = _bars[question.dataPoint1Idx];
-        var barData = bar.GetComponent<FramedBarData>();
-        barData._selectedIdx = BarOption.Bar1;
-        barData.updateBars();
+        //TODO: instead of check _visualisationType, use question.visualisationType
+        switch (_visualisationType)
+        {
+            case VisualisationType.InPlaceBars:
+                DataPointsManager.Instance.mapDataPoints[question.dataPoint1Idx].showQuestionOption1();
+                // Highlight a single bar
+                /* 
+                var bar = _bars[question.dataPoint1Idx];
+                var barData = bar.GetComponent<FramedBarData>();
+                barData._selectedIdx = BarOption.Bar1;
+                barData.updateBars();
+                Debug.Log(bar);
+                */
 
-        Debug.Log(bar);
+                break;
+            case VisualisationType.BarCone:
+                break;
+            case VisualisationType.MapCone:
+                DataPointsManager.Instance.mapDataPoints[question.dataPoint1Idx].showQuestionOption1();
+                break;
+            default:
+                break;
+        }
 
         // Switch controller to Numeric answer mode
         var controllerBehavior = _controller.GetComponent<ControllerBehavior>();
@@ -328,6 +342,9 @@ public class LoadDataSet : MonoBehaviour {
     void handleOptionQuestion(Question question)
     {
         // Highlight two bars
+        DataPointsManager.Instance.mapDataPoints[question.dataPoint1Idx].showQuestionOption1();
+        DataPointsManager.Instance.mapDataPoints[question.dataPoint2Idx].showQuestionOption2();
+        /* 
         var bar1 = _bars[question.dataPoint1Idx];
         var barData1 = bar1.GetComponent<FramedBarData>();
         barData1._selectedIdx = BarOption.Bar1;
@@ -337,6 +354,7 @@ public class LoadDataSet : MonoBehaviour {
         var barData2 = bar2.GetComponent<FramedBarData>();
         barData2._selectedIdx = BarOption.Bar2;
         barData2.updateBars();
+        */
 
         // Switch controller to option answer mode
         var controllerBehavior = _controller.GetComponent<ControllerBehavior>();
@@ -440,15 +458,5 @@ public class LoadDataSet : MonoBehaviour {
                 mapCone.initializeWithData();
                 break;
         }
-    }
-
-    void mapRedraw()
-    {
-        Debug.Log("Map redrawn");
-    }
-
-    void mapUpdate()
-    {
-        Debug.Log("map update");
     }
 }

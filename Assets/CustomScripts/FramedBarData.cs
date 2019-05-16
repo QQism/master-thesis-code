@@ -45,7 +45,6 @@ public class FramedBarData : MonoBehaviour {
     public MeshSelection MeshType { get { return _meshType; } set { _meshType = value; } }
 
     public bool _static = false;
-    public MapDataPoint mapDataPoint { get; set; }
 
     public Mesh _cubeMesh;
     public Mesh _cylinderMesh;
@@ -59,6 +58,35 @@ public class FramedBarData : MonoBehaviour {
     private Material dataMaterial;
     private Material frameMaterial;
 
+    private MapDataPoint _mapDataPoint;
+    public MapDataPoint mapDataPoint
+    {
+        get
+        {
+            return _mapDataPoint;
+        }
+        set
+        {
+            _mapDataPoint = value;
+            var arrow = _indicationArrow.GetComponent<ArrowIndicationBehavior>();
+            arrow.mapDataPoint = value;
+            _mapDataPoint.OnPoseEnter += onPoseEnter;
+            _mapDataPoint.OnPoseLeave += onPoseLeave;
+
+            PoseBehavior dataPose = _dataBar.gameObject.AddComponent(typeof(PoseBehavior)) as PoseBehavior;
+            if (dataPose)
+            {
+                dataPose.onPoseEnter += _mapDataPoint.poseEnter;
+                dataPose.onPoseLeave += _mapDataPoint.poseLeave;
+            }
+            PoseBehavior framePose = _frameBar.gameObject.AddComponent(typeof(PoseBehavior)) as PoseBehavior;
+            if (framePose)
+            {
+                framePose.onPoseEnter += _mapDataPoint.poseEnter;
+                framePose.onPoseLeave += _mapDataPoint.poseLeave;
+            }
+        }
+    }
     void Start()
     {
         _originalScale = transform.localScale;
@@ -69,19 +97,6 @@ public class FramedBarData : MonoBehaviour {
 
     void initializeDataAndFrameComponents()
     {
-        PoseBehavior dataPose = _dataBar.gameObject.AddComponent(typeof(PoseBehavior)) as PoseBehavior;
-        if (dataPose)
-        {
-            dataPose.onPoseEnter += onPoseEnter;
-            dataPose.onPoseLeave += onPoseLeave;
-        }
-        PoseBehavior framePose = _frameBar.gameObject.AddComponent(typeof(PoseBehavior)) as PoseBehavior;
-        if (framePose)
-        {
-            framePose.onPoseEnter += onPoseEnter;
-            framePose.onPoseLeave += onPoseLeave;
-        }
-
         // Create copies of materials 
         Renderer dataRenderer = _dataBar.GetComponent<Renderer>();
         Renderer frameRenderer = _frameBar.GetComponent<Renderer>();
@@ -120,7 +135,6 @@ public class FramedBarData : MonoBehaviour {
         moveBarOffTheGround();
 
         var arrow = _indicationArrow.GetComponent<ArrowIndicationBehavior>();
-        arrow._selectedIdx = _selectedIdx;
     }
 
     public void shear()
@@ -233,7 +247,7 @@ public class FramedBarData : MonoBehaviour {
         Debug.Log("Pose enter: " + name);
         dataMaterial.SetInt("_OutlineOn", 1);
         frameMaterial.SetInt("_OutlineOn", 1);
-        mapDataPoint.Selected = true;
+        //mapDataPoint.Selected = true;
     }
 
     void onPoseLeave()
@@ -241,7 +255,7 @@ public class FramedBarData : MonoBehaviour {
         Debug.Log("Pose leave: " + name);
         dataMaterial.SetInt("_OutlineOn", 0);
         frameMaterial.SetInt("_OutlineOn", 0);
-        mapDataPoint.Selected = false;
+        //mapDataPoint.Selected = false;
     }
 
     Mesh getMesh()

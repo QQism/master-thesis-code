@@ -26,7 +26,6 @@ public class ConeMapRenderer : MonoBehaviour {
 
 	public float _height;
 
-
 	private Vector3 _originPosition = Vector3.zero;
 
 	private float _faceHeight = 0;

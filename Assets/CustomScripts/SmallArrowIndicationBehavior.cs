@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class ArrowIndicationBehavior : MonoBehaviour {
+public class SmallArrowIndicationBehavior : MonoBehaviour {
 	public float _scale = 1;
 	private RectTransform _rectTransform;
 	private TextMeshPro _textMesh;
@@ -41,7 +41,7 @@ public class ArrowIndicationBehavior : MonoBehaviour {
 		float baseDistance = 300;
 		if (_distanceToCamera > baseDistance)
 		{
-			_scale = (_distanceToCamera/baseDistance * 4.0f);
+			_scale = 1; //(_distanceToCamera/baseDistance * 4.0f);
 		}
 	}
 	
@@ -69,9 +69,10 @@ public class ArrowIndicationBehavior : MonoBehaviour {
 
 	void animate()
 	{
-			Vector3 moving = new Vector3(0, Mathf.Sin(_animationSpeed * Time.time)/_textAnimationThreshold * _scale + _scale, 0);
+			Vector3 moving = new Vector3(0, Mathf.Sin(_animationSpeed * Time.time)/_textAnimationThreshold * _scale/12 + _scale/20, 0);
         	_rectTransform.localPosition = new Vector3(0, 0.5f + (_scale / 8) / 2, 0);
 			_rectTransform.position = _rectTransform.position + moving;
+			//_rectTransform.position = _rectTransform.position;
 	}
 
 	void OnQuestionOption1ToShow()

@@ -26,6 +26,8 @@ public class FramedConeBarData : MonoBehaviour {
     public GameObject _dataBar;
     [SerializeField]
     public GameObject _frameBar;
+    [SerializeField]
+    public GameObject _indicationArrow;
 
     public float Value { get { return _value; } set { _value = value; } }
 
@@ -41,7 +43,6 @@ public class FramedConeBarData : MonoBehaviour {
     public MeshSelection MeshType { get { return _meshType; } set { _meshType = value; } }
 
     public bool _static = false;
-    public MapDataPoint mapDataPoint { get; set; }
 
     public Mesh _cubeMesh;
     public Mesh _cylinderMesh;
@@ -52,6 +53,35 @@ public class FramedConeBarData : MonoBehaviour {
     private Material dataMaterial;
     private Material frameMaterial;
 
+    private MapDataPoint _mapDataPoint;
+    public MapDataPoint mapDataPoint
+    {
+        get
+        {
+            return _mapDataPoint;
+        }
+        set
+        {
+            _mapDataPoint = value;
+            var arrow = _indicationArrow.GetComponent<SmallArrowIndicationBehavior>();
+            arrow.mapDataPoint = value;
+            _mapDataPoint.OnPoseEnter += onPoseEnter;
+            _mapDataPoint.OnPoseLeave += onPoseLeave;
+
+            PoseBehavior dataPose = _dataBar.gameObject.AddComponent(typeof(PoseBehavior)) as PoseBehavior;
+            if (dataPose)
+            {
+                dataPose.onPoseEnter += _mapDataPoint.poseEnter;
+                dataPose.onPoseLeave += _mapDataPoint.poseLeave;
+            }
+            PoseBehavior framePose = _frameBar.gameObject.AddComponent(typeof(PoseBehavior)) as PoseBehavior;
+            if (framePose)
+            {
+                framePose.onPoseEnter += _mapDataPoint.poseEnter;
+                framePose.onPoseLeave += _mapDataPoint.poseLeave;
+            }
+        }
+    }
 
     void Start()
     {
@@ -63,19 +93,6 @@ public class FramedConeBarData : MonoBehaviour {
 
     void initializeDataAndFrameComponents()
     {
-        PoseBehavior dataPose = _dataBar.gameObject.AddComponent(typeof(PoseBehavior)) as PoseBehavior;
-        if (dataPose)
-        {
-            dataPose.onPoseEnter += onPoseEnter;
-            dataPose.onPoseLeave += onPoseLeave;
-        }
-        PoseBehavior framePose = _frameBar.gameObject.AddComponent(typeof(PoseBehavior)) as PoseBehavior;
-        if (framePose)
-        {
-            framePose.onPoseEnter += onPoseEnter;
-            framePose.onPoseLeave += onPoseLeave;
-        }
-
         // Create copies of materials 
         Renderer dataRenderer = _dataBar.GetComponent<Renderer>();
         Renderer frameRenderer = _frameBar.GetComponent<Renderer>();
@@ -234,6 +251,7 @@ public class FramedConeBarData : MonoBehaviour {
         frameMaterial.SetInt("_OutlineOn", 0);
         mapDataPoint.Selected = false;
     }
+
     Mesh getMesh()
     {
         Mesh mesh;

@@ -44,7 +44,13 @@ public class StudyPlot
 		_allResponses = new List<UserResponse>();
 		_quesitons = new List<Question>() {
 			new Question(1, Task.EstimateSinglePoint, VisualisationType.MapCone, 10),
-			new Question(2, Task.PickLargerDataPoint, VisualisationType.MapCone, 10, 20)
+			new Question(2, Task.PickLargerDataPoint, VisualisationType.MapCone, 10, 20),
+			new Question(3, Task.EstimateSinglePoint, VisualisationType.MapCone, 8),
+			new Question(4, Task.PickLargerDataPoint, VisualisationType.MapCone, 22, 33),
+			new Question(5, Task.EstimateSinglePoint, VisualisationType.MapCone, 50),
+			new Question(6, Task.PickLargerDataPoint, VisualisationType.MapCone, 44, 80),
+			new Question(7, Task.EstimateSinglePoint, VisualisationType.MapCone, 87),
+			new Question(8, Task.PickLargerDataPoint, VisualisationType.MapCone, 86, 94),
 		};
 	}
 

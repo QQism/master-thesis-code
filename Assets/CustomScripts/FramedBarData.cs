@@ -188,8 +188,8 @@ public class FramedBarData : MonoBehaviour {
     void moveBarOffTheGround()
     { 
         //transform.position = new Vector3(transform.position.x, _elevation + _maxHeight/2, transform.position.z);
-        //transform.position = new Vector3(transform.position.x, _elevation + transform.localScale.y/2, transform.position.z);
-        transform.position = new Vector3(transform.position.x, transform.localScale.y/2, transform.position.z);
+        transform.position = new Vector3(transform.position.x, _elevation + transform.localScale.y/2, transform.position.z);
+        //transform.position = new Vector3(transform.position.x, transform.localScale.y/2, transform.position.z);
     }
 
     void scaleDataBarToValue(float meshScaleFactor=1)

@@ -277,6 +277,7 @@ public class LoadDataSet : MonoBehaviour {
             case PlotState.OnDoingQuestion:
                 break;
             case PlotState.OnCompletedQuestion:
+                completeQuestion(StudyPlot.Instance.currentQuestion());
                 var nextQuestion = StudyPlot.Instance.nextQuestion();
                 handleQuestion(nextQuestion);
                 break;
@@ -302,6 +303,26 @@ public class LoadDataSet : MonoBehaviour {
                 break;
             case Task.PickLargerDataPoint:
                 handleOptionQuestion(question);
+                break;
+            default:
+                break;
+        }
+    }
+
+    void completeQuestion(Question question)
+    {
+        if (question == null)
+        {
+            return;
+        }
+        switch(question.task)
+        {
+            case Task.EstimateSinglePoint:
+                DataPointsManager.Instance.mapDataPoints[question.dataPoint1Idx].completeQuestionOption1();
+                break;
+            case Task.PickLargerDataPoint:
+                DataPointsManager.Instance.mapDataPoints[question.dataPoint1Idx].completeQuestionOption1();
+                DataPointsManager.Instance.mapDataPoints[question.dataPoint2Idx].completeQuestionOption2();
                 break;
             default:
                 break;

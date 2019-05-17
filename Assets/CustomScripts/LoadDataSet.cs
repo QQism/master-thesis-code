@@ -326,6 +326,7 @@ public class LoadDataSet : MonoBehaviour {
 
                 break;
             case VisualisationType.BarCone:
+                DataPointsManager.Instance.mapDataPoints[question.dataPoint1Idx].showQuestionOption1();
                 break;
             case VisualisationType.MapCone:
                 DataPointsManager.Instance.mapDataPoints[question.dataPoint1Idx].showQuestionOption1();

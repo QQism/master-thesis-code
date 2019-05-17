@@ -63,7 +63,7 @@ public class FramedConeBarData : MonoBehaviour {
         set
         {
             _mapDataPoint = value;
-            var arrow = _indicationArrow.GetComponent<SmallArrowIndicationBehavior>();
+            var arrow = _indicationArrow.GetComponent<MapConeArrowIndicationBehavior>();
             arrow.mapDataPoint = value;
             _mapDataPoint.OnPoseEnter += onPoseEnter;
             _mapDataPoint.OnPoseLeave += onPoseLeave;

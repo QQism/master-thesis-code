@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class SmallArrowIndicationBehavior : MonoBehaviour {
+public class BarConeArrowIndicationBehavior : MonoBehaviour {
 	public float _scale = 1;
 	private RectTransform _rectTransform;
 	private TextMeshPro _textMesh;
@@ -36,18 +36,12 @@ public class SmallArrowIndicationBehavior : MonoBehaviour {
 	{ 
         _rectTransform = GetComponent<RectTransform>();
 		_textMesh = GetComponent<TextMeshPro>();
-		_distanceToCamera = Vector3.Distance(Camera.main.transform.position, transform.position);
-		//Debug.Log("Distance: " + _distanceToCamera);
-		float baseDistance = 300;
-		if (_distanceToCamera > baseDistance)
-		{
-			_scale = 1; //(_distanceToCamera/baseDistance * 4.0f);
-		}
 	}
 	
 	void Update ()
     {
-		_rectTransform.localScale = new Vector3(_scale, _scale / 8, _scale);
+		//_rectTransform.localScale = new Vector3(_scale, _scale / 8, _scale);
+		_rectTransform.localScale  = new Vector3(_scale/8, _scale/8, _scale/8);
 
         switch (_state)
         {

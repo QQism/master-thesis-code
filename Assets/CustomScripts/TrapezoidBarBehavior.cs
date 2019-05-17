@@ -56,7 +56,7 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 		set
 		{
             _mapDataPoint = value;
-            var arrow = _indicationArrow.GetComponent<SmallArrowIndicationBehavior>();
+            var arrow = _indicationArrow.GetComponent<BarConeArrowIndicationBehavior>();
             arrow.mapDataPoint = value;
             _mapDataPoint.OnPoseEnter += onPoseEnter;
             _mapDataPoint.OnPoseLeave += onPoseLeave;
@@ -81,6 +81,8 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 		GameObject container = transform.Find("RotationContainer").gameObject;
 		_frameBar = container.transform.Find("Top").gameObject;
 		_dataBar = container.transform.Find("Bottom").gameObject;
+		var arrow = transform.Find("Arrow");
+		_indicationArrow = arrow.gameObject;
 
 		// Create copies of materials 
 		Renderer topRenderer =  _frameBar.GetComponent<Renderer>();
@@ -125,42 +127,42 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 		_dataBar.transform.localPosition = new Vector3(oldBottomPosition.x, oldBottomPosition.y, _level - 1);
 		_frameBar.transform.localPosition = new Vector3(oldTopPosition.x, oldTopPosition.y, _level);
 
-		Material topMaterial =  _frameBar.GetComponent<Renderer>().sharedMaterial;
-		Material bottomMaterial =  _dataBar.GetComponent<Renderer>().sharedMaterial;
+		//Material frameMaterial =  _frameBar.GetComponent<Renderer>().sharedMaterial;
+		//Material dataMaterial =  _dataBar.GetComponent<Renderer>().sharedMaterial;
 
-		if (topMaterial == null || bottomMaterial == null)
+		if (frameMaterial == null || dataMaterial == null)
 			return;
 
 		float midScale = _upperScale + (_lowerScale -_upperScale) * (1 - _level);
-		topMaterial.SetFloat("_UpperScale", _upperScale);
-		topMaterial.SetFloat("_LowerScale", midScale);
+		frameMaterial.SetFloat("_UpperScale", _upperScale);
+		frameMaterial.SetFloat("_LowerScale", midScale);
 
-		bottomMaterial.SetFloat("_UpperScale", midScale);
-		bottomMaterial.SetFloat("_LowerScale", _lowerScale);
+		dataMaterial.SetFloat("_UpperScale", midScale);
+		dataMaterial.SetFloat("_LowerScale", _lowerScale);
 
-		topMaterial.SetInt("_OnTop", 1);
-		bottomMaterial.SetInt("_OnTop", 0);
+		frameMaterial.SetInt("_OnTop", 1);
+		dataMaterial.SetInt("_OnTop", 0);
 
-		topMaterial.SetFloat("_LevelScale", topScale);
-		bottomMaterial.SetFloat("_LevelScale", bottomScale);
+		frameMaterial.SetFloat("_LevelScale", topScale);
+		dataMaterial.SetFloat("_LevelScale", bottomScale);
 
 		float tickStep = 1.0f / (_ticksCount + 1);
-		topMaterial.SetFloat("_TickStep", tickStep);
-		bottomMaterial.SetFloat("_TickStep", tickStep);
+		frameMaterial.SetFloat("_TickStep", tickStep);
+		dataMaterial.SetFloat("_TickStep", tickStep);
 
-		topMaterial.SetFloat("_TickThickness", _tickThickness / topScale);
-		bottomMaterial.SetFloat("_TickThickness", _tickThickness  / bottomScale);
+		frameMaterial.SetFloat("_TickThickness", _tickThickness / topScale);
+		dataMaterial.SetFloat("_TickThickness", _tickThickness  / bottomScale);
 
-		topMaterial.SetFloat("_Transparency", _topTransparency);
-		bottomMaterial.SetFloat("_Transparency", _bottomTransparency);
+		frameMaterial.SetFloat("_Transparency", _topTransparency);
+		dataMaterial.SetFloat("_Transparency", _bottomTransparency);
 
-		topMaterial.SetFloat("_TickTransparency", _tickTransparency);
-		bottomMaterial.SetFloat("_TickTransparency", _tickTransparency);
+		frameMaterial.SetFloat("_TickTransparency", _tickTransparency);
+		dataMaterial.SetFloat("_TickTransparency", _tickTransparency);
 
-		topMaterial.SetFloat("_RotationAngle", _angle * _no);
-		topMaterial.SetFloat("_MiterAngle", _miterAngle);
+		frameMaterial.SetFloat("_RotationAngle", _angle * _no);
+		frameMaterial.SetFloat("_MiterAngle", _miterAngle);
 
-		topMaterial.SetInt("_QuadsCount", _quadsCount);
+		frameMaterial.SetInt("_QuadsCount", _quadsCount);
 	}
 
     void onPoseEnter()

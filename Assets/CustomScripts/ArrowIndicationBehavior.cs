@@ -93,4 +93,14 @@ public class ArrowIndicationBehavior : MonoBehaviour {
 	{
 		_state = MapDataPoint.MapDataPointState.NotQuestion;
 	}
+    void OnDestroy()
+    {
+        if (_mapDataPoint != null)
+        {
+			_mapDataPoint.OnQuestionOption1ToShow -= OnQuestionOption1ToShow;
+			_mapDataPoint.OnQuestionOption2ToShow -= OnQuestionOption2ToShow;
+			_mapDataPoint.OnQuestionOption1Completed -= OnQuestionOption1Completed;
+			_mapDataPoint.OnQuestionOption2Completed -= OnQuestionOption2Completed;
+        }
+    }
 }

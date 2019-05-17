@@ -88,10 +88,10 @@ public class ConeMapRenderer : MonoBehaviour {
 			return;
 	}
 
-	private void clearData()
+	public void clearData()
 	{
 		foreach(var bar in bars)
-			DestroyImmediate(bar);
+			Destroy(bar);
 
 		bars.Clear();
 	}
@@ -185,7 +185,8 @@ public class ConeMapRenderer : MonoBehaviour {
             barDataComponent.LatLong = point.GeoPosition;
             barDataComponent.Elevation = 0;
             barDataComponent.MeshType = _meshSelectionType;
-			barDataComponent.MaxValue = _barMaxValue;
+			//barDataComponent.MaxValue = _barMaxValue;
+			barDataComponent.MaxValue = 1;//_maxDataPointValue;
 			barDataComponent._static = true;
 
             barDataComponent.updateBars();

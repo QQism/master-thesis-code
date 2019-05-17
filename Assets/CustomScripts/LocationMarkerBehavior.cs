@@ -22,14 +22,14 @@ public class LocationMarkerBehavior : MonoBehaviour {
     {
         set
         {
-			_mapDataPoint = value;	
-			_mapDataPoint.OnPoseEnter += OnPoseEnter;
-			_mapDataPoint.OnPoseLeave += OnPoseLeave;
+            _mapDataPoint = value;
+            _mapDataPoint.OnPoseEnter += OnPoseEnter;
+            _mapDataPoint.OnPoseLeave += OnPoseLeave;
         }
-		get
-		{
-			return _mapDataPoint;
-		}
+        get
+        {
+            return _mapDataPoint;
+        }
     }
 
     [Range(0, 2)]
@@ -65,11 +65,19 @@ public class LocationMarkerBehavior : MonoBehaviour {
 
     void OnPoseEnter()
     {
-		_selected = true;
+        _selected = true;
     }
 
     void OnPoseLeave()
     {
-		_selected = false;
+        _selected = false;
+    }
+    void OnDestroy()
+    {
+        if (_mapDataPoint != null)
+        {
+            _mapDataPoint.OnPoseEnter -= OnPoseEnter;
+            _mapDataPoint.OnPoseLeave -= OnPoseLeave;
+        }
     }
 }

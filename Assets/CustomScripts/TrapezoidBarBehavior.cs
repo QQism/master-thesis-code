@@ -168,16 +168,31 @@ public class TrapezoidBarBehavior : MonoBehaviour {
     void onPoseEnter()
     {
         Debug.Log("Pose enter: " + name);
-        dataMaterial.SetInt("_OutlineOn", 1);
-        frameMaterial.SetInt("_OutlineOn", 1);
+        if (dataMaterial != null)
+            dataMaterial.SetInt("_OutlineOn", 1);
+
+        if (frameMaterial != null)
+            frameMaterial.SetInt("_OutlineOn", 1);
         mapDataPoint.Selected = true;
     }
 
     void onPoseLeave()
     {
         Debug.Log("Pose leave: " + name);
-        dataMaterial.SetInt("_OutlineOn", 0);
-        frameMaterial.SetInt("_OutlineOn", 0);
+        if (dataMaterial != null)
+            dataMaterial.SetInt("_OutlineOn", 0);
+
+        if (frameMaterial != null)
+            frameMaterial.SetInt("_OutlineOn", 0);
         mapDataPoint.Selected = false;
+    }
+
+    void OnDestroy()
+    {
+        if (_mapDataPoint != null)
+        {
+            _mapDataPoint.OnPoseEnter -= onPoseEnter;
+            _mapDataPoint.OnPoseLeave -= onPoseLeave;
+        }
     }
 }

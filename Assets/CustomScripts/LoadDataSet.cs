@@ -19,6 +19,7 @@ public enum MeshSelection
 
 public enum VisualisationType
 {
+    None,
     InPlaceBars,
     ProjectingCone,
     MapCone,
@@ -233,8 +234,8 @@ public class LoadDataSet : MonoBehaviour {
             barDataComponent.updateBars();
             //barDataComponent.shear();
         }
-
         // Highlight options bars to choose
+        /*
         var currentQuestion = StudyPlot.Instance.currentQuestion();
         if (currentQuestion.task == Task.EstimateSinglePoint)
         {
@@ -245,6 +246,7 @@ public class LoadDataSet : MonoBehaviour {
             var bar1 = _bars[currentQuestion.dataPoint1Idx];
             var bar2 = _bars[currentQuestion.dataPoint2Idx];
         }
+        */
     }
 
     string normalisedTextData(string data)
@@ -296,6 +298,42 @@ public class LoadDataSet : MonoBehaviour {
         {
             return;
         }
+
+        bool changed = (_visualisationType != question.visualisationType);
+
+        if (changed)
+        {
+            _visualisationType = question.visualisationType;
+
+            var barCone = _player.GetComponentInChildren<ConeRenderer>();
+            var mapCone = _player.GetComponentInChildren<ConeMapRenderer>();
+
+            switch (_visualisationType)
+            {
+                case VisualisationType.InPlaceBars:
+                    destroyInPlaceBars();
+                    addInPlaceBars();
+                    barCone.clearData();
+                    mapCone.clearData();
+                    _controller._attachedCone = null;
+                    break;
+                case VisualisationType.BarCone:
+                    destroyInPlaceBars();
+                    addBlankBars();
+                    _controller._attachedCone = barCone;
+                    barCone.initializeWithData();
+                    mapCone.clearData();
+                    break;
+                case VisualisationType.MapCone:
+                    destroyInPlaceBars();
+                    barCone.clearData();
+                    addBlankBars();
+                    _controller._attachedCone = mapCone;
+                    mapCone.initializeWithData();
+                    break;
+            }
+        }
+
         switch(question.task)
         {
             case Task.EstimateSinglePoint:
@@ -459,6 +497,7 @@ public class LoadDataSet : MonoBehaviour {
         _meshes.Add(MeshSelection.Cylinder, _cylinderMesh);
         _meshes.Add(MeshSelection.Quad, _quadMesh);
         // Skip the header
+        /*
         switch(_visualisationType)
         {
             case VisualisationType.InPlaceBars:
@@ -480,5 +519,18 @@ public class LoadDataSet : MonoBehaviour {
                 mapCone.initializeWithData();
                 break;
         }
+        */
+        var mapCone = _player.GetComponentInChildren<ConeMapRenderer>();
+        mapCone._meshes = _meshes;
+        mapCone._meshSelectionType = _meshSelectionType;
+    }
+
+    void destroyInPlaceBars()
+    {
+        //_barsContainer.DetachChildren();
+		foreach(var bar in _bars)
+			Destroy(bar);
+
+		_bars.Clear();
     }
 }

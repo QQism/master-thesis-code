@@ -92,10 +92,10 @@ public class ConeRenderer : MonoBehaviour {
         mapDataPointsToBars();
     }
 
-	private void clearData()
+	public void clearData()
 	{
 		foreach(var bar in bars)
-			DestroyImmediate(bar);
+			Destroy(bar);
 
 		bars.Clear();
 	}

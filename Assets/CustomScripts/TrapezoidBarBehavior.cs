@@ -179,11 +179,12 @@ public class TrapezoidBarBehavior : MonoBehaviour {
     void onPoseLeave()
     {
         Debug.Log("Pose leave: " + name);
-        if (dataMaterial != null)
+        if (dataMaterial != null && frameMaterial != null)
+		{
             dataMaterial.SetInt("_OutlineOn", 0);
-
-        if (frameMaterial != null)
             frameMaterial.SetInt("_OutlineOn", 0);
+		}
+
         mapDataPoint.Selected = false;
     }
 

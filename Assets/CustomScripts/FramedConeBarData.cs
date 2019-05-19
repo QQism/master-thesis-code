@@ -239,22 +239,26 @@ public class FramedConeBarData : MonoBehaviour {
     void onPoseEnter()
     {
         Debug.Log("Pose enter: " + name);
-        if (dataMaterial != null)
+        if (dataMaterial != null && frameMaterial != null) 
+        {
             dataMaterial.SetInt("_OutlineOn", 1);
-
-        if (frameMaterial != null)
+            dataMaterial.SetFloat("_OutlineWidth", 1.05f);
             frameMaterial.SetInt("_OutlineOn", 1);
+            frameMaterial.SetFloat("_OutlineWidth", 1.05f);
+        }
+
         mapDataPoint.Selected = true;
     }
 
     void onPoseLeave()
     {
         Debug.Log("Pose leave: " + name);
-        if (dataMaterial != null)
+        if (dataMaterial != null && frameMaterial != null)
+        {
             dataMaterial.SetInt("_OutlineOn", 0);
-
-        if (frameMaterial != null)
             frameMaterial.SetInt("_OutlineOn", 0);
+        }
+
         mapDataPoint.Selected = false;
     }
 

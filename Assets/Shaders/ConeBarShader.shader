@@ -60,7 +60,7 @@
 				if (_OutlineOn)
 				{
 					c = tex2D(_MainTex, i.uv);
-					c *= float4(1, 1, 1, 1);
+					c *= _OutlineColor;// float4(1, 1, 1, 1);
 				}
 				else
 				{

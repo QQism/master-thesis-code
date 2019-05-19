@@ -285,7 +285,7 @@ public class LoadDataSet : MonoBehaviour {
                 break;
             case PlotState.OnFinished:
                 Debug.Log("Finish....");
-                Application.Quit();
+                quitGame();
                 break;
             default:
                 break;
@@ -369,20 +369,10 @@ public class LoadDataSet : MonoBehaviour {
 
     void handleEstimateQuestion(Question question)
     {
-        //TODO: instead of check _visualisationType, use question.visualisationType
         switch (_visualisationType)
         {
             case VisualisationType.InPlaceBars:
                 DataPointsManager.Instance.mapDataPoints[question.dataPoint1Idx].showQuestionOption1();
-                // Highlight a single bar
-                /* 
-                var bar = _bars[question.dataPoint1Idx];
-                var barData = bar.GetComponent<FramedBarData>();
-                barData._selectedIdx = BarOption.Bar1;
-                barData.updateBars();
-                Debug.Log(bar);
-                */
-
                 break;
             case VisualisationType.BarCone:
                 DataPointsManager.Instance.mapDataPoints[question.dataPoint1Idx].showQuestionOption1();
@@ -496,30 +486,7 @@ public class LoadDataSet : MonoBehaviour {
         _meshes.Add(MeshSelection.Cube, _cubeMesh);
         _meshes.Add(MeshSelection.Cylinder, _cylinderMesh);
         _meshes.Add(MeshSelection.Quad, _quadMesh);
-        // Skip the header
-        /*
-        switch(_visualisationType)
-        {
-            case VisualisationType.InPlaceBars:
-                addInPlaceBars();
-                break;
-            case VisualisationType.BarCone:
-                addBlankBars();
-                var barCone = _player.GetComponentInChildren<ConeRenderer>();
-                _controller._attachedCone = barCone;
-                barCone.initializeWithData();
-                break;
-            case VisualisationType.MapCone:
-                addBlankBars();
-                var mapCone = _player.GetComponentInChildren<ConeMapRenderer>();
-                _controller._attachedCone = mapCone;
-                mapCone._meshes = _meshes;
-                mapCone._meshSelectionType = _meshSelectionType;
-                mapCone._barMaxValue = maxValue;
-                mapCone.initializeWithData();
-                break;
-        }
-        */
+
         var mapCone = _player.GetComponentInChildren<ConeMapRenderer>();
         mapCone._meshes = _meshes;
         mapCone._meshSelectionType = _meshSelectionType;
@@ -532,5 +499,16 @@ public class LoadDataSet : MonoBehaviour {
 			Destroy(bar);
 
 		_bars.Clear();
+    }
+
+    void quitGame()
+    {
+#if UNITY_EDITOR
+        // Application.Quit() does not work in the editor so
+        // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+         Application.Quit();
+#endif
     }
 }

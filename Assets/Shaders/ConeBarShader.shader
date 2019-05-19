@@ -12,6 +12,7 @@
 
 	SubShader {
 		Tags { "RenderType"="Opaque" "Queue"="Transparent+1" }
+
 		Pass 
 		{
 			Name "Outline"

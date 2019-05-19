@@ -53,6 +53,9 @@ public class FramedBarData : MonoBehaviour {
     [Range(0, 2)]
     public int _selectedIdx;
 
+    public bool _onPosing = false;
+
+	public float _animationSpeed = 6.0f;
     private Vector3 _originalScale;
 
     private Material dataMaterial;
@@ -176,6 +179,22 @@ public class FramedBarData : MonoBehaviour {
             //updateBars();
             // shear();
         }
+
+        if (dataMaterial == null || frameMaterial == null)
+            return;
+
+        if (_onPosing)
+        {
+            dataMaterial.SetInt("_OutlineOn", 1);
+            dataMaterial.SetFloat("_OutlineWidth", 1 + Mathf.Sin(_animationSpeed * Time.time) / 5);
+
+            frameMaterial.SetInt("_OutlineOn", 1);
+            frameMaterial.SetFloat("_OutlineWidth", 1 + Mathf.Sin(_animationSpeed * Time.time) / 5);
+        } else 
+        {
+            dataMaterial.SetInt("_OutlineOn", 0);
+            frameMaterial.SetInt("_OutlineOn", 0);
+        }
     }
 
     void updatePerspectiveScale()
@@ -245,22 +264,28 @@ public class FramedBarData : MonoBehaviour {
     void onPoseEnter()
     {
         Debug.Log("Pose enter: " + name);
+        _onPosing = true;
+        /*
         if (dataMaterial != null)
             dataMaterial.SetInt("_OutlineOn", 1);
 
         if (frameMaterial != null)
             frameMaterial.SetInt("_OutlineOn", 1);
+        */
         //mapDataPoint.Selected = true;
     }
 
     void onPoseLeave()
     {
         Debug.Log("Pose leave: " + name);
+        _onPosing = false;
+        /*
         if (dataMaterial != null)
             dataMaterial.SetInt("_OutlineOn", 0);
 
         if (frameMaterial != null)
             frameMaterial.SetInt("_OutlineOn", 0);
+        */
         //mapDataPoint.Selected = false;
     }
 

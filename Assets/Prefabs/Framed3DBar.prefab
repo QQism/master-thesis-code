@@ -174,7 +174,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: e08c6fcfe0fae4b42bcc18ddac54fe87, type: 2}
+  - {fileID: 2100000, guid: e4487f6e4f12d57448fa2b35d527fae1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -279,7 +279,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: cf9d7615dca20c444b92448cfd3737e2, type: 2}
+  - {fileID: 2100000, guid: a4d13f60881738e40b0863175b810c3a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -554,6 +554,8 @@ MonoBehaviour:
   _cylinderMesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
   _quadMesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
   _selectedIdx: 0
+  _onPosing: 0
+  _animationSpeed: 6
 --- !u!222 &222516368994303844
 CanvasRenderer:
   m_ObjectHideFlags: 1

@@ -10,6 +10,7 @@ public class LocationMarkerBehavior : MonoBehaviour {
 	public float _animationSpeed = 6.0f;
 	public float _textAnimationThreshold = 2.5f;
 
+	public bool _selected = false;
 	private RectTransform _rectTextTransform;
 
 	private Vector3 _startTextPosition;
@@ -17,7 +18,6 @@ public class LocationMarkerBehavior : MonoBehaviour {
 	private Material _cylinderMaterial;
 
 	private MapDataPoint _mapDataPoint;
-	private bool _selected = false;
     public MapDataPoint mapDataPoint
     {
         set

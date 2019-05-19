@@ -11,6 +11,7 @@ public enum Task
 
 public enum Dataset
 {
+	None,
 	Dataset1,
 	Dataset2,
 	Dataset3,

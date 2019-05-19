@@ -79,6 +79,8 @@ public class LoadDataSet : MonoBehaviour {
     private float mapMinX = Mathf.Infinity;
     private float mapMinY = Mathf.Infinity;
 
+    private Dataset _currentDataset = Dataset.None;
+
     private void Awake()
     {
         //_map.OnInitialized += placeBarChart;
@@ -99,8 +101,8 @@ public class LoadDataSet : MonoBehaviour {
 
     void loadCSVData()
     {
-        float maxValue = 0;
         /*
+        float maxValue = 0;
         string filePath = String.Join(System.IO.Path.DirectorySeparatorChar.ToString(), new string[] {
             Application.dataPath,
             datasetDir,
@@ -234,19 +236,6 @@ public class LoadDataSet : MonoBehaviour {
             barDataComponent.updateBars();
             //barDataComponent.shear();
         }
-        // Highlight options bars to choose
-        /*
-        var currentQuestion = StudyPlot.Instance.currentQuestion();
-        if (currentQuestion.task == Task.EstimateSinglePoint)
-        {
-            var bar = _bars[currentQuestion.dataPoint1Idx];
-        }
-        else if (currentQuestion.task == Task.PickLargerDataPoint)
-        { 
-            var bar1 = _bars[currentQuestion.dataPoint1Idx];
-            var bar2 = _bars[currentQuestion.dataPoint2Idx];
-        }
-        */
     }
 
     string normalisedTextData(string data)
@@ -299,6 +288,13 @@ public class LoadDataSet : MonoBehaviour {
             return;
         }
 
+        if (_currentDataset != question.dataset)
+        {
+            _currentDataset = question.dataset;
+            destroyInPlaceBars();
+            addInPlaceBars();
+        }
+
         bool changed = (_visualisationType != question.visualisationType);
 
         if (changed)
@@ -311,23 +307,23 @@ public class LoadDataSet : MonoBehaviour {
             switch (_visualisationType)
             {
                 case VisualisationType.InPlaceBars:
-                    destroyInPlaceBars();
-                    addInPlaceBars();
+                    //destroyInPlaceBars();
+                    //addInPlaceBars();
                     barCone.clearData();
                     mapCone.clearData();
                     _controller._attachedCone = null;
                     break;
                 case VisualisationType.BarCone:
-                    destroyInPlaceBars();
-                    addBlankBars();
+                    //destroyInPlaceBars();
+                    //addBlankBars();
                     _controller._attachedCone = barCone;
                     barCone.initializeWithData();
                     mapCone.clearData();
                     break;
                 case VisualisationType.MapCone:
-                    destroyInPlaceBars();
+                    //destroyInPlaceBars();
                     barCone.clearData();
-                    addBlankBars();
+                    //addBlankBars();
                     _controller._attachedCone = mapCone;
                     mapCone.initializeWithData();
                     break;
@@ -341,6 +337,8 @@ public class LoadDataSet : MonoBehaviour {
                 break;
             case Task.PickLargerDataPoint:
                 handleOptionQuestion(question);
+                break;
+            case Task.PickCloserDataPoint:
                 break;
             default:
                 break;
@@ -359,6 +357,7 @@ public class LoadDataSet : MonoBehaviour {
                 DataPointsManager.Instance.mapDataPoints[question.dataPoint1Idx].completeQuestionOption1();
                 break;
             case Task.PickLargerDataPoint:
+            case Task.PickCloserDataPoint:
                 DataPointsManager.Instance.mapDataPoints[question.dataPoint1Idx].completeQuestionOption1();
                 DataPointsManager.Instance.mapDataPoints[question.dataPoint2Idx].completeQuestionOption2();
                 break;

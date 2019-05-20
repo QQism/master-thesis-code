@@ -45,7 +45,7 @@
 			v2f vert (appdata v)
 			{
 				if (_OutlineOn)
-					v.vertex.xzy *= _OutlineWidth;
+					v.vertex.x *= _OutlineWidth;
 
 				v2f o;
 				o.vertex = UnityObjectToClipPos(v.vertex);

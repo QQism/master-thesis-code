@@ -242,9 +242,9 @@ public class FramedConeBarData : MonoBehaviour {
         if (dataMaterial != null && frameMaterial != null) 
         {
             dataMaterial.SetInt("_OutlineOn", 1);
-            dataMaterial.SetFloat("_OutlineWidth", 1.05f);
+            dataMaterial.SetFloat("_OutlineWidth", 1.1f);
             frameMaterial.SetInt("_OutlineOn", 1);
-            frameMaterial.SetFloat("_OutlineWidth", 1.05f);
+            frameMaterial.SetFloat("_OutlineWidth", 1.1f);
         }
 
         mapDataPoint.Selected = true;

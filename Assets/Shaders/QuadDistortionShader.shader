@@ -13,6 +13,9 @@
 		_LevelScale("Scale Level", Range(0, 1)) = 0.5
 		_TickStep("Tick Step", Range(0, 1)) = 0.25
 		_OnTop("On Top?", Int) = 0
+		_OutlineColor ("Outline Color", Color) = (0, 0, 0, 1)
+		_OutlineWidth ("Outline Width", Range(1.0, 10.0)) = 1.02
+		_OutlineOn("Outline On", Int) = 0
 	}
 	SubShader
 	{
@@ -22,6 +25,76 @@
 		ZWrite Off
 		ZTest Always
 		Blend SrcAlpha OneMinusSrcAlpha
+
+		Pass
+		{
+			Name "Outline"
+			ZWrite Off
+			Blend SrcAlpha OneMinusSrcAlpha
+			CGPROGRAM
+			#pragma vertex vert
+			#pragma fragment frag
+			
+			#include "UnityCG.cginc"
+
+			struct appdata
+			{
+				float4 vertex : POSITION;
+				float2 uv : TEXCOORD0;
+			};
+
+			struct v2f
+			{
+				float2 uv : TEXCOORD0;
+				UNITY_FOG_COORDS(1)
+				float4 vertex : SV_POSITION;
+			};
+
+			sampler2D _MainTex;
+			float4 _OutlineColor;
+			float _OutlineWidth;
+			int _OutlineOn;
+			float _UpperScale;
+			float _LowerScale;
+
+			v2f vert (appdata v)
+			{
+
+				// To avoid warning "not completely initialized"
+				v2f o = (v2f)0;
+
+				// Distorting the quad to become a traperzoid
+				float avg = (_UpperScale + _LowerScale)/2.0;
+				v.vertex.x *=  avg + (v.vertex.z * (_UpperScale - avg));
+
+				if (_OutlineOn)
+					v.vertex.x *= _OutlineWidth;
+
+				//v2f o;
+				o.vertex = UnityObjectToClipPos(v.vertex);
+				o.uv = v.uv;
+				return o;
+			}
+
+			fixed4 frag(v2f i): SV_TARGET
+			{
+				float4 c;
+
+				if (_OutlineOn)
+				{
+					c = tex2D(_MainTex, i.uv);
+					//c *= _OutlineColor;// float4(1, 1, 1, 1);
+					c *= float4(1, 1, 1, 1);
+				}
+				else
+				{
+					c = float4(1, 1, 1, 0);
+				}
+
+				return c;
+			}
+			ENDCG
+		}
 
 		Pass
 		{
@@ -149,5 +222,6 @@
 			}
 			ENDCG
 		}
+
 	}
 }

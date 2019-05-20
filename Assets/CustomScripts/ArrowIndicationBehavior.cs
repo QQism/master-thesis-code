@@ -12,7 +12,7 @@ public class ArrowIndicationBehavior : MonoBehaviour {
 	public float _animationSpeed = 7.0f;
 	public float _textAnimationThreshold = 2.5f;
 
-	private MapDataPoint.MapDataPointState _state = MapDataPoint.MapDataPointState.NotQuestion;
+	public MapDataPoint.MapDataPointState _state = MapDataPoint.MapDataPointState.NotQuestion;
 	private MapDataPoint _mapDataPoint;
 	public MapDataPoint mapDataPoint
 	{

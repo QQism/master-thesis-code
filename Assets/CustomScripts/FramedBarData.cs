@@ -55,7 +55,7 @@ public class FramedBarData : MonoBehaviour {
 
     public bool _onPosing = false;
 
-	public float _animationSpeed = 6.0f;
+	public float _animationSpeed = 3.0f;
     private Vector3 _originalScale;
 
     private Material dataMaterial;
@@ -186,10 +186,10 @@ public class FramedBarData : MonoBehaviour {
         if (_onPosing)
         {
             dataMaterial.SetInt("_OutlineOn", 1);
-            dataMaterial.SetFloat("_OutlineWidth", 1 + Mathf.Sin(_animationSpeed * Time.time) / 5);
+            dataMaterial.SetFloat("_OutlineWidth", 1 + Mathf.Abs(Mathf.Sin(_animationSpeed * Time.time)) / 5);
 
             frameMaterial.SetInt("_OutlineOn", 1);
-            frameMaterial.SetFloat("_OutlineWidth", 1 + Mathf.Sin(_animationSpeed * Time.time) / 5);
+            frameMaterial.SetFloat("_OutlineWidth", 1 + Mathf.Abs(Mathf.Sin(_animationSpeed * Time.time)) / 5);
         } else 
         {
             dataMaterial.SetInt("_OutlineOn", 0);

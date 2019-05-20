@@ -55,7 +55,7 @@ public class FramedBarData : MonoBehaviour {
 
     public bool _onPosing = false;
 
-	public float _animationSpeed = 3.0f;
+	public float _animationSpeed = 4.0f;
     private Vector3 _originalScale;
 
     private Material dataMaterial;
@@ -73,6 +73,9 @@ public class FramedBarData : MonoBehaviour {
             _mapDataPoint = value;
             var arrow = _indicationArrow.GetComponent<ArrowIndicationBehavior>();
             arrow.mapDataPoint = value;
+            var poseArrow = transform.Find("PoseArrow").GetComponent<PoseArrowBehavior>();
+            poseArrow.mapDataPoint = value;
+
             _mapDataPoint.OnPoseEnter += onPoseEnter;
             _mapDataPoint.OnPoseLeave += onPoseLeave;
 

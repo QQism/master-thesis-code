@@ -36,4 +36,12 @@ public class DataPointsManager {
 		mapDataPoints = new List<MapDataPoint>();
 		mapTestDataPoints = new List<MapDataPoint>();
 	}
+
+	public void resetPosing()
+	{
+		foreach(MapDataPoint point in mapDataPoints)
+		{
+			point.poseLeave();
+		}
+	}
 }

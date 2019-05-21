@@ -297,6 +297,8 @@ public class LoadDataSet : MonoBehaviour {
             addInPlaceBars();
         }
 
+        DataPointsManager.Instance.resetPosing();
+
         bool changed = (_visualisationType != question.visualisationType);
 
         if (changed)

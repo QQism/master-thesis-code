@@ -43,14 +43,16 @@ public class StudyPlot
 	{
 		_allResponses = new List<UserResponse>();
 		_quesitons = new List<Question>() {
-			new Question(1, Task.EstimateSinglePoint, VisualisationType.MapCone, Dataset.Dataset1, 10),
-			new Question(2, Task.PickLargerDataPoint, VisualisationType.BarCone, Dataset.Dataset1, 10, 20),
-			new Question(3, Task.EstimateSinglePoint, VisualisationType.InPlaceBars, Dataset.Dataset1, 8),
-			new Question(4, Task.PickLargerDataPoint, VisualisationType.BarCone, Dataset.Dataset1, 22, 33),
-			new Question(5, Task.EstimateSinglePoint, VisualisationType.MapCone, Dataset.Dataset1, 50),
-			new Question(6, Task.PickLargerDataPoint, VisualisationType.InPlaceBars, Dataset.Dataset1, 44, 80),
-			new Question(7, Task.EstimateSinglePoint, VisualisationType.BarCone, Dataset.Dataset1, 87),
-			new Question(8, Task.PickLargerDataPoint, VisualisationType.MapCone, Dataset.Dataset1, 86, 94),
+			new Question(0, Task.EstimateSinglePoint, VisualisationType.MapCone, Dataset.Dataset1, 10),
+			new Question(1, Task.PickLargerDataPoint, VisualisationType.BarCone, Dataset.Dataset1, 10, 20),
+			new Question(2, Task.PickCloserDataPoint, VisualisationType.InPlaceBars, Dataset.Dataset1, 8),
+			new Question(3, Task.PickLargerDataPoint, VisualisationType.BarCone, Dataset.Dataset1, 22, 33),
+			new Question(4, Task.EstimateSinglePoint, VisualisationType.MapCone, Dataset.Dataset1, 50),
+			new Question(5, Task.PickCloserDataPoint, VisualisationType.InPlaceBars, Dataset.Dataset1, 44, 80),
+			new Question(6, Task.EstimateSinglePoint, VisualisationType.BarCone, Dataset.Dataset1, 87),
+			new Question(7, Task.PickLargerDataPoint, VisualisationType.MapCone, Dataset.Dataset1, 86, 94),
+			new Question(8, Task.PickCloserDataPoint, VisualisationType.InPlaceBars, Dataset.Dataset1, 20, 39),
+			new Question(9, Task.EstimateSinglePoint, VisualisationType.BarCone, Dataset.Dataset1, 55),
 		};
 	}
 

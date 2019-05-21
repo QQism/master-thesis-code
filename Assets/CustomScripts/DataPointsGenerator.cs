@@ -45,7 +45,7 @@ public class DataPointsGenerator: MonoBehaviour {
                 float x = Random.Range(furthestLeft, furthestRight);
                 float y = Random.Range(furthestBack, furthestForward);
                 float val = Random.Range(lowestValue, highestValue);
-                writer.WriteLine(x.ToString() + ", " + y.ToString() + ", " + val.ToString());
+                writer.WriteLine(i.ToString() + ", " + x.ToString() + ", " + y.ToString() + ", " + val.ToString());
             }
             writer.Close();
             Debug.Log(string.Format("Dateset generated: {0}", filename));

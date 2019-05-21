@@ -27,6 +27,11 @@ public class Question
 	public int dataPoint2Idx;
 	public int dataPoint3Idx;
 
+	/* If est question, would be in [0, 100]
+	 * If option question, would be in [1, 2]
+	 */
+	public int answer;
+
     public Question(int id, Task task, VisualisationType visualisationType, Dataset dataset, int dataPoint1Idx)
     : this(id, task, visualisationType, dataset, dataPoint1Idx, -1)
     { }

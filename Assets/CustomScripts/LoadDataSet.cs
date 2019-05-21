@@ -38,7 +38,8 @@ public class LoadDataSet : MonoBehaviour {
     private String datasetDir = "Datasets";
 
     private String datasetFile = "vic_wateruse_2008_2009.csv";
-    private String testDatasetFile = "data_20190515141314.csv";
+    private String trainingDatasetFile = "data_20190515141314.csv";
+    private String testDatasetFile = "data_20190521143911.csv";
 
     [SerializeField]
     public GameObject _player = null;
@@ -463,14 +464,14 @@ public class LoadDataSet : MonoBehaviour {
         {
             string[] lineData = lines[i].Split(',');
             
-            if (lineData.Length < 3) continue;
+            if (lineData.Length < 4) continue;
 
             MapDataPoint point = new MapDataPoint();
-            point.Name = "Point " + i;
-            point.Value = float.Parse(lineData[2]);
+            point.Name = "Point " + lineData[0];
+            point.Value = float.Parse(lineData[3]);
 
-            float x = ((float.Parse(lineData[0]) + 1) * (Mathf.Abs(mapMaxX) + Mathf.Abs(mapMinX)) / 2) - Mathf.Abs(mapMinX);
-            float z = ((float.Parse(lineData[1]) + 1) * (Mathf.Abs(mapMaxY) + Mathf.Abs(mapMinY)) / 2) - Mathf.Abs(mapMinY);
+            float x = ((float.Parse(lineData[1]) + 1) * (Mathf.Abs(mapMaxX) + Mathf.Abs(mapMinX)) / 2) - Mathf.Abs(mapMinX);
+            float z = ((float.Parse(lineData[2]) + 1) * (Mathf.Abs(mapMaxY) + Mathf.Abs(mapMinY)) / 2) - Mathf.Abs(mapMinY);
 
             Vector2d latLong = _map.WorldToGeoPosition(new Vector3(x, 0, z));
             float height = _map.QueryElevationInUnityUnitsAt(latLong);

@@ -39,7 +39,7 @@ public class LoadDataSet : MonoBehaviour {
 
     private String datasetFile = "vic_wateruse_2008_2009.csv";
     private String trainingDatasetFile = "data_20190515141314.csv";
-    private String testDatasetFile = "data_20190521143911.csv";
+    private String testDatasetFile = "data_20190521191821.csv";
 
     [SerializeField]
     public GameObject _player = null;

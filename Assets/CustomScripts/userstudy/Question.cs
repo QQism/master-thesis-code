@@ -27,11 +27,6 @@ public class Question
 	public int dataPoint2Idx;
 	public int dataPoint3Idx;
 
-	/* If est question, would be in [0, 100]
-	 * If option question, would be in [1, 2]
-	 */
-	public int answer;
-
 	public Question(int id, Task task, VisualisationType visualisationType, Dataset dataset, int dataPoint1Idx, int dataPoint2Idx)
 	{
 		this.id = id;
@@ -55,5 +50,13 @@ public class Question
 	public static Question createCloser(int id, VisualisationType visualisationType, Dataset dataset, int dataPoint1Idx, int dataPoint2Idx) 
 	{
 		return new Question(id, Task.PickCloserDataPoint, visualisationType, dataset, dataPoint1Idx, dataPoint2Idx);
+	}
+
+	/* If est question, would be in [0, 100]
+	 * If option question, would be in [1, 2]
+	 */
+	public int getAnswer()
+	{
+		return 0;
 	}
 }

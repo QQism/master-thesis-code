@@ -18,6 +18,10 @@ public class UserResponse
 
 	public void save()
 	{
-		Debug.Log("Save Question " + question.id + " - User " + userId + " - StartTime: " + startTime + " - EndTime: " + completionTime);
+        Debug.Log("Save Question " + question.id +
+        " - User " + userId + "answered " + answer + 
+		" - Question Answer " + question.getAnswer() + 
+        " - StartTime: " + startTime +
+        " - EndTime: " + completionTime);
 	}
 }

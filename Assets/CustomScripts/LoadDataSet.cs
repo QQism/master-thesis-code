@@ -331,6 +331,8 @@ public class LoadDataSet : MonoBehaviour {
             }
         }
 
+        _controller.questionTask = question.task;
+
         switch(question.task)
         {
             case Task.EstimateSinglePoint:
@@ -340,6 +342,7 @@ public class LoadDataSet : MonoBehaviour {
                 handleOptionQuestion(question);
                 break;
             case Task.PickCloserDataPoint:
+                handleOptionQuestion(question);
                 break;
             default:
                 break;
@@ -386,11 +389,13 @@ public class LoadDataSet : MonoBehaviour {
 
         // Switch controller to Numeric answer mode
         var controllerBehavior = _controller.GetComponent<ControllerBehavior>();
-        controllerBehavior._controllerMode = ControllerMode.NumericAnswerBoard;
     }
 
     void handleOptionQuestion(Question question)
     {
+        Debug.Log("Datapoint 1: " + question.dataPoint1Idx);
+        Debug.Log("Datapoint 2: " + question.dataPoint2Idx);
+
         // Highlight two bars
         DataPointsManager.Instance.mapDataPoints[question.dataPoint1Idx].showQuestionOption1();
         DataPointsManager.Instance.mapDataPoints[question.dataPoint2Idx].showQuestionOption2();
@@ -408,7 +413,8 @@ public class LoadDataSet : MonoBehaviour {
 
         // Switch controller to option answer mode
         var controllerBehavior = _controller.GetComponent<ControllerBehavior>();
-        controllerBehavior._controllerMode = ControllerMode.OptionAnswerBoard;
+        //controllerBehavior._controllerMode = ControllerMode.OptionAnswerBoard;
+        //controllerBehavior.questionTask = question.task;
     }
 
     void readSizeOfMap() {

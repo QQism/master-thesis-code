@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Valve.VR;
+using TMPro;
 
 public enum ControllerMode {
 	AdjustCone,
@@ -30,6 +31,36 @@ public class ControllerBehavior : MonoBehaviour {
 
 	public GameObject lastHitObject = null;
 
+	public TextMeshPro _instructionText;
+
+	public Task _questionTask;
+	public Task questionTask
+	{
+		get
+		{
+			return _questionTask;
+		}
+		set
+		{
+			_questionTask = value;
+
+            switch (value)
+            {
+                case Task.PickCloserDataPoint:
+                    _instructionText.SetText("Closer");
+                    _controllerMode = ControllerMode.OptionAnswerBoard;
+                    break;
+                case Task.PickLargerDataPoint:
+                    _instructionText.SetText("Higher");
+                    _controllerMode = ControllerMode.OptionAnswerBoard;
+                    break;
+                case Task.EstimateSinglePoint:
+                    _controllerMode = ControllerMode.NumericAnswerBoard;
+                    break;
+            }
+		} 
+	}
+
 	public ControllerMode _controllerMode = ControllerMode.NumericAnswerBoard;
 
 	private Vector3 vectorFoward;
@@ -52,6 +83,12 @@ public class ControllerBehavior : MonoBehaviour {
 		longPresses.Add(padDownAction, 0);
 		longPresses.Add(padLeftAction, 0);
 		longPresses.Add(padRightAction, 0);
+
+        if (_attachedOptionPanel != null)
+        {
+            var instructionPanel = _attachedOptionPanel.transform.Find("InstructionPanel");
+            _instructionText = instructionPanel.Find("InstructionText").GetComponent<TextMeshPro>();
+        }
     }
 	
 	// Update is called once per frame

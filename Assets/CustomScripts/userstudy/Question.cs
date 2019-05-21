@@ -32,9 +32,6 @@ public class Question
 	 */
 	public int answer;
 
-    public Question(int id, Task task, VisualisationType visualisationType, Dataset dataset, int dataPoint1Idx)
-    : this(id, task, visualisationType, dataset, dataPoint1Idx, -1)
-    { }
 	public Question(int id, Task task, VisualisationType visualisationType, Dataset dataset, int dataPoint1Idx, int dataPoint2Idx)
 	{
 		this.id = id;
@@ -43,5 +40,20 @@ public class Question
 		this.dataset = dataset;
 		this.dataPoint1Idx = dataPoint1Idx;
 		this.dataPoint2Idx = dataPoint2Idx;
+	}
+
+	public static Question createEstimate(int id, VisualisationType visualisationType, Dataset dataset, int dataPoint1Idx) 
+	{
+		return new Question(id, Task.EstimateSinglePoint, visualisationType, dataset, dataPoint1Idx, -1);
+	}
+
+	public static Question createLarger(int id, VisualisationType visualisationType, Dataset dataset, int dataPoint1Idx, int dataPoint2Idx) 
+	{
+		return new Question(id, Task.PickLargerDataPoint, visualisationType, dataset, dataPoint1Idx, dataPoint2Idx);
+	}
+
+	public static Question createCloser(int id, VisualisationType visualisationType, Dataset dataset, int dataPoint1Idx, int dataPoint2Idx) 
+	{
+		return new Question(id, Task.PickCloserDataPoint, visualisationType, dataset, dataPoint1Idx, dataPoint2Idx);
 	}
 }

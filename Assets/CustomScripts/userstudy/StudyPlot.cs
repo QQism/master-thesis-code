@@ -43,16 +43,16 @@ public class StudyPlot
 	{
 		_allResponses = new List<UserResponse>();
 		_quesitons = new List<Question>() {
-			new Question(0, Task.EstimateSinglePoint, VisualisationType.MapCone, Dataset.Dataset1, 10),
-			new Question(1, Task.PickLargerDataPoint, VisualisationType.BarCone, Dataset.Dataset1, 10, 20),
-			new Question(2, Task.PickCloserDataPoint, VisualisationType.InPlaceBars, Dataset.Dataset1, 8),
-			new Question(3, Task.PickLargerDataPoint, VisualisationType.BarCone, Dataset.Dataset1, 22, 33),
-			new Question(4, Task.EstimateSinglePoint, VisualisationType.MapCone, Dataset.Dataset1, 50),
-			new Question(5, Task.PickCloserDataPoint, VisualisationType.InPlaceBars, Dataset.Dataset1, 44, 80),
-			new Question(6, Task.EstimateSinglePoint, VisualisationType.BarCone, Dataset.Dataset1, 87),
-			new Question(7, Task.PickLargerDataPoint, VisualisationType.MapCone, Dataset.Dataset1, 86, 94),
-			new Question(8, Task.PickCloserDataPoint, VisualisationType.InPlaceBars, Dataset.Dataset1, 20, 39),
-			new Question(9, Task.EstimateSinglePoint, VisualisationType.BarCone, Dataset.Dataset1, 55),
+			Question.createEstimate(0, VisualisationType.MapCone, Dataset.Dataset1, 10),
+			Question.createLarger(1, VisualisationType.BarCone, Dataset.Dataset1, 10, 20),
+			Question.createCloser(2, VisualisationType.InPlaceBars, Dataset.Dataset1, 8, 43),
+			Question.createLarger(3, VisualisationType.BarCone, Dataset.Dataset1, 22, 33),
+			Question.createEstimate(4, VisualisationType.MapCone, Dataset.Dataset1, 50),
+			Question.createCloser(5, VisualisationType.InPlaceBars, Dataset.Dataset1, 44, 80),
+			Question.createEstimate(6, VisualisationType.BarCone, Dataset.Dataset1, 87),
+			Question.createLarger(7, VisualisationType.MapCone, Dataset.Dataset1, 86, 94),
+			Question.createCloser(8, VisualisationType.InPlaceBars, Dataset.Dataset1, 20, 39),
+			Question.createEstimate(9, VisualisationType.BarCone, Dataset.Dataset1, 55),
 		};
 	}
 

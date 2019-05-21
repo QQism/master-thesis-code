@@ -68,7 +68,7 @@ public class LoadDataSet : MonoBehaviour {
     private Dictionary<MeshSelection, Mesh> _meshes;
 
     [Header("Interaction")]
-    public ControllerBehavior _controller;
+    public ControllerBehavior _leftController;
 
     private DataPointsManager dataPoinstsManager;
 
@@ -312,12 +312,12 @@ public class LoadDataSet : MonoBehaviour {
                     //addInPlaceBars();
                     barCone.clearData();
                     mapCone.clearData();
-                    _controller._attachedCone = null;
+                    _leftController._attachedCone = null;
                     break;
                 case VisualisationType.BarCone:
                     //destroyInPlaceBars();
                     //addBlankBars();
-                    _controller._attachedCone = barCone;
+                    _leftController._attachedCone = barCone;
                     barCone.initializeWithData();
                     mapCone.clearData();
                     break;
@@ -325,13 +325,13 @@ public class LoadDataSet : MonoBehaviour {
                     //destroyInPlaceBars();
                     barCone.clearData();
                     //addBlankBars();
-                    _controller._attachedCone = mapCone;
+                    _leftController._attachedCone = mapCone;
                     mapCone.initializeWithData();
                     break;
             }
         }
 
-        _controller.questionTask = question.task;
+        _leftController.questionTask = question.task;
 
         switch(question.task)
         {
@@ -388,7 +388,7 @@ public class LoadDataSet : MonoBehaviour {
         }
 
         // Switch controller to Numeric answer mode
-        var controllerBehavior = _controller.GetComponent<ControllerBehavior>();
+        var controllerBehavior = _leftController.GetComponent<ControllerBehavior>();
     }
 
     void handleOptionQuestion(Question question)
@@ -412,7 +412,7 @@ public class LoadDataSet : MonoBehaviour {
         */
 
         // Switch controller to option answer mode
-        var controllerBehavior = _controller.GetComponent<ControllerBehavior>();
+        var controllerBehavior = _leftController.GetComponent<ControllerBehavior>();
         //controllerBehavior._controllerMode = ControllerMode.OptionAnswerBoard;
         //controllerBehavior.questionTask = question.task;
     }

@@ -69,6 +69,7 @@ public class LoadDataSet : MonoBehaviour {
 
     [Header("Interaction")]
     public ControllerBehavior _leftController;
+    public ControllerBehavior _rightController;
 
     private DataPointsManager dataPoinstsManager;
 
@@ -313,11 +314,13 @@ public class LoadDataSet : MonoBehaviour {
                     barCone.clearData();
                     mapCone.clearData();
                     _leftController._attachedCone = null;
+                    _rightController._attachedCone = null;
                     break;
                 case VisualisationType.BarCone:
                     //destroyInPlaceBars();
                     //addBlankBars();
                     _leftController._attachedCone = barCone;
+                    _rightController._attachedCone = barCone;
                     barCone.initializeWithData();
                     mapCone.clearData();
                     break;
@@ -326,12 +329,14 @@ public class LoadDataSet : MonoBehaviour {
                     barCone.clearData();
                     //addBlankBars();
                     _leftController._attachedCone = mapCone;
+                    _rightController._attachedCone = mapCone;
                     mapCone.initializeWithData();
                     break;
             }
         }
 
         _leftController.questionTask = question.task;
+        _rightController.questionTask = question.task;
 
         switch(question.task)
         {
@@ -372,49 +377,13 @@ public class LoadDataSet : MonoBehaviour {
 
     void handleEstimateQuestion(Question question)
     {
-        switch (_visualisationType)
-        {
-            case VisualisationType.InPlaceBars:
-                DataPointsManager.Instance.mapDataPoints[question.dataPoint1Idx].showQuestionOption1();
-                break;
-            case VisualisationType.BarCone:
-                DataPointsManager.Instance.mapDataPoints[question.dataPoint1Idx].showQuestionOption1();
-                break;
-            case VisualisationType.MapCone:
-                DataPointsManager.Instance.mapDataPoints[question.dataPoint1Idx].showQuestionOption1();
-                break;
-            default:
-                break;
-        }
-
-        // Switch controller to Numeric answer mode
-        var controllerBehavior = _leftController.GetComponent<ControllerBehavior>();
+        DataPointsManager.Instance.mapDataPoints[question.dataPoint1Idx].showQuestionOption1();
     }
 
     void handleOptionQuestion(Question question)
     {
-        Debug.Log("Datapoint 1: " + question.dataPoint1Idx);
-        Debug.Log("Datapoint 2: " + question.dataPoint2Idx);
-
-        // Highlight two bars
         DataPointsManager.Instance.mapDataPoints[question.dataPoint1Idx].showQuestionOption1();
         DataPointsManager.Instance.mapDataPoints[question.dataPoint2Idx].showQuestionOption2();
-        /* 
-        var bar1 = _bars[question.dataPoint1Idx];
-        var barData1 = bar1.GetComponent<FramedBarData>();
-        barData1._selectedIdx = BarOption.Bar1;
-        barData1.updateBars();
-
-        var bar2 = _bars[question.dataPoint2Idx];
-        var barData2 = bar2.GetComponent<FramedBarData>();
-        barData2._selectedIdx = BarOption.Bar2;
-        barData2.updateBars();
-        */
-
-        // Switch controller to option answer mode
-        var controllerBehavior = _leftController.GetComponent<ControllerBehavior>();
-        //controllerBehavior._controllerMode = ControllerMode.OptionAnswerBoard;
-        //controllerBehavior.questionTask = question.task;
     }
 
     void readSizeOfMap() {

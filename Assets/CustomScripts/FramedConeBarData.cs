@@ -63,8 +63,8 @@ public class FramedConeBarData : MonoBehaviour {
         set
         {
             _mapDataPoint = value;
-            var arrow = _indicationArrow.GetComponent<MapConeArrowIndicationBehavior>();
-            arrow.mapDataPoint = value;
+            //var arrow = _indicationArrow.GetComponent<MapConeArrowIndicationBehavior>();
+            //arrow.mapDataPoint = value;
             _mapDataPoint.OnPoseEnter += onPoseEnter;
             _mapDataPoint.OnPoseLeave += onPoseLeave;
 
@@ -242,9 +242,9 @@ public class FramedConeBarData : MonoBehaviour {
         if (dataMaterial != null && frameMaterial != null) 
         {
             dataMaterial.SetInt("_OutlineOn", 1);
-            dataMaterial.SetFloat("_OutlineWidth", 1.1f);
+            dataMaterial.SetFloat("_OutlineWidth", 1.15f);
             frameMaterial.SetInt("_OutlineOn", 1);
-            frameMaterial.SetFloat("_OutlineWidth", 1.1f);
+            frameMaterial.SetFloat("_OutlineWidth", 1.15f);
         }
 
         mapDataPoint.Selected = true;

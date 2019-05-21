@@ -56,8 +56,8 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 		set
 		{
             _mapDataPoint = value;
-            var arrow = _indicationArrow.GetComponent<BarConeArrowIndicationBehavior>();
-            arrow.mapDataPoint = value;
+            //var arrow = _indicationArrow.GetComponent<BarConeArrowIndicationBehavior>();
+            //arrow.mapDataPoint = value;
             _mapDataPoint.OnPoseEnter += onPoseEnter;
             _mapDataPoint.OnPoseLeave += onPoseLeave;
 

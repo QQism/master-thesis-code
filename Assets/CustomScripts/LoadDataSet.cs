@@ -446,6 +446,10 @@ public class LoadDataSet : MonoBehaviour {
             MapDataPoint point = new MapDataPoint();
             point.Name = "Point " + lineData[0];
             point.Value = float.Parse(lineData[3]);
+            var rawX = float.Parse(lineData[1]);
+            var rawY = float.Parse(lineData[2]);
+
+            point.RawPosition = new Vector2(rawX, rawY);
 
             float x = ((float.Parse(lineData[1]) + 1) * (Mathf.Abs(mapMaxX) + Mathf.Abs(mapMinX)) / 2) - Mathf.Abs(mapMinX);
             float z = ((float.Parse(lineData[2]) + 1) * (Mathf.Abs(mapMaxY) + Mathf.Abs(mapMinY)) / 2) - Mathf.Abs(mapMinY);

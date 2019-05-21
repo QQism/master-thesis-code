@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class MapDataPoint {
 	public string Name {get; set;}
+	public Vector2 RawPosition {get; set;}
 	public Vector2d GeoPosition {get; set;}
 	public Vector3 WorldPosition {get; set;} 
 	public Vector2 ConePosition {get; set;}

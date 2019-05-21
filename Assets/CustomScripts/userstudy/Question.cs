@@ -52,11 +52,45 @@ public class Question
 		return new Question(id, Task.PickCloserDataPoint, visualisationType, dataset, dataPoint1Idx, dataPoint2Idx);
 	}
 
-	/* If est question, would be in [0, 100]
+    /* If est question, would be in [0, 100]
 	 * If option question, would be in [1, 2]
 	 */
-	public int getAnswer()
-	{
-		return 0;
-	}
+    public int getAnswer()
+    {
+		int answer = 0;
+        switch (task)
+        {
+            case Task.EstimateSinglePoint:
+                answer = Mathf.RoundToInt(DataPointsManager.Instance.mapDataPoints[dataPoint1Idx].Value * 100f);
+                break;
+            case Task.PickLargerDataPoint:
+                var dataPointL1 = DataPointsManager.Instance.mapDataPoints[dataPoint1Idx];
+                var dataPointL2 = DataPointsManager.Instance.mapDataPoints[dataPoint2Idx];
+
+                if (dataPointL1.Value > dataPointL2.Value)
+                {
+                    answer = BarOption.Bar1;
+                }
+                else
+                {
+                    answer = BarOption.Bar2;
+                }
+                break;
+            case Task.PickCloserDataPoint:
+                var dataPointC1 = DataPointsManager.Instance.mapDataPoints[dataPoint1Idx];
+                var dataPointC2 = DataPointsManager.Instance.mapDataPoints[dataPoint2Idx];
+
+                if (dataPointC1.RawPosition.magnitude < dataPointC2.RawPosition.magnitude)
+                {
+                    answer = BarOption.Bar1;
+                }
+                else
+                {
+                    answer = BarOption.Bar2;
+                }
+                break;
+        }
+
+        return answer;
+    }
 }

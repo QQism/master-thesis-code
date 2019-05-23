@@ -1,8 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Mapbox.Unity.Map;
 using UnityEngine;
 
 public class DataPointsManager {
+
+	public float MapMaxX = -Mathf.Infinity;
+	public float MapMaxY = -Mathf.Infinity;
+	public float MapMinX = Mathf.Infinity;
+	public float MapMinY = Mathf.Infinity;
+	public AbstractMap Map;
 
 	private static DataPointsManager instance = null;
 	private static readonly object padlock = new object();

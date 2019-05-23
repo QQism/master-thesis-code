@@ -52,4 +52,21 @@ public class DataPointsGenerator: MonoBehaviour {
 			generated = false;
         }
     }
+
+    void generateEstimateQuestions()
+    {
+        // Decide how many groups (k)
+        // Number of questions n = k * 3
+        // Traverse through 
+    }
+
+    void generateHigherQuestion()
+    {
+
+    }
+
+    void generateCloseQuestion()
+    {
+
+    }
 }

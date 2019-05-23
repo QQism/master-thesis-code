@@ -32,12 +32,13 @@ public class FramedBarData : MonoBehaviour {
     public GameObject _indicationArrow;
 
     public float Value { get { return _value; } set { _value = value; } }
-
     public Vector2d LatLong { get { return _latLong; } set { _latLong = value; } }
 
     public float MaxValue { get { return _maxValue; } set { _maxValue = value; } }
 
     public float Elevation { get { return _elevation; } set { _elevation = value; } }
+    
+    public Vector2 _rawPosition;
 
     [SerializeField]
     public MeshSelection _meshType;
@@ -91,6 +92,8 @@ public class FramedBarData : MonoBehaviour {
                 framePose.onPoseEnter += _mapDataPoint.poseEnter;
                 framePose.onPoseLeave += _mapDataPoint.poseLeave;
             }
+
+            _rawPosition = value.RawPosition;
         }
     }
     void Start()
@@ -139,8 +142,6 @@ public class FramedBarData : MonoBehaviour {
         var frameCollider = _frameBar.GetComponent<BoxCollider>();
         frameCollider.size = new Vector3(frameCollider.size.x, meshHeightScaleFactor, frameCollider.size.z);
         moveBarOffTheGround();
-
-        var arrow = _indicationArrow.GetComponent<ArrowIndicationBehavior>();
     }
 
     public void shear()
@@ -169,6 +170,7 @@ public class FramedBarData : MonoBehaviour {
     {
         //Debug.Log("[" + name + "] Distance to X: " + PlayerCamera.WorldToScreenPoint(Vector3.Scale(transform.position, new Vector3(1, 0, 1))).y.ToString());
         updateBars();
+        checkRawPositionChanged();
     }
 
     void Update()
@@ -316,6 +318,15 @@ public class FramedBarData : MonoBehaviour {
         {
             _mapDataPoint.OnPoseEnter -= onPoseEnter;
             _mapDataPoint.OnPoseLeave -= onPoseLeave;
+        }
+    }
+
+    void checkRawPositionChanged()
+    {
+        if (_mapDataPoint != null && _mapDataPoint.RawPosition != _rawPosition)
+        {
+            _mapDataPoint.RawPosition = _rawPosition;
+            this.transform.position = _mapDataPoint.WorldPosition;
         }
     }
 }

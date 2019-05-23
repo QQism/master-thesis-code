@@ -417,6 +417,13 @@ public class LoadDataSet : MonoBehaviour {
         mapMinX -= tileLength;
         mapMinY -= tileLength;
 
+        
+        DataPointsManager.Instance.Map = _map;
+        DataPointsManager.Instance.MapMaxX = mapMaxX;
+        DataPointsManager.Instance.MapMaxY = mapMaxY;
+        DataPointsManager.Instance.MapMinX = mapMinX;
+        DataPointsManager.Instance.MapMinY = mapMinY;
+
         Debug.Log("Max X: " + mapMaxX);
         Debug.Log("Max Y: " + mapMaxY);
         Debug.Log("Min X: " + mapMinX);
@@ -451,13 +458,6 @@ public class LoadDataSet : MonoBehaviour {
 
             point.RawPosition = new Vector2(rawX, rawY);
 
-            float x = ((float.Parse(lineData[1]) + 1) * (Mathf.Abs(mapMaxX) + Mathf.Abs(mapMinX)) / 2) - Mathf.Abs(mapMinX);
-            float z = ((float.Parse(lineData[2]) + 1) * (Mathf.Abs(mapMaxY) + Mathf.Abs(mapMinY)) / 2) - Mathf.Abs(mapMinY);
-
-            Vector2d latLong = _map.WorldToGeoPosition(new Vector3(x, 0, z));
-            float height = _map.QueryElevationInUnityUnitsAt(latLong);
-            point.GeoPosition = latLong;
-            point.WorldPosition = new Vector3(x, height, z);
             Debug.Log("Pos " + i + " : " + point.WorldPosition.ToString());
             DataPointsManager.Instance.mapDataPoints.Add(point);
         }

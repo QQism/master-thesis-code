@@ -847,6 +847,7 @@ MonoBehaviour:
   _dataBar: {fileID: 1315859709506506}
   _frameBar: {fileID: 1924695585344114}
   _indicationArrow: {fileID: 1357639352734156}
+  _rawPosition: {x: 0, y: 0}
   _meshType: 1
   _static: 0
   _cubeMesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}

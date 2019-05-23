@@ -83,9 +83,13 @@ public class LoadDataSet : MonoBehaviour {
 
     private Dataset _currentDataset = Dataset.None;
 
+    private AudioSource _audioData;
+
     private void Awake()
     {
         //_map.OnInitialized += placeBarChart;
+
+        _audioData = GetComponent<AudioSource>();
 
         _map.OnInitialized += loadCSVData;
 
@@ -270,6 +274,7 @@ public class LoadDataSet : MonoBehaviour {
             case PlotState.OnDoingQuestion:
                 break;
             case PlotState.OnCompletedQuestion:
+                _audioData.Play(0);
                 completeQuestion(StudyPlot.Instance.currentQuestion());
                 var nextQuestion = StudyPlot.Instance.nextQuestion();
                 handleQuestion(nextQuestion);

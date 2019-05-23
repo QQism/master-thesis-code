@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 using TMPro;
+using System;
 
 using UnityEngine;
 
@@ -28,8 +30,15 @@ public class NumericAnswerPanelBehavior : MonoBehaviour {
 	private Color32 _activeTextColor;
 	// Use this for initialization
 
+	AudioSource _audioSource;
+
+	AudioClip _tapSound;
+	AudioClip _denySound;
+
 	void Awake()
 	{
+		_audioSource = GetComponent<AudioSource>();
+		StartCoroutine(loadSounds());
 		_activeTextColor = new Color32(153, 50, 204, 255);
 		_valueTextMesh = valueText.GetComponent<TextMeshProUGUI>();
 		_upTextMesh = upText.GetComponent<TextMeshProUGUI>();
@@ -57,9 +66,12 @@ public class NumericAnswerPanelBehavior : MonoBehaviour {
 			if (answerValue < 100)
 			{
 				answerValue += 1;
-			} else
+				_audioSource.PlayOneShot(_tapSound);
+			} 
+			else
 			{ 
 				controller.triggerHapticPulse(2);
+				_audioSource.PlayOneShot(_denySound);
 			}
 			_changedLastTime = 1;
 		}
@@ -69,9 +81,12 @@ public class NumericAnswerPanelBehavior : MonoBehaviour {
 			if (answerValue > 0)
 			{
 				answerValue -= 1;
-			} else
+				_audioSource.PlayOneShot(_tapSound);
+			} 
+			else
 			{ 
 				controller.triggerHapticPulse(2);
+				_audioSource.PlayOneShot(_denySound);
 			}
 			_changedLastTime = -1;
 		}
@@ -94,4 +109,45 @@ public class NumericAnswerPanelBehavior : MonoBehaviour {
 	{
 		answerValue = defaultAnswerValue;
 	}	
+    IEnumerator loadSounds()
+    {
+        string tapPanelSoundPath = String.Join(System.IO.Path.DirectorySeparatorChar.ToString(), new string[] {
+            Application.dataPath,
+            "Sounds",
+            "tap_panel.wav"
+        });
+        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(tapPanelSoundPath, AudioType.WAV))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                _tapSound = DownloadHandlerAudioClip.GetContent(www);
+            }
+        }
+
+        string denySoundPath = String.Join(System.IO.Path.DirectorySeparatorChar.ToString(), new string[] {
+            Application.dataPath,
+            "Sounds",
+            "tap_panel_deny.wav"
+        });
+
+        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(denySoundPath, AudioType.WAV))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                _denySound = DownloadHandlerAudioClip.GetContent(www);
+            }
+        }
+    }
 }

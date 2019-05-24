@@ -4,7 +4,7 @@ using System.IO;
 using UnityEngine;
 
 public class DataPointsGenerator: MonoBehaviour {
-	private float numberDataPoints = 100;
+	private int numberDataPoints = 100;
 	private float furthestLeft = -1;
 	private float furthestRight = 1;
 
@@ -57,11 +57,18 @@ public class DataPointsGenerator: MonoBehaviour {
     {
         // Decide how many groups (k)
         // Number of questions n = k * 3
-        // Traverse through 
+        // Traverse over each 
+
     }
 
     void generateHigherQuestion()
     {
+        // Generate close datapoints
+        int closePointsCount, farPointsCount;
+        closePointsCount = farPointsCount = numberDataPoints / 2;
+        float closestRadius = 0.027f;
+        float furthestRadius = 1;
+        float radius = Random.Range(closestRadius, furthestRadius);
 
     }
 

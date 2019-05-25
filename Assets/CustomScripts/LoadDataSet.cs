@@ -39,7 +39,7 @@ public class LoadDataSet : MonoBehaviour {
 
     private String datasetFile = "vic_wateruse_2008_2009.csv";
     private String trainingDatasetFile = "data_20190515141314.csv";
-    private String testDatasetFile = "data_20190521191821.csv";
+    private String testDatasetFile = "dataset_est.csv";
 
     [SerializeField]
     public GameObject _player = null;
@@ -449,6 +449,7 @@ public class LoadDataSet : MonoBehaviour {
 
         float maxValue = 1;
 
+        // Skip the header
         for (int i = 1; i < lines.Length; i++)
         {
             string[] lineData = lines[i].Split(',');

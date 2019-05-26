@@ -117,7 +117,11 @@ generate_task2_dataset <- function()
                           "fov"=integer(), 
                           "angle1"=integer(), "angle2"=integer(),
                           "re"=integer(), stringsAsFactors = F,
-                          "answer"=integer())
+                          "answer"=integer(), 
+                          "base_value"=double(),
+                          "diff_value"=double(),
+                          "value1"=double(),
+                          "value2"=double())
   
   for (id in 1:(datasets_count/2))
   {
@@ -147,6 +151,16 @@ generate_task2_dataset <- function()
   # Loop for out_fov
   out_fovs <- randomNumbers(n=datasets_count/2/3/2, min=max_in_fov, max=max_out_fov, col=1)
   currentOutFovIdx <- 1
+  
+  # Base values
+  base_values <- randomNumbers(n=datasets_count/2/3, min=0, max = 100, col=1)
+  base_values <- base_values / 100 # normalise [0, 100] to [0, 1]
+  currentBaseValues <- 1
+  
+  # Diff values: min 5%, max 10%
+  diff_values <- randomNumbers(n=datasets_count/2/3, min=5, max = 10, col=1)
+  diff_values <- diff_values / 100
+  currentDiffValues <- 1
   
   for (rep in 0:(task2_repetition-1))
   {
@@ -215,6 +229,24 @@ generate_task2_dataset <- function()
         questions[idx, 8] <- rep+1
       }
     }
+    
+    # Base value
+    #rep <- 0
+    #for (r in 1:(datasets_count/2/3))
+    for (r in 1:6)
+    {
+      base_value <- base_values[currentBaseValues]
+      currentBaseValues <- currentBaseValues + 1
+      
+      diff_value <- diff_values[currentDiffValues]
+      currentDiffValues <- currentDiffValues + 1
+      
+      for (id in 1:3)
+      {
+        idx <- id*6*task2_repetition-(6 * task2_repetition - 1)+r*task2_repetition-task2_repetition+rep
+        questions[idx, 10:11] <- c(base_value, diff_value)
+      }
+    }
   }
   
   dataPoints <- data.frame("id"=integer(), "x"=double(), "y"=double(), "value"=double(), stringsAsFactors = F)
@@ -228,23 +260,63 @@ generate_task2_dataset <- function()
     fov <- questions[id, "fov"]
     angle1 <- angles1[currentAngleIdx]
     currentAngleIdx <- currentAngleIdx + 1
-    
-    x1 <- sin(angle1 * pi/180) * radius1
-    y1 <- cos(angle1 * pi/180) * radius1
-    
     angle2 <- angle1 - fov
-    x2 <- sin(angle2 * pi/180) * radius2
-    y2 <- cos(angle2 * pi/180) * radius2
-    
+
     questions[id, 6:7] <- c(angle1, angle2)
+    
+    base_value = questions[id, 10]
+    diff_value = questions[id, 11]
+    
+    value1 <- 0
+    value2 <- 0
+    
+    adjustment = "increase"
+    if ((base_value+diff_value) >= 1)
+    {
+      adjustment = "decrease"
+    }
     
     if ((id %% 2) == 1)
     {
       questions[id, 9] <- 1
+      
+      if (adjustment ==  "increase")
+      { 
+        value1 <- base_value + diff_value
+        value2 <- base_value
+      } else
+      { 
+        value1 <- base_value
+        value2 <- base_value - diff_value
+      }
     } else
     { 
       questions[id, 9] <- 2
+      
+      if (adjustment ==  "increase")
+      { 
+        value1 <- base_value
+        value2 <- base_value + diff_value
+      } else
+      { 
+        value1 <- base_value - diff_value
+        value2 <- base_value
+      }
     }
+    
+    questions[id, 12] <- value1
+    questions[id, 13] <- value2
+    
+    x1 <- sin(angle1 * pi/180) * radius1
+    y1 <- cos(angle1 * pi/180) * radius1
+    
+    x2 <- sin(angle2 * pi/180) * radius2
+    y2 <- cos(angle2 * pi/180) * radius2
+    
+    id1 <- id * 2 - 1
+    id2 <- id1 + 1
+    dataPoints[id1, ] <- c(id1, x1, y1, value1)
+    dataPoints[id2, ] <- c(id2, x2, y2, value2)
   }
 }
 

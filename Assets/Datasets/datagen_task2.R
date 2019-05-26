@@ -222,4 +222,12 @@ generate_task2_dataset <- function()
     dataPoints[id1, ] <- c(id1, x1, y1, value1)
     dataPoints[id2, ] <- c(id2, x2, y2, value2)
   }
+  
+  return(dataPoints)
 }
+
+dataPoints1 <- generate_task2_dataset()
+
+write.csv(dataPoints1, file="dataset_higher1.csv", quote=F, row.names=F)
+  
+  

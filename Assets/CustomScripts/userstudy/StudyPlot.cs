@@ -143,6 +143,8 @@ public class StudyPlot
 		setUpDataset2();
 		setUpDataset3();
 		setUpDataset4();
+		setUpDataset4();
+		setUpDataset5();
 	}
 
 	public string getDatasetFile()
@@ -382,6 +384,120 @@ public class StudyPlot
 			Question.createLarger(15, VisualisationType.MapCone, Dataset.Dataset4, 24, 25),
 			Question.createLarger(16, VisualisationType.InPlaceBars, Dataset.Dataset4, 8, 9),
 			Question.createLarger(17, VisualisationType.BarCone, Dataset.Dataset4, 18, 19),
+		});
+	}
+
+	void setUpDataset5()
+	{
+		datasetQuestions.Add(Dataset.Dataset5, new List<Question>() { 
+			// 1
+			Question.createCloser(0, VisualisationType.InPlaceBars, Dataset.Dataset5, 14, 15),
+			Question.createCloser(1, VisualisationType.BarCone, Dataset.Dataset5, 20, 21),
+			Question.createCloser(2, VisualisationType.MapCone, Dataset.Dataset5, 34, 35),
+			// 2
+			Question.createCloser(3, VisualisationType.BarCone, Dataset.Dataset5, 26, 27),
+			Question.createCloser(4, VisualisationType.MapCone, Dataset.Dataset5, 44, 45),
+			Question.createCloser(5, VisualisationType.InPlaceBars, Dataset.Dataset5, 2, 3),
+			// 3
+			Question.createCloser(6, VisualisationType.MapCone, Dataset.Dataset5, 36, 37),
+			Question.createCloser(7, VisualisationType.InPlaceBars, Dataset.Dataset5, 10, 11),
+			Question.createCloser(8, VisualisationType.BarCone, Dataset.Dataset5, 28, 29),
+			// 4
+			Question.createCloser(9, VisualisationType.InPlaceBars, Dataset.Dataset5, 4, 5),
+			Question.createCloser(10, VisualisationType.BarCone, Dataset.Dataset5, 18, 19),
+			Question.createCloser(11, VisualisationType.MapCone, Dataset.Dataset5, 40, 41),
+			// 5
+			Question.createCloser(12, VisualisationType.BarCone, Dataset.Dataset5, 24, 25),
+			Question.createCloser(13, VisualisationType.MapCone, Dataset.Dataset5, 38, 39),
+			Question.createCloser(14, VisualisationType.InPlaceBars, Dataset.Dataset5, 0, 1),
+			// 6
+			Question.createCloser(15, VisualisationType.MapCone, Dataset.Dataset5, 42, 43),
+			Question.createCloser(16, VisualisationType.InPlaceBars, Dataset.Dataset5, 12, 13),
+			Question.createCloser(17, VisualisationType.BarCone, Dataset.Dataset5, 22, 23),
+			// 7
+			Question.createCloser(18, VisualisationType.InPlaceBars, Dataset.Dataset5, 6, 7),
+			Question.createCloser(19, VisualisationType.BarCone, Dataset.Dataset5, 16, 17),
+			Question.createCloser(20, VisualisationType.MapCone, Dataset.Dataset5, 46, 47),
+			// 8
+			Question.createCloser(21, VisualisationType.BarCone, Dataset.Dataset5, 30, 31),
+			Question.createCloser(22, VisualisationType.MapCone, Dataset.Dataset5, 32, 33),
+			Question.createCloser(23, VisualisationType.InPlaceBars, Dataset.Dataset5, 8, 9),
+		});
+	}
+
+	void setUpDataset6()
+	{
+		datasetQuestions.Add(Dataset.Dataset6, new List<Question>() { 
+			// 1
+			Question.createCloser(0, VisualisationType.InPlaceBars, 	Dataset.Dataset6, 14, 15),
+			Question.createCloser(1, VisualisationType.BarCone, 		Dataset.Dataset6, 20, 21),
+			Question.createCloser(2, VisualisationType.MapCone, 		Dataset.Dataset6, 34, 35),
+			// 2
+			Question.createCloser(3, VisualisationType.BarCone, 		Dataset.Dataset6, 26, 27),
+			Question.createCloser(4, VisualisationType.MapCone, 		Dataset.Dataset6, 44, 45),
+			Question.createCloser(5, VisualisationType.InPlaceBars, 	Dataset.Dataset6, 2, 3),
+			// 3
+			Question.createCloser(6, VisualisationType.MapCone, 		Dataset.Dataset6, 36, 37),
+			Question.createCloser(7, VisualisationType.InPlaceBars, 	Dataset.Dataset6, 10, 11),
+			Question.createCloser(8, VisualisationType.BarCone, 		Dataset.Dataset6, 28, 29),
+			// 4
+			Question.createCloser(9, VisualisationType.InPlaceBars, 	Dataset.Dataset6, 4, 5),
+			Question.createCloser(10, VisualisationType.BarCone, 		Dataset.Dataset6, 18, 19),
+			Question.createCloser(11, VisualisationType.MapCone, 		Dataset.Dataset6, 40, 41),
+			// 5
+			Question.createCloser(12, VisualisationType.BarCone, 		Dataset.Dataset6, 24, 25),
+			Question.createCloser(13, VisualisationType.MapCone, 		Dataset.Dataset6, 38, 39),
+			Question.createCloser(14, VisualisationType.InPlaceBars, 	Dataset.Dataset6, 0, 1),
+			// 6
+			Question.createCloser(15, VisualisationType.MapCone, 		Dataset.Dataset6, 42, 43),
+			Question.createCloser(16, VisualisationType.InPlaceBars, 	Dataset.Dataset6, 12, 13),
+			Question.createCloser(17, VisualisationType.BarCone, 		Dataset.Dataset6, 22, 23),
+			// 7
+			Question.createCloser(18, VisualisationType.InPlaceBars, 	Dataset.Dataset6, 6, 7),
+			Question.createCloser(19, VisualisationType.BarCone, 		Dataset.Dataset6, 16, 17),
+			Question.createCloser(20, VisualisationType.MapCone, 		Dataset.Dataset6, 46, 47),
+			// 8
+			Question.createCloser(21, VisualisationType.BarCone, 		Dataset.Dataset6, 30, 31),
+			Question.createCloser(22, VisualisationType.MapCone, 		Dataset.Dataset6, 32, 33),
+			Question.createCloser(23, VisualisationType.InPlaceBars, 	Dataset.Dataset6, 8, 9),
+		});
+	}
+
+	void setUpDataset7()
+	{
+		datasetQuestions.Add(Dataset.Dataset6, new List<Question>() { 
+			// 1
+			Question.createCloser(0, VisualisationType.InPlaceBars, 	Dataset.Dataset7, 14, 15),
+			Question.createCloser(1, VisualisationType.BarCone, 		Dataset.Dataset7, 20, 21),
+			Question.createCloser(2, VisualisationType.MapCone, 		Dataset.Dataset7, 34, 35),
+			// 2
+			Question.createCloser(3, VisualisationType.BarCone, 		Dataset.Dataset7, 26, 27),
+			Question.createCloser(4, VisualisationType.MapCone, 		Dataset.Dataset7, 44, 45),
+			Question.createCloser(5, VisualisationType.InPlaceBars, 	Dataset.Dataset7, 2, 3),
+			// 3
+			Question.createCloser(6, VisualisationType.MapCone, 		Dataset.Dataset7, 36, 37),
+			Question.createCloser(7, VisualisationType.InPlaceBars, 	Dataset.Dataset7, 10, 11),
+			Question.createCloser(8, VisualisationType.BarCone, 		Dataset.Dataset7, 28, 29),
+			// 4
+			Question.createCloser(9, VisualisationType.InPlaceBars, 	Dataset.Dataset7, 4, 5),
+			Question.createCloser(10, VisualisationType.BarCone, 		Dataset.Dataset7, 18, 19),
+			Question.createCloser(11, VisualisationType.MapCone, 		Dataset.Dataset7, 40, 41),
+			// 5
+			Question.createCloser(12, VisualisationType.BarCone, 		Dataset.Dataset7, 24, 25),
+			Question.createCloser(13, VisualisationType.MapCone, 		Dataset.Dataset7, 38, 39),
+			Question.createCloser(14, VisualisationType.InPlaceBars, 	Dataset.Dataset7, 0, 1),
+			// 6
+			Question.createCloser(15, VisualisationType.MapCone, 		Dataset.Dataset7, 42, 43),
+			Question.createCloser(16, VisualisationType.InPlaceBars, 	Dataset.Dataset7, 12, 13),
+			Question.createCloser(17, VisualisationType.BarCone, 		Dataset.Dataset7, 22, 23),
+			// 7
+			Question.createCloser(18, VisualisationType.InPlaceBars, 	Dataset.Dataset7, 6, 7),
+			Question.createCloser(19, VisualisationType.BarCone, 		Dataset.Dataset7, 16, 17),
+			Question.createCloser(20, VisualisationType.MapCone, 		Dataset.Dataset7, 46, 47),
+			// 8
+			Question.createCloser(21, VisualisationType.BarCone, 		Dataset.Dataset7, 30, 31),
+			Question.createCloser(22, VisualisationType.MapCone, 		Dataset.Dataset7, 32, 33),
+			Question.createCloser(23, VisualisationType.InPlaceBars, 	Dataset.Dataset7, 8, 9),
 		});
 	}
 }

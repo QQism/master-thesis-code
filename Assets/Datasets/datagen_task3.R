@@ -64,28 +64,39 @@ generate_task3_dataset <- function()
   diff_values <- diff_values / 100
   currentDiffValues <- 1
   
+  # Diff values: min 5%, max 10%
+  radius_diff_values <- randomNumbers(n=datasets_count/2/3, min=3, max = 5, col=1)
+  radius_diff_values <- radius_diff_values / 100
+  currentRadiusDiffValues <- 1
+  
   for (rep in 0:(task3_repetition-1))
   {
-    # CC
+    rep <- 0
+    # CC - A
     for (r in 0:1)
     {
+      radius_diff_value <- radius_diff_values[currentRadiusDiffValues]
+      currentRadiusDiffValues <- currentRadiusDiffValues + 1
+      
       radius1 <- sCloseRadii[closeRadiusIdx]
       closeRadiusIdx <- closeRadiusIdx + 1
-      radius2 <- sCloseRadii[closeRadiusIdx]
-      closeRadiusIdx <- closeRadiusIdx + 1
+      radius2 <- radius1 * (1 + radius_diff_value)
+      
       for (id in 1:3)
       {
         questions[id*8*task3_repetition-(8 * task3_repetition - 1)+r*task3_repetition+rep, 3:4] <- c(radius1, radius2)
       }
     }
     
-    # CF
+    # CC - B
     for (r in 0:1)
     {
-      radius1 <- sCloseRadii[closeRadiusIdx]
+      radius_diff_value <- radius_diff_values[currentRadiusDiffValues]
+      currentRadiusDiffValues <- currentRadiusDiffValues + 1
+      
+      radius2 <- sCloseRadii[closeRadiusIdx]
       closeRadiusIdx <- closeRadiusIdx + 1
-      radius2 <- sFarRadii[farRadiusIdx]
-      farRadiusIdx <- farRadiusIdx + 1  
+      radius1 <- radius2 * (1 + radius_diff_value)
       
       for (id in 1:3)
       {
@@ -93,13 +104,16 @@ generate_task3_dataset <- function()
       }
     }
     
-    # FF
+    # FF - A
     for (r in 0:1)
     {
-      radius1 <- sFarRadii[farRadiusIdx]
-      farRadiusIdx <- farRadiusIdx + 1
+      radius_diff_value <- radius_diff_values[currentRadiusDiffValues]
+      currentRadiusDiffValues <- currentRadiusDiffValues + 1
+      
       radius2 <- sFarRadii[farRadiusIdx]
       farRadiusIdx <- farRadiusIdx + 1
+      
+      radius1 <- radius2 / (1 + radius_diff_value)
       
       for (id in 1:3)
       {
@@ -107,13 +121,16 @@ generate_task3_dataset <- function()
       }
     }
     
-    # FC
+    # FF - B
     for (r in 0:1)
     {
+      radius_diff_value <- radius_diff_values[currentRadiusDiffValues]
+      currentRadiusDiffValues <- currentRadiusDiffValues + 1
+      
       radius1 <- sFarRadii[farRadiusIdx]
       farRadiusIdx <- farRadiusIdx + 1
-      radius2 <- sCloseRadii[closeRadiusIdx]
-      closeRadiusIdx <- closeRadiusIdx + 1
+      
+      radius2 <- radius1 / (1 + radius_diff_value)
       
       for (id in 1:3)
       {
@@ -235,9 +252,9 @@ generate_task3_dataset <- function()
   return(dataPoints)
 }
 
-dataPoints1 <- generate_task3_dataset()
-dataPoints2 <- generate_task3_dataset()
-dataPoints3 <- generate_task3_dataset()
-write.csv(dataPoints1, file="dataset_closer1.csv", quote=F, row.names=F)
-write.csv(dataPoints2, file="dataset_closer2.csv", quote=F, row.names=F)
-write.csv(dataPoints3, file="dataset_closer3.csv", quote=F, row.names=F)
+task3_dataPoints1 <- generate_task3_dataset()
+task3_dataPoints2 <- generate_task3_dataset()
+task3_dataPoints3 <- generate_task3_dataset()
+write.csv(task3_dataPoints1, file="dataset_closer1.csv", quote=F, row.names=F)
+write.csv(task3_dataPoints2, file="dataset_closer2.csv", quote=F, row.names=F)
+write.csv(task3_dataPoints3, file="dataset_closer3.csv", quote=F, row.names=F)

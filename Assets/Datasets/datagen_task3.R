@@ -64,7 +64,7 @@ generate_task3_dataset <- function()
   diff_values <- diff_values / 100
   currentDiffValues <- 1
   
-  # Diff values: min 5%, max 10%
+  # Diff values: min 3%, max 5%
   radius_diff_values <- randomNumbers(n=datasets_count/2/3, min=3, max = 5, col=1)
   radius_diff_values <- radius_diff_values / 100
   currentRadiusDiffValues <- 1
@@ -190,7 +190,7 @@ generate_task3_dataset <- function()
     fov <- questions[id, "fov"]
     angle1 <- angles1[currentAngleIdx]
     currentAngleIdx <- currentAngleIdx + 1
-    angle2 <- angle1 - fov
+    angle2 <- angle1 + fov
     
     questions[id, 6:7] <- c(angle1, angle2)
     

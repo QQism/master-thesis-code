@@ -309,8 +309,8 @@ public class LoadDataSet : MonoBehaviour {
 
     void handleOptionQuestion(Question question)
     {
-        DataPointsManager.Instance.mapDataPoints[question.dataPoint1Idx].showQuestionOption2();
-        DataPointsManager.Instance.mapDataPoints[question.dataPoint2Idx].showQuestionOption1();
+        DataPointsManager.Instance.mapDataPoints[question.dataPoint1Idx].showQuestionOption1();
+        DataPointsManager.Instance.mapDataPoints[question.dataPoint2Idx].showQuestionOption2();
     }
 
     void readSizeOfMap() {

@@ -12,8 +12,8 @@ public class OptionAnswerPanelBehavior : MonoBehaviour {
 	[SerializeField]
 	public GameObject downTick;
 
-	public int optionSelected = BarOption.Bar2;
-	private int defaultOption = BarOption.Bar2;
+	public int optionSelected = BarOption.Bar1;
+	private int defaultOption = BarOption.Bar1;
 
 	private Transform upTickTransform;
 	private Transform downTickTransform;
@@ -50,9 +50,9 @@ public class OptionAnswerPanelBehavior : MonoBehaviour {
 
 		if (controller.isSelectingLeft())
 		{
-            if (optionSelected != BarOption.Bar2)
+            if (optionSelected != BarOption.Bar1)
             {
-				selectOption(BarOption.Bar2);
+				selectOption(BarOption.Bar1);
 				_audioSource.PlayOneShot(_tapSound);
             }
             else
@@ -64,9 +64,9 @@ public class OptionAnswerPanelBehavior : MonoBehaviour {
 
         if (controller.isSelectingRight())
 		{
-			if (optionSelected != BarOption.Bar1)
+			if (optionSelected != BarOption.Bar2)
 			{ 
-				selectOption(BarOption.Bar1);
+				selectOption(BarOption.Bar2);
 				_audioSource.PlayOneShot(_tapSound);
 			}
 			else
@@ -81,11 +81,11 @@ public class OptionAnswerPanelBehavior : MonoBehaviour {
 	private void selectOption(int value)
     {
         optionSelected = value;
-		if (optionSelected == BarOption.Bar2)
+		if (optionSelected == BarOption.Bar1)
 		{
 			moveTransform(upTickTransform, true);
 			moveTransform(downTickTransform, true);
-		} else if (optionSelected == BarOption.Bar1)
+		} else if (optionSelected == BarOption.Bar2)
 		{ 
 			moveTransform(upTickTransform, false);
 			moveTransform(downTickTransform, false);

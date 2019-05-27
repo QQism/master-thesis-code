@@ -164,7 +164,7 @@ generate_task2_dataset <- function()
     fov <- questions[id, "fov"]
     angle1 <- angles1[currentAngleIdx]
     currentAngleIdx <- currentAngleIdx + 1
-    angle2 <- angle1 - fov
+    angle2 <- angle1 + fov
 
     questions[id, 6:7] <- c(angle1, angle2)
     

@@ -66,13 +66,13 @@ public class OptionAnswerPanelBehavior : MonoBehaviour {
 		{
 			if (optionSelected != BarOption.Bar2)
 			{ 
-				_audioSource.PlayOneShot(_tapSound);
 				selectOption(BarOption.Bar2);
+				_audioSource.PlayOneShot(_tapSound);
 			}
 			else
 			{	
-				_audioSource.PlayOneShot(_denySound);
 				controller.triggerHapticPulse(2);
+				_audioSource.PlayOneShot(_denySound);
 			}
 
 		}

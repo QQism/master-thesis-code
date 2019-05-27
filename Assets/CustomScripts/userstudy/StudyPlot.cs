@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public enum PlotState
@@ -7,6 +8,7 @@ public enum PlotState
 	NotStarted, // start state
 	OnDoingQuestion, // waiting the answer
 	OnCompletedQuestion, // move to the next question
+	ChangeDataset,
 	OnFinished // there is not question left, Finished
 }
 
@@ -15,7 +17,10 @@ public class StudyPlot
 	private static StudyPlot instance = null;
 	private static readonly object padlock = new object();
 
-	private List<Question> _quesitons {get; set;}
+	public List<Question> _questions {get; set;}
+	private string _currentDatasetFile;
+
+	private Dataset _currentDataset;
 
 	public PlotState state = PlotState.NotStarted;
 
@@ -25,6 +30,9 @@ public class StudyPlot
 	private UserResponse _currentResponse;
 
 	public int userId;
+
+	public Dictionary<Dataset, List<Question>> datasetQuestions;
+	public Dictionary<Dataset, string> datasetFiles;
 
 	public static StudyPlot Instance
 	{
@@ -42,8 +50,142 @@ public class StudyPlot
 	StudyPlot()
 	{
 		_allResponses = new List<UserResponse>();
-		_quesitons = new List<Question>() 
+		setUpQuestions();
+	}
+
+	public void setStartQuestionIdx(int questionIdx)
+	{
+		_currentQuestionId = questionIdx;
+	}
+
+	public Question startPlot()
+	{
+		if (_currentQuestionId >= _questions.Count)
+			return null;
+
+		var nextQuestion = _questions[_currentQuestionId];
+		_currentResponse = new UserResponse(nextQuestion);
+		_allResponses.Add(_currentResponse);
+
+		state = PlotState.OnDoingQuestion;
+
+		return nextQuestion;
+	}
+
+	public void answer(int value)
+	{
+		_currentResponse.answer = value;
+		_currentResponse.completionTime = Time.time;
+		_currentResponse.save();
+
+		//if (_currentQuestionId >= _questions.Count-1)
+		//{
+		//	state = PlotState.OnFinished;
+		//}
+        //else
+        //{
+            state = PlotState.OnCompletedQuestion;
+        //}
+	}
+
+	public Question currentQuestion()
+	{
+		return _questions[_currentQuestionId];
+	}
+
+	public Question nextQuestion()
+	{
+		if (_currentQuestionId >= _questions.Count-1)
 		{
+            if (getNextDataset() == Dataset.None)
+            {
+                state = PlotState.OnFinished;
+            }
+            else
+            {
+                state = PlotState.ChangeDataset;
+            }
+			return null;
+		}
+
+		var nextQuestion = _questions[++_currentQuestionId];
+		_currentResponse = new UserResponse(nextQuestion);
+		_allResponses.Add(_currentResponse);
+
+		_currentResponse.startTime = Time.time;
+		state = PlotState.OnDoingQuestion;
+
+		return nextQuestion;
+	}
+
+	public void setDataset(Dataset dataset) {
+		_currentDataset = dataset;
+		_questions = datasetQuestions[_currentDataset];
+		_currentDatasetFile = datasetFiles[_currentDataset];
+	}
+
+	void setUpQuestions()
+	{
+		datasetFiles = new Dictionary<Dataset, string>();
+		datasetFiles.Add(Dataset.Dataset1, "dataset_est_latest.csv");
+
+		datasetFiles.Add(Dataset.Dataset2, "dataset_higher1.csv");
+		datasetFiles.Add(Dataset.Dataset3, "dataset_higher2.csv");
+		datasetFiles.Add(Dataset.Dataset4, "dataset_higher3.csv");
+
+		datasetFiles.Add(Dataset.Dataset5, "dataset_closer1.csv");
+		datasetFiles.Add(Dataset.Dataset6, "dataset_closer2.csv");
+		datasetFiles.Add(Dataset.Dataset7, "dataset_closer3.csv");
+
+		datasetQuestions = new Dictionary<Dataset, List<Question>>();
+
+		setUpDataset1();
+		setUpDataset2();
+		setUpDataset3();
+		setUpDataset4();
+	}
+
+	public string getDatasetFile()
+	{
+        return String.Join(System.IO.Path.DirectorySeparatorChar.ToString(), new string[] {
+            Application.dataPath,
+            "Datasets",
+            _currentDatasetFile
+        });
+	}
+
+	public Dataset getNextDataset()
+	{
+		Dataset nextDataset = Dataset.None;
+
+		switch(_currentDataset)
+		{
+            case Dataset.Dataset1:
+                nextDataset = Dataset.Dataset2;
+                break;
+            case Dataset.Dataset2:
+                nextDataset = Dataset.Dataset3;
+                break;
+            case Dataset.Dataset3:
+                nextDataset = Dataset.Dataset4;
+                break;
+            case Dataset.Dataset4:
+                break;
+            case Dataset.Dataset5:
+                break;
+            case Dataset.Dataset6:
+                break;
+            case Dataset.Dataset7:
+			default:
+                break;
+        }
+
+		return nextDataset;
+	}
+
+	void setUpDataset1()
+	{
+		datasetQuestions.Add(Dataset.Dataset1, new List<Question>() {
 			Question.createEstimate(0, VisualisationType.InPlaceBars, Dataset.Dataset1, 3),
 			Question.createEstimate(1, VisualisationType.BarCone, Dataset.Dataset1, 13),
 			Question.createEstimate(2, VisualisationType.MapCone, Dataset.Dataset1, 18),
@@ -75,75 +217,171 @@ public class StudyPlot
 			Question.createEstimate(21, VisualisationType.BarCone, Dataset.Dataset1, 11),
 			Question.createEstimate(22, VisualisationType.MapCone, Dataset.Dataset1, 23),
 			Question.createEstimate(23, VisualisationType.InPlaceBars, Dataset.Dataset1, 6),
-
-			//Question.createEstimate(0, VisualisationType.MapCone, Dataset.Dataset1, 10),
-			//Question.createLarger(1, VisualisationType.BarCone, Dataset.Dataset1, 10, 20),
-			//Question.createCloser(2, VisualisationType.InPlaceBars, Dataset.Dataset1, 8, 43),
-			//Question.createLarger(3, VisualisationType.BarCone, Dataset.Dataset1, 22, 33),
-			//Question.createEstimate(4, VisualisationType.MapCone, Dataset.Dataset1, 50),
-			//Question.createCloser(5, VisualisationType.InPlaceBars, Dataset.Dataset1, 44, 80),
-			//Question.createEstimate(6, VisualisationType.BarCone, Dataset.Dataset1, 87),
-			//Question.createLarger(7, VisualisationType.MapCone, Dataset.Dataset1, 86, 94),
-			//Question.createCloser(8, VisualisationType.InPlaceBars, Dataset.Dataset1, 20, 39),
-			//Question.createEstimate(9, VisualisationType.BarCone, Dataset.Dataset1, 55),
-		};
+		});
 	}
 
-	public void setStartQuestionIdx(int questionIdx)
+	void setUpDataset2()
 	{
-		_currentQuestionId = questionIdx;
+		datasetQuestions.Add(Dataset.Dataset2, new List<Question>() {
+			/*
+			// 1
+			Question.createLarger(0, VisualisationType.InPlaceBars, Dataset.Dataset2, 25, 26),
+			Question.createLarger(1, VisualisationType.BarCone, Dataset.Dataset2, 43, 44),
+			Question.createLarger(2, VisualisationType.MapCone, Dataset.Dataset2, 85, 86),
+			// 2
+			Question.createLarger(3, VisualisationType.BarCone, Dataset.Dataset2, 67, 68),
+			Question.createLarger(4, VisualisationType.MapCone, Dataset.Dataset2, 73, 74),
+			Question.createLarger(5, VisualisationType.InPlaceBars, Dataset.Dataset2, 1, 2),
+			// 3
+			Question.createLarger(6, VisualisationType.MapCone, Dataset.Dataset2, 103, 104),
+			Question.createLarger(7, VisualisationType.InPlaceBars, Dataset.Dataset2, 19, 20),
+			Question.createLarger(8, VisualisationType.BarCone, Dataset.Dataset2, 49, 50),
+			// 4
+			Question.createLarger(9, VisualisationType.InPlaceBars, Dataset.Dataset2, 7, 8),
+			Question.createLarger(10, VisualisationType.BarCone, Dataset.Dataset2, 61, 62),
+			Question.createLarger(11, VisualisationType.MapCone, Dataset.Dataset2, 97, 98),
+			// 5
+			Question.createLarger(12, VisualisationType.BarCone, Dataset.Dataset2, 55, 56),
+			Question.createLarger(13, VisualisationType.MapCone, Dataset.Dataset2, 91, 92),
+			Question.createLarger(14, VisualisationType.InPlaceBars, Dataset.Dataset2, 13, 14),
+			// 6
+			Question.createLarger(15, VisualisationType.MapCone, Dataset.Dataset2, 79, 80),
+			Question.createLarger(16, VisualisationType.InPlaceBars, Dataset.Dataset2, 31, 32),
+			Question.createLarger(17, VisualisationType.BarCone, Dataset.Dataset2, 37, 38),
+			// 7
+			Question.createLarger(18, VisualisationType.InPlaceBars, Dataset.Dataset2, 15, 16),
+			Question.createLarger(19, VisualisationType.BarCone, Dataset.Dataset2, 57, 58),
+			Question.createLarger(20, VisualisationType.MapCone, Dataset.Dataset2, 81, 82),
+			// 8
+			Question.createLarger(21, VisualisationType.BarCone, Dataset.Dataset2, 39, 40),
+			Question.createLarger(22, VisualisationType.MapCone, Dataset.Dataset2, 99, 100),
+			Question.createLarger(23, VisualisationType.InPlaceBars, Dataset.Dataset2, 33, 34),
+			// 9
+			Question.createLarger(24, VisualisationType.MapCone, Dataset.Dataset2, 93, 94),
+			Question.createLarger(25, VisualisationType.InPlaceBars, Dataset.Dataset2, 3, 4),
+			Question.createLarger(26, VisualisationType.BarCone, Dataset.Dataset2, 63, 64),
+			// 10
+			Question.createLarger(27, VisualisationType.InPlaceBars, Dataset.Dataset2, 27, 28),
+			Question.createLarger(28, VisualisationType.BarCone, Dataset.Dataset2, 45, 46),
+			Question.createLarger(29, VisualisationType.MapCone, Dataset.Dataset2, 87, 88),
+			// 11
+			Question.createLarger(30, VisualisationType.BarCone, Dataset.Dataset2, 69, 70),
+			Question.createLarger(31, VisualisationType.MapCone, Dataset.Dataset2, 75, 76),
+			Question.createLarger(32, VisualisationType.InPlaceBars, Dataset.Dataset2, 9, 10),
+			// 12
+			Question.createLarger(33, VisualisationType.MapCone, Dataset.Dataset2, 105, 106),
+			Question.createLarger(34, VisualisationType.InPlaceBars, Dataset.Dataset2, 21, 22),
+			Question.createLarger(35, VisualisationType.BarCone, Dataset.Dataset2, 51, 52),
+			// 13
+			Question.createLarger(36, VisualisationType.InPlaceBars, Dataset.Dataset2, 5, 6),
+			Question.createLarger(37, VisualisationType.BarCone, Dataset.Dataset2, 71, 72),
+			Question.createLarger(38, VisualisationType.MapCone, Dataset.Dataset2, 107, 108),
+			// 14
+			Question.createLarger(39, VisualisationType.BarCone, Dataset.Dataset2, 53, 54),
+			Question.createLarger(40, VisualisationType.MapCone, Dataset.Dataset2, 89, 90),
+			Question.createLarger(41, VisualisationType.InPlaceBars, Dataset.Dataset2, 23, 24),
+			// 15
+			Question.createLarger(42, VisualisationType.MapCone, Dataset.Dataset2, 77, 78),
+			Question.createLarger(43, VisualisationType.InPlaceBars, Dataset.Dataset2, 29, 30),
+			Question.createLarger(44, VisualisationType.BarCone, Dataset.Dataset2, 47, 48),
+			// 16
+			Question.createLarger(45, VisualisationType.InPlaceBars, Dataset.Dataset2, 17, 18),
+			Question.createLarger(46, VisualisationType.BarCone, Dataset.Dataset2, 59, 60),
+			Question.createLarger(47, VisualisationType.MapCone, Dataset.Dataset2, 83, 84),
+			// 17
+			Question.createLarger(48, VisualisationType.BarCone, Dataset.Dataset2, 41, 42),
+			Question.createLarger(49, VisualisationType.MapCone, Dataset.Dataset2, 101, 102),
+			Question.createLarger(50, VisualisationType.InPlaceBars, Dataset.Dataset2, 35, 36),
+			// 18
+			Question.createLarger(51, VisualisationType.MapCone, Dataset.Dataset2, 95, 96),
+			Question.createLarger(52, VisualisationType.InPlaceBars, Dataset.Dataset2, 11, 12),
+			Question.createLarger(53, VisualisationType.BarCone, Dataset.Dataset2, 65, 66),
+			*/
+
+			// 1
+			Question.createLarger(0, VisualisationType.InPlaceBars, Dataset.Dataset2, 10, 11),
+			Question.createLarger(1, VisualisationType.BarCone, Dataset.Dataset2, 16, 17),
+			Question.createLarger(2, VisualisationType.MapCone, Dataset.Dataset2, 26, 27),
+			// 2
+			Question.createLarger(3, VisualisationType.BarCone, Dataset.Dataset2, 22, 23),
+			Question.createLarger(4, VisualisationType.MapCone, Dataset.Dataset2, 28, 29),
+			Question.createLarger(5, VisualisationType.InPlaceBars, Dataset.Dataset2, 0, 1),
+			// 3
+			Question.createLarger(6, VisualisationType.MapCone, Dataset.Dataset2, 32, 33),
+			Question.createLarger(7, VisualisationType.InPlaceBars, Dataset.Dataset2, 6, 7),
+			Question.createLarger(8, VisualisationType.BarCone, Dataset.Dataset2, 12, 13),
+			// 4
+			Question.createLarger(9, VisualisationType.InPlaceBars, Dataset.Dataset2, 2, 3),
+			Question.createLarger(10, VisualisationType.BarCone, Dataset.Dataset2, 20, 21),
+			Question.createLarger(11, VisualisationType.MapCone, Dataset.Dataset2, 30, 31),
+			// 5
+			Question.createLarger(12, VisualisationType.BarCone, Dataset.Dataset2, 14, 15),
+			Question.createLarger(13, VisualisationType.MapCone, Dataset.Dataset2, 34, 35),
+			Question.createLarger(14, VisualisationType.InPlaceBars, Dataset.Dataset2, 4, 5),
+			// 6
+			Question.createLarger(15, VisualisationType.MapCone, Dataset.Dataset2, 24, 25),
+			Question.createLarger(16, VisualisationType.InPlaceBars, Dataset.Dataset2, 8, 9),
+			Question.createLarger(17, VisualisationType.BarCone, Dataset.Dataset2, 18, 19),
+		});
 	}
 
-	public Question startPlot()
+	void setUpDataset3()
 	{
-		if (_currentQuestionId >= _quesitons.Count)
-			return null;
-
-		var nextQuestion = _quesitons[_currentQuestionId];
-		_currentResponse = new UserResponse(nextQuestion);
-		_allResponses.Add(_currentResponse);
-
-		state = PlotState.OnDoingQuestion;
-
-		return nextQuestion;
+		datasetQuestions.Add(Dataset.Dataset3, new List<Question>() { 
+			// 1
+			Question.createLarger(0, VisualisationType.InPlaceBars, Dataset.Dataset3, 10, 11),
+			Question.createLarger(1, VisualisationType.BarCone, Dataset.Dataset3, 16, 17),
+			Question.createLarger(2, VisualisationType.MapCone, Dataset.Dataset3, 26, 27),
+			// 2
+			Question.createLarger(3, VisualisationType.BarCone, Dataset.Dataset3, 22, 23),
+			Question.createLarger(4, VisualisationType.MapCone, Dataset.Dataset3, 28, 29),
+			Question.createLarger(5, VisualisationType.InPlaceBars, Dataset.Dataset3, 0, 1),
+			// 3
+			Question.createLarger(6, VisualisationType.MapCone, Dataset.Dataset3, 32, 33),
+			Question.createLarger(7, VisualisationType.InPlaceBars, Dataset.Dataset3, 6, 7),
+			Question.createLarger(8, VisualisationType.BarCone, Dataset.Dataset3, 12, 13),
+			// 4
+			Question.createLarger(9, VisualisationType.InPlaceBars, Dataset.Dataset3, 2, 3),
+			Question.createLarger(10, VisualisationType.BarCone, Dataset.Dataset3, 20, 21),
+			Question.createLarger(11, VisualisationType.MapCone, Dataset.Dataset3, 30, 31),
+			// 5
+			Question.createLarger(12, VisualisationType.BarCone, Dataset.Dataset3, 14, 15),
+			Question.createLarger(13, VisualisationType.MapCone, Dataset.Dataset3, 34, 35),
+			Question.createLarger(14, VisualisationType.InPlaceBars, Dataset.Dataset3, 4, 5),
+			// 6
+			Question.createLarger(15, VisualisationType.MapCone, Dataset.Dataset3, 24, 25),
+			Question.createLarger(16, VisualisationType.InPlaceBars, Dataset.Dataset3, 8, 9),
+			Question.createLarger(17, VisualisationType.BarCone, Dataset.Dataset3, 18, 19),
+		});
 	}
 
-	public void answer(int value)
+	void setUpDataset4()
 	{
-		_currentResponse.answer = value;
-		_currentResponse.completionTime = Time.time;
-		_currentResponse.save();
-
-		if (_currentQuestionId >= _quesitons.Count-1)
-		{
-			state = PlotState.OnFinished;
-		}
-        else
-        {
-            state = PlotState.OnCompletedQuestion;
-        }
-	}
-
-	public Question currentQuestion()
-	{
-		return _quesitons[_currentQuestionId];
-	}
-
-	public Question nextQuestion()
-	{
-		if (_currentQuestionId >= _quesitons.Count-1)
-		{
-			state = PlotState.OnFinished;
-			return null;
-		}
-
-		var nextQuestion = _quesitons[++_currentQuestionId];
-		_currentResponse = new UserResponse(nextQuestion);
-		_allResponses.Add(_currentResponse);
-
-		_currentResponse.startTime = Time.time;
-		state = PlotState.OnDoingQuestion;
-
-		return nextQuestion;
+		datasetQuestions.Add(Dataset.Dataset4, new List<Question>() { 
+			// 1
+			Question.createLarger(0, VisualisationType.InPlaceBars, Dataset.Dataset4, 10, 11),
+			Question.createLarger(1, VisualisationType.BarCone, Dataset.Dataset4, 16, 17),
+			Question.createLarger(2, VisualisationType.MapCone, Dataset.Dataset4, 26, 27),
+			// 2
+			Question.createLarger(3, VisualisationType.BarCone, Dataset.Dataset4, 22, 23),
+			Question.createLarger(4, VisualisationType.MapCone, Dataset.Dataset4, 28, 29),
+			Question.createLarger(5, VisualisationType.InPlaceBars, Dataset.Dataset4, 0, 1),
+			// 3
+			Question.createLarger(6, VisualisationType.MapCone, Dataset.Dataset4, 32, 33),
+			Question.createLarger(7, VisualisationType.InPlaceBars, Dataset.Dataset4, 6, 7),
+			Question.createLarger(8, VisualisationType.BarCone, Dataset.Dataset4, 12, 13),
+			// 4
+			Question.createLarger(9, VisualisationType.InPlaceBars, Dataset.Dataset4, 2, 3),
+			Question.createLarger(10, VisualisationType.BarCone, Dataset.Dataset4, 20, 21),
+			Question.createLarger(11, VisualisationType.MapCone, Dataset.Dataset4, 30, 31),
+			// 5
+			Question.createLarger(12, VisualisationType.BarCone, Dataset.Dataset4, 14, 15),
+			Question.createLarger(13, VisualisationType.MapCone, Dataset.Dataset4, 34, 35),
+			Question.createLarger(14, VisualisationType.InPlaceBars, Dataset.Dataset4, 4, 5),
+			// 6
+			Question.createLarger(15, VisualisationType.MapCone, Dataset.Dataset4, 24, 25),
+			Question.createLarger(16, VisualisationType.InPlaceBars, Dataset.Dataset4, 8, 9),
+			Question.createLarger(17, VisualisationType.BarCone, Dataset.Dataset4, 18, 19),
+		});
 	}
 }

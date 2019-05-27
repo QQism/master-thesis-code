@@ -81,7 +81,11 @@ public class LoadDataSet : MonoBehaviour {
     private float mapMinX = Mathf.Infinity;
     private float mapMinY = Mathf.Infinity;
 
-    private Dataset _currentDataset = Dataset.None;
+    public Dataset _currentDataset = Dataset.None;
+
+    public int _startQuestionIdx = 0;
+
+    public bool needToReloadBars = false;
 
     private AudioSource _audioData;
 
@@ -90,8 +94,6 @@ public class LoadDataSet : MonoBehaviour {
         //_map.OnInitialized += placeBarChart;
 
         _audioData = GetComponent<AudioSource>();
-
-        _map.OnInitialized += loadCSVData;
 
         if (_meshSelectionType == MeshSelection.Cube)
         {
@@ -103,96 +105,6 @@ public class LoadDataSet : MonoBehaviour {
         {
             _meshSelection = _quadMesh;
         }
-    }
-
-    void loadCSVData()
-    {
-        /*
-        float maxValue = 0;
-        string filePath = String.Join(System.IO.Path.DirectorySeparatorChar.ToString(), new string[] {
-            Application.dataPath,
-            datasetDir,
-            datasetFile
-        });
-
-        Debug.Log("File path:" + filePath);
-
-        Debug.Log("User position: " + _map.WorldToGeoPosition(new Vector3(13.65f, 23.1f, -87.2f)));
-
-        string data = System.IO.File.ReadAllText(filePath);
-        string[] lines = data.Split('\n');
-        List<MapDataPoint> dataPoints = new List<MapDataPoint>();
-
-        string[] filters = { "Melbourne Cbd", "Caulfield North", "Clayton" };
-        for (int i = 1; i < lines.Length; i++)
-        {
-
-            string[] lineData = lines[i].Split(',');
-            if (lineData.Length < 5)
-                continue;
-
-            bool filtered = false;
-            string stringData = normalisedTextData(lineData[5]);
-
-            foreach (string filter in filters)
-                if (filter.Equals(stringData, StringComparison.OrdinalIgnoreCase))
-                {
-                    filtered = false;
-                    break;
-                }
-
-            if (filtered)
-                continue;
-
-            float latitude = float.Parse(lineData[3]);
-            float longitude = float.Parse(lineData[4]);
-            Vector2d position = new Vector2d(latitude, longitude);
-
-            MapDataPoint point = new MapDataPoint();
-            point.Name = stringData;
-            point.GeoPosition = position;
-            point.WorldPosition = _map.GeoToWorldPosition(position, true);
-            //Debug.Log(point.WorldPosition.ToString("f4"));
-            point.Value = float.Parse(lineData[1]);
-
-            dataPoints.Add(point);
-            DataPointsManager.Instance.mapDataPoints.Add(point);
-
-            if (maxValue < point.Value)
-                maxValue = point.Value;
-        }
-
-        Debug.Log("Number of records: " + lines.Length.ToString());
-        
-
-        DataPointsManager.Instance.maxValue = maxValue;
-        _meshes = new Dictionary<MeshSelection, Mesh>();
-        _meshes.Add(MeshSelection.Cube, _cubeMesh);
-        _meshes.Add(MeshSelection.Cylinder, _cylinderMesh);
-        _meshes.Add(MeshSelection.Quad, _quadMesh);
-        // Skip the header
-        switch(_visualisationType)
-        {
-            case VisualisationType.InPlaceBars:
-                addInPlaceBars();
-                break;
-            case VisualisationType.BarCone:
-                addBlankBars();
-                var barCone = _player.GetComponentInChildren<ConeRenderer>();
-                _controller._attachedCone = barCone;
-                barCone.initializeWithData();
-                break;
-            case VisualisationType.MapCone:
-                addBlankBars();
-                var mapCone = _player.GetComponentInChildren<ConeMapRenderer>();
-                _controller._attachedCone = mapCone;
-                mapCone._meshes = _meshes;
-                mapCone._meshSelectionType = _meshSelectionType;
-                mapCone._barMaxValue = maxValue;
-                mapCone.initializeWithData();
-                break;
-        }
-        */
     }
 
     void addBlankBars()
@@ -260,16 +172,24 @@ public class LoadDataSet : MonoBehaviour {
             Dictionary<Mapbox.Map.UnwrappedTileId, UnityTile> dict = _map.MapVisualizer.ActiveTiles;
             Debug.Log("Tile count: " + dict.Count);
             readSizeOfMap();
-            loadTestDataset(testDatasetFile);
+            loadTestDataset(_currentDataset);
+            loadMeshes();
             mapFullyLoaded = true;
         }
 
         switch (StudyPlot.Instance.state)
         {
             case PlotState.NotStarted:
-                StudyPlot.Instance.setStartQuestionIdx(0);
+                StudyPlot.Instance.setStartQuestionIdx(_startQuestionIdx);
                 var firstQuestion = StudyPlot.Instance.startPlot();
                 handleQuestion(firstQuestion);
+                break;
+            case PlotState.ChangeDataset:
+                needToReloadBars = true;
+                _startQuestionIdx = 0;
+                _currentDataset = StudyPlot.Instance.getNextDataset();
+                loadTestDataset(_currentDataset);
+                StudyPlot.Instance.state = PlotState.NotStarted;
                 break;
             case PlotState.OnDoingQuestion:
                 break;
@@ -295,11 +215,11 @@ public class LoadDataSet : MonoBehaviour {
             return;
         }
 
-        if (_currentDataset != question.dataset)
+        if (needToReloadBars)
         {
-            _currentDataset = question.dataset;
             destroyInPlaceBars();
             addInPlaceBars();
+            needToReloadBars = false;
         }
 
         DataPointsManager.Instance.resetPosing();
@@ -435,20 +355,17 @@ public class LoadDataSet : MonoBehaviour {
         Debug.Log("Min Y: " + mapMinY);
     }
 
-    void loadTestDataset(string filename) 
+    void loadTestDataset(Dataset dataset) 
     {
-        string filePath = String.Join(System.IO.Path.DirectorySeparatorChar.ToString(), new string[] {
-            Application.dataPath,
-            datasetDir,
-            filename
-        });
+        StudyPlot.Instance.setDataset(dataset);
 
-        string data = System.IO.File.ReadAllText(filePath);
+        string data = System.IO.File.ReadAllText(StudyPlot.Instance.getDatasetFile());
         string[] lines = data.Split('\n');
         List<MapDataPoint> dataPoints = new List<MapDataPoint>();
 
         float maxValue = 1;
 
+        DataPointsManager.Instance.mapDataPoints.Clear();
         // Skip the header
         for (int i = 1; i < lines.Length; i++)
         {
@@ -464,11 +381,21 @@ public class LoadDataSet : MonoBehaviour {
 
             point.RawPosition = new Vector2(rawX, rawY);
 
-            Debug.Log("Pos " + i + " : " + point.WorldPosition.ToString());
+            //Debug.Log("Pos " + i + " : " + point.WorldPosition.ToString());
             DataPointsManager.Instance.mapDataPoints.Add(point);
         }
 
+        needToReloadBars = true;
+
+        Debug.Log("Dataset: " + dataset +
+        " - " + StudyPlot.Instance._questions.Count + " questions" +
+        " - " + DataPointsManager.Instance.mapDataPoints.Count + " datapoints");
+
         DataPointsManager.Instance.maxValue = maxValue;
+    }
+
+    void loadMeshes()
+    {
         _meshes = new Dictionary<MeshSelection, Mesh>();
         _meshes.Add(MeshSelection.Cube, _cubeMesh);
         _meshes.Add(MeshSelection.Cylinder, _cylinderMesh);

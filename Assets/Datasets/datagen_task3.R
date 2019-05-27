@@ -236,4 +236,8 @@ generate_task3_dataset <- function()
 }
 
 dataPoints1 <- generate_task3_dataset()
+dataPoints2 <- generate_task3_dataset()
+dataPoints3 <- generate_task3_dataset()
 write.csv(dataPoints1, file="dataset_closer1.csv", quote=F, row.names=F)
+write.csv(dataPoints2, file="dataset_closer2.csv", quote=F, row.names=F)
+write.csv(dataPoints3, file="dataset_closer3.csv", quote=F, row.names=F)

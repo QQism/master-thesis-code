@@ -238,7 +238,7 @@ public class FramedConeBarData : MonoBehaviour {
 
     void onPoseEnter()
     {
-        Debug.Log("Pose enter: " + name);
+        //Debug.Log("Pose enter: " + name);
         if (dataMaterial != null && frameMaterial != null) 
         {
             dataMaterial.SetInt("_OutlineOn", 1);
@@ -252,7 +252,7 @@ public class FramedConeBarData : MonoBehaviour {
 
     void onPoseLeave()
     {
-        Debug.Log("Pose leave: " + name);
+        //Debug.Log("Pose leave: " + name);
         if (dataMaterial != null && frameMaterial != null)
         {
             dataMaterial.SetInt("_OutlineOn", 0);

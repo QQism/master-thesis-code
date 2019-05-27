@@ -268,7 +268,7 @@ public class FramedBarData : MonoBehaviour {
 
     void onPoseEnter()
     {
-        Debug.Log("Pose enter: " + name);
+        //Debug.Log("Pose enter: " + name);
         _onPosing = true;
         /*
         if (dataMaterial != null)
@@ -282,7 +282,7 @@ public class FramedBarData : MonoBehaviour {
 
     void onPoseLeave()
     {
-        Debug.Log("Pose leave: " + name);
+        //Debug.Log("Pose leave: " + name);
         _onPosing = false;
         /*
         if (dataMaterial != null)

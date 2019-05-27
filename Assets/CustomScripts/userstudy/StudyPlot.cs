@@ -143,8 +143,9 @@ public class StudyPlot
 		setUpDataset2();
 		setUpDataset3();
 		setUpDataset4();
-		setUpDataset4();
 		setUpDataset5();
+		setUpDataset6();
+		setUpDataset7();
 	}
 
 	public string getDatasetFile()
@@ -465,7 +466,7 @@ public class StudyPlot
 
 	void setUpDataset7()
 	{
-		datasetQuestions.Add(Dataset.Dataset6, new List<Question>() { 
+		datasetQuestions.Add(Dataset.Dataset7, new List<Question>() { 
 			// 1
 			Question.createCloser(0, VisualisationType.InPlaceBars, 	Dataset.Dataset7, 14, 15),
 			Question.createCloser(1, VisualisationType.BarCone, 		Dataset.Dataset7, 20, 21),

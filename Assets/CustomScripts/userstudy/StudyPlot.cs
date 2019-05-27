@@ -127,15 +127,15 @@ public class StudyPlot
 	void setUpQuestions()
 	{
 		datasetFiles = new Dictionary<Dataset, string>();
-		datasetFiles.Add(Dataset.Dataset1, "dataset_est_latest.csv");
+		datasetFiles.Add(Dataset.Dataset1, "dataset_est.csv");
 
-		datasetFiles.Add(Dataset.Dataset2, "dataset_higher1.csv");
-		datasetFiles.Add(Dataset.Dataset3, "dataset_higher2.csv");
-		datasetFiles.Add(Dataset.Dataset4, "dataset_higher3.csv");
+		datasetFiles.Add(Dataset.Dataset2, "dataset_higher1_latest.csv");
+		datasetFiles.Add(Dataset.Dataset3, "dataset_higher2_latest.csv");
+		datasetFiles.Add(Dataset.Dataset4, "dataset_higher3_latest.csv");
 
-		datasetFiles.Add(Dataset.Dataset5, "dataset_closer1.csv");
-		datasetFiles.Add(Dataset.Dataset6, "dataset_closer2.csv");
-		datasetFiles.Add(Dataset.Dataset7, "dataset_closer3.csv");
+		datasetFiles.Add(Dataset.Dataset5, "dataset_closer1_latest.csv");
+		datasetFiles.Add(Dataset.Dataset6, "dataset_closer2_latest.csv");
+		datasetFiles.Add(Dataset.Dataset7, "dataset_closer3_latest.csv");
 
 		datasetQuestions = new Dictionary<Dataset, List<Question>>();
 

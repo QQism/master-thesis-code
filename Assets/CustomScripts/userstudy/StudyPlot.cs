@@ -163,21 +163,20 @@ public class StudyPlot
 
 		switch(_currentDataset)
 		{
-            case Dataset.Dataset1:
-                nextDataset = Dataset.Dataset2;
-                break;
             case Dataset.Dataset2:
                 nextDataset = Dataset.Dataset3;
                 break;
             case Dataset.Dataset3:
                 nextDataset = Dataset.Dataset4;
                 break;
-            case Dataset.Dataset4:
-                break;
             case Dataset.Dataset5:
+                nextDataset = Dataset.Dataset6;
                 break;
             case Dataset.Dataset6:
+                nextDataset = Dataset.Dataset7;
                 break;
+            case Dataset.Dataset1:
+            case Dataset.Dataset4:
             case Dataset.Dataset7:
 			default:
                 break;

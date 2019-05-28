@@ -31,7 +31,7 @@ public class StudyPlot
 
 	public int userId;
 
-	public Dictionary<Dataset, List<Question>> datasetQuestions;
+	public Dictionary<string, List<Question>> datasetQuestions;
 	public Dictionary<Dataset, string> datasetFiles;
 
 	public static StudyPlot Instance
@@ -118,10 +118,11 @@ public class StudyPlot
 		return nextQuestion;
 	}
 
-	public void setDataset(Dataset dataset) {
+	public void setDataset(Dataset dataset, ParticipantGroup group) {
 		_currentDataset = dataset;
-		_questions = datasetQuestions[_currentDataset];
 		_currentDatasetFile = datasetFiles[_currentDataset];
+
+		_questions = datasetQuestions[getDatasetKey(dataset, group)];
 	}
 
 	void setUpQuestions()
@@ -137,7 +138,7 @@ public class StudyPlot
 		datasetFiles.Add(Dataset.Dataset6, "dataset_closer2_latest.csv");
 		datasetFiles.Add(Dataset.Dataset7, "dataset_closer3_latest.csv");
 
-		datasetQuestions = new Dictionary<Dataset, List<Question>>();
+		datasetQuestions = new Dictionary<string, List<Question>>();
 
 		setUpDataset1();
 		setUpDataset2();
@@ -187,44 +188,67 @@ public class StudyPlot
 
 	void setUpDataset1()
 	{
-		datasetQuestions.Add(Dataset.Dataset1, new List<Question>() {
-			Question.createEstimate(0, VisualisationType.InPlaceBars, Dataset.Dataset1, 3),
-			Question.createEstimate(1, VisualisationType.BarCone, Dataset.Dataset1, 13),
-			Question.createEstimate(2, VisualisationType.MapCone, Dataset.Dataset1, 18),
+        datasetQuestions.Add(getDatasetKey(Dataset.Dataset1, ParticipantGroup.Group1), new List<Question>() {
+            Question.createEstimate(0, VisualisationType.InPlaceBars, Dataset.Dataset1, 0),
+            Question.createEstimate(1, VisualisationType.InPlaceBars, Dataset.Dataset1, 2),
+            Question.createEstimate(2, VisualisationType.InPlaceBars, Dataset.Dataset1, 1),
+            Question.createEstimate(3, VisualisationType.InPlaceBars, Dataset.Dataset1, 3),
 
-			Question.createEstimate(3, VisualisationType.BarCone, Dataset.Dataset1, 10),
-			Question.createEstimate(4, VisualisationType.MapCone, Dataset.Dataset1, 21),
-			Question.createEstimate(5, VisualisationType.InPlaceBars, Dataset.Dataset1, 4),
+            Question.createEstimate(4, VisualisationType.BarCone, Dataset.Dataset1, 4),
+            Question.createEstimate(5, VisualisationType.BarCone, Dataset.Dataset1, 6),
+            Question.createEstimate(6, VisualisationType.BarCone, Dataset.Dataset1, 5),
+            Question.createEstimate(7, VisualisationType.BarCone, Dataset.Dataset1, 7),
 
-			Question.createEstimate(6, VisualisationType.MapCone, Dataset.Dataset1, 19),
-			Question.createEstimate(7, VisualisationType.InPlaceBars, Dataset.Dataset1, 2),
-			Question.createEstimate(8, VisualisationType.BarCone, Dataset.Dataset1, 15),
+            Question.createEstimate(8, VisualisationType.MapCone, Dataset.Dataset1, 8),
+            Question.createEstimate(9, VisualisationType.MapCone, Dataset.Dataset1, 10),
+            Question.createEstimate(10, VisualisationType.MapCone, Dataset.Dataset1, 9),
+            Question.createEstimate(11, VisualisationType.MapCone, Dataset.Dataset1, 11),
+        });
 
-			Question.createEstimate(9, VisualisationType.InPlaceBars, Dataset.Dataset1, 5),
-			Question.createEstimate(10, VisualisationType.BarCone, Dataset.Dataset1, 8),
-			Question.createEstimate(11, VisualisationType.MapCone, Dataset.Dataset1, 20),
+		string group2Dataset1 = ParticipantGroup.Group2.ToString() + "_" + Dataset.Dataset1.ToString();
 
-			Question.createEstimate(12, VisualisationType.BarCone, Dataset.Dataset1, 14),
-			Question.createEstimate(13, VisualisationType.MapCone, Dataset.Dataset1, 17),
-			Question.createEstimate(14, VisualisationType.InPlaceBars, Dataset.Dataset1, 0),
+        datasetQuestions.Add(group2Dataset1, new List<Question>() {
+            Question.createEstimate(0, VisualisationType.BarCone, Dataset.Dataset1, 4),
+            Question.createEstimate(1, VisualisationType.BarCone, Dataset.Dataset1, 6),
+            Question.createEstimate(2, VisualisationType.BarCone, Dataset.Dataset1, 5),
+            Question.createEstimate(3, VisualisationType.BarCone, Dataset.Dataset1, 7),
 
-			Question.createEstimate(15, VisualisationType.MapCone, Dataset.Dataset1, 22),
-			Question.createEstimate(16, VisualisationType.InPlaceBars, Dataset.Dataset1, 7),
-			Question.createEstimate(17, VisualisationType.BarCone, Dataset.Dataset1, 9),
+            Question.createEstimate(4, VisualisationType.MapCone, Dataset.Dataset1, 8),
+            Question.createEstimate(5, VisualisationType.MapCone, Dataset.Dataset1, 10),
+            Question.createEstimate(6, VisualisationType.MapCone, Dataset.Dataset1, 9),
+            Question.createEstimate(7, VisualisationType.MapCone, Dataset.Dataset1, 11),
 
-			Question.createEstimate(18, VisualisationType.InPlaceBars, Dataset.Dataset1, 1),
-			Question.createEstimate(19, VisualisationType.BarCone, Dataset.Dataset1, 12),
-			Question.createEstimate(20, VisualisationType.MapCone, Dataset.Dataset1, 16),
+            Question.createEstimate(8, VisualisationType.InPlaceBars, Dataset.Dataset1, 0),
+            Question.createEstimate(9, VisualisationType.InPlaceBars, Dataset.Dataset1, 2),
+            Question.createEstimate(10, VisualisationType.InPlaceBars, Dataset.Dataset1, 1),
+            Question.createEstimate(11, VisualisationType.InPlaceBars, Dataset.Dataset1, 3),
+        });
 
-			Question.createEstimate(21, VisualisationType.BarCone, Dataset.Dataset1, 11),
-			Question.createEstimate(22, VisualisationType.MapCone, Dataset.Dataset1, 23),
-			Question.createEstimate(23, VisualisationType.InPlaceBars, Dataset.Dataset1, 6),
-		});
+		string group3Dataset1 = ParticipantGroup.Group3.ToString() + "_" + Dataset.Dataset1.ToString();
+
+        datasetQuestions.Add(group3Dataset1, new List<Question>() {
+            Question.createEstimate(0, VisualisationType.MapCone, Dataset.Dataset1, 8),
+            Question.createEstimate(1, VisualisationType.MapCone, Dataset.Dataset1, 10),
+            Question.createEstimate(2, VisualisationType.MapCone, Dataset.Dataset1, 9),
+            Question.createEstimate(3, VisualisationType.MapCone, Dataset.Dataset1, 11),
+
+            Question.createEstimate(4, VisualisationType.InPlaceBars, Dataset.Dataset1, 0),
+            Question.createEstimate(5, VisualisationType.InPlaceBars, Dataset.Dataset1, 2),
+            Question.createEstimate(6, VisualisationType.InPlaceBars, Dataset.Dataset1, 1),
+            Question.createEstimate(7, VisualisationType.InPlaceBars, Dataset.Dataset1, 3),
+
+            Question.createEstimate(8, VisualisationType.BarCone, Dataset.Dataset1, 4),
+            Question.createEstimate(9, VisualisationType.BarCone, Dataset.Dataset1, 6),
+            Question.createEstimate(10, VisualisationType.BarCone, Dataset.Dataset1, 5),
+            Question.createEstimate(11, VisualisationType.BarCone, Dataset.Dataset1, 7),
+        });
 	}
 
 	void setUpDataset2()
 	{
-		datasetQuestions.Add(Dataset.Dataset2, new List<Question>() {
+		string group1Dataset2 = ParticipantGroup.Group1.ToString() + "_" + Dataset.Dataset2.ToString();
+
+		datasetQuestions.Add(group1Dataset2, new List<Question>() {
 			/*
 			// 1
 			Question.createLarger(0, VisualisationType.InPlaceBars, Dataset.Dataset2, 25, 26),
@@ -329,7 +353,9 @@ public class StudyPlot
 
 	void setUpDataset3()
 	{
-		datasetQuestions.Add(Dataset.Dataset3, new List<Question>() { 
+		string group1Dataset3 = ParticipantGroup.Group1.ToString() + "_" + Dataset.Dataset3.ToString();
+
+		datasetQuestions.Add(group1Dataset3, new List<Question>() { 
 			// 1
 			Question.createLarger(0, VisualisationType.InPlaceBars, Dataset.Dataset3, 10, 11),
 			Question.createLarger(1, VisualisationType.BarCone, Dataset.Dataset3, 16, 17),
@@ -359,7 +385,8 @@ public class StudyPlot
 
 	void setUpDataset4()
 	{
-		datasetQuestions.Add(Dataset.Dataset4, new List<Question>() { 
+		string group1Dataset4 = ParticipantGroup.Group1.ToString() + "_" + Dataset.Dataset4.ToString();
+		datasetQuestions.Add(group1Dataset4, new List<Question>() { 
 			// 1
 			Question.createLarger(0, VisualisationType.InPlaceBars, Dataset.Dataset4, 10, 11),
 			Question.createLarger(1, VisualisationType.BarCone, Dataset.Dataset4, 16, 17),
@@ -389,7 +416,8 @@ public class StudyPlot
 
 	void setUpDataset5()
 	{
-		datasetQuestions.Add(Dataset.Dataset5, new List<Question>() { 
+		string group1Dataset5 = ParticipantGroup.Group1.ToString() + "_" + Dataset.Dataset5.ToString();
+		datasetQuestions.Add(group1Dataset5, new List<Question>() { 
 			// 1
 			Question.createCloser(0, VisualisationType.InPlaceBars, Dataset.Dataset5, 14, 15),
 			Question.createCloser(1, VisualisationType.BarCone, Dataset.Dataset5, 20, 21),
@@ -427,7 +455,8 @@ public class StudyPlot
 
 	void setUpDataset6()
 	{
-		datasetQuestions.Add(Dataset.Dataset6, new List<Question>() { 
+		string group1Dataset6 = ParticipantGroup.Group1.ToString() + "_" + Dataset.Dataset6.ToString();
+		datasetQuestions.Add(group1Dataset6, new List<Question>() { 
 			// 1
 			Question.createCloser(0, VisualisationType.InPlaceBars, 	Dataset.Dataset6, 14, 15),
 			Question.createCloser(1, VisualisationType.BarCone, 		Dataset.Dataset6, 20, 21),
@@ -465,7 +494,8 @@ public class StudyPlot
 
 	void setUpDataset7()
 	{
-		datasetQuestions.Add(Dataset.Dataset7, new List<Question>() { 
+		string group1Dataset7 = ParticipantGroup.Group1.ToString() + "_" + Dataset.Dataset7.ToString();
+		datasetQuestions.Add(group1Dataset7, new List<Question>() { 
 			// 1
 			Question.createCloser(0, VisualisationType.InPlaceBars, 	Dataset.Dataset7, 14, 15),
 			Question.createCloser(1, VisualisationType.BarCone, 		Dataset.Dataset7, 20, 21),
@@ -499,5 +529,10 @@ public class StudyPlot
 			Question.createCloser(22, VisualisationType.MapCone, 		Dataset.Dataset7, 32, 33),
 			Question.createCloser(23, VisualisationType.InPlaceBars, 	Dataset.Dataset7, 8, 9),
 		});
+	}
+
+	string getDatasetKey(Dataset dataset, ParticipantGroup group)
+	{
+		return group.ToString() + "_" + dataset.ToString();
 	}
 }

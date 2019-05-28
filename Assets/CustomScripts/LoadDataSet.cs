@@ -82,6 +82,7 @@ public class LoadDataSet : MonoBehaviour {
     private float mapMinY = Mathf.Infinity;
 
     public Dataset _currentDataset = Dataset.None;
+    public ParticipantGroup _participantGroup = ParticipantGroup.Group1;
 
     public int _startQuestionIdx = 0;
 
@@ -357,7 +358,7 @@ public class LoadDataSet : MonoBehaviour {
 
     void loadTestDataset(Dataset dataset) 
     {
-        StudyPlot.Instance.setDataset(dataset);
+        StudyPlot.Instance.setDataset(dataset, _participantGroup);
 
         string data = System.IO.File.ReadAllText(StudyPlot.Instance.getDatasetFile());
         string[] lines = data.Split('\n');

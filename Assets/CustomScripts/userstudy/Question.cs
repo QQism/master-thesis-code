@@ -27,6 +27,13 @@ public enum Dataset
 	// Closer 3
 	Dataset7,
 }
+
+public enum ParticipantGroup
+{
+	Group1,
+	Group2,
+	Group3,
+}
 public class Question
 {
 	public int id;

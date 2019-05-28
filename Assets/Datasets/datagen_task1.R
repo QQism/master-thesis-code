@@ -28,7 +28,7 @@ generate_task1_dataset <- function()
   # For the rest of  76 (100-24), would be randomly placed in uniform distribution
   
   # repetition
-  task1_repetition <- 4
+  task1_repetition <- 2
   vis_levels <- 3
   radius_level <- 2
   datasets_count <- vis_levels * radius_level * task1_repetition
@@ -36,67 +36,50 @@ generate_task1_dataset <- function()
   
   
   sCloseRadii <- runif(task1_repetition, minRadius, closeRadius)
+  closeRadiusIdx <- 1
   sFarRadii <- runif(task1_repetition, closeRadius, maxRadius)
+  farRadiusIdx <- 1
   
   dataPoints <- data.frame("id"=integer(), "x"=double(), "y"=double(), "value"=double(), stringsAsFactors = F)
   names(dataPoints)
   currentAngleIdx <- 1
-  # Close point
-  recur <- 0
-  for (radius in sCloseRadii)
+  
+  for(rep in 0:(task1_repetition-1))
   {
     base_value <- round(runif(1, 0, 1), 2)
     # 3 trials w/ close radius
+    closeRadius <- sCloseRadii[closeRadiusIdx]
+    closeRadiusIdx <- closeRadiusIdx + 1
     for (idx in 1:3) 
     {
       value <- fluctuate_values(base_value, 0.05)
       angle <- angles[currentAngleIdx]
       currentAngleIdx <- currentAngleIdx + 1
-      x <- sin(angle * pi/180) * radius
-      y <- cos(angle * pi/180) * radius
-      id <- idx*8-7 + recur
+      x <- sin(angle * pi/180) * closeRadius
+      y <- cos(angle * pi/180) * closeRadius
+      id <- idx * 4 - 3 + rep
       dataPoints[id, ] <- c(id, x, y, value)
     }
-    recur <- recur + 1
-  }
-  
-  recur <- 0
-  for (radius in sFarRadii)
-  {
+    
     base_value <- round(runif(1, 0, 1), 2)
     # 3 trials w/ far radius
+    farRadius <- sFarRadii[farRadiusIdx]
+    farRadiusIdx <- farRadiusIdx + 1
     for (idx in 1:3) 
     {
       value <- fluctuate_values(base_value, 0.05)
       angle <- angles[currentAngleIdx]
       currentAngleIdx <- currentAngleIdx + 1
-      x <- sin(angle * pi/180) * radius
-      y <- cos(angle * pi/180) * radius
-      id <- idx*8-7 + recur + task1_repetition
+      x <- sin(angle * pi/180) * farRadius
+      y <- cos(angle * pi/180) * farRadius
+      id <- (idx * 4 - 3) + rep + task1_repetition
       dataPoints[id, ] <- c(id, x, y, value)
     }
-    recur <- recur + 1
   }
   
-  # Fill out the rest of 76 slots
-  #remaining_slots = n - (vis_levels * radius_level * task1_repetition)
-  #closeRadii <- runif(remaining_slots/2, minRadius, closeRadius)
-  #farRadii <- runif(remaining_slots/2, closeRadius, maxRadius)
-  #allRadius <- c(closeRadii, farRadii)
-  #remaining_values <- round(runif(remaining_slots, 0, 1), 2)
-  #dataPoints[25:100, 4] <- remaining_values
-  
-  #for (idx in 25:100)
-  #{
-  #  radius <- allRadius[idx-24]
-  #  angle <- angles[currentAngleIdx]
-  #  currentAngleIdx <- currentAngleIdx + 1
-  #  x <- sin(angle * pi/180) * radius
-  #  y <- cos(angle * pi/180) * radius
-  #  dataPoints[idx, 1:3] <- c(idx, x, y)
-  #}
-  
-  # Write to CSV file
-  write.csv(dataPoints, file="dataset_est.csv", quote=F, row.names=F)
+  return(dataPoints)
 }
-generate_task1_dataset()
+
+dataPoints <- generate_task1_dataset()
+
+write.csv(dataPoints, file="dataset_est.csv", quote=F, row.names=F)

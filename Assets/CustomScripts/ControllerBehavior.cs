@@ -164,8 +164,9 @@ public class ControllerBehavior : MonoBehaviour {
 				RaycastHit hit;
 				// Shorten the default magnitude of the beam by 0.3
 				Vector3 direction = poseAction.GetLocalRotation(_controller) * vectorFoward * 0.3f;
-                line.SetPosition(1, line.transform.position + direction);
-				debugPoseMarkerEnd.transform.position = line.transform.position + direction;
+				Vector3 endPoint = line.transform.position + direction * 10000;
+                line.SetPosition(1, endPoint);
+				debugPoseMarkerEnd.transform.position = endPoint;
 				Ray ray = new Ray(line.transform.position, direction);
 				if (Physics.Raycast(ray, out hit)) 
 				{
@@ -176,7 +177,8 @@ public class ControllerBehavior : MonoBehaviour {
 				} else
 				{
 					//Debug.Log("Missed!");
-					debugPoseMarkerEnd.transform.position = line.transform.position + direction;
+                	//line.SetPosition(1, line.transform.position + direction * 10000);
+					//debugPoseMarkerEnd.transform.position = line.transform.position + direction * 10000;
 					handleMiss();
 				}
 			}

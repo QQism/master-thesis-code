@@ -47,11 +47,11 @@ public class ControllerBehavior : MonoBehaviour {
             switch (value)
             {
                 case Task.PickCloserDataPoint:
-                    _instructionText.SetText("Closer");
+                    _instructionText.SetText("Closer?");
                     _controllerMode = ControllerMode.OptionAnswerBoard;
                     break;
                 case Task.PickLargerDataPoint:
-                    _instructionText.SetText("Higher");
+                    _instructionText.SetText("Greater?");
                     _controllerMode = ControllerMode.OptionAnswerBoard;
                     break;
                 case Task.EstimateSinglePoint:

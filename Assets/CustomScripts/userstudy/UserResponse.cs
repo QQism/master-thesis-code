@@ -13,8 +13,9 @@ public class UserResponse
 	public float completionTime {get; set;}
 	public int answer {get; set;}
 
-	public UserResponse(Question question)
+	public UserResponse(int userId, Question question)
 	{
+		this.userId = userId;
 		this.question = question;
 	}
 

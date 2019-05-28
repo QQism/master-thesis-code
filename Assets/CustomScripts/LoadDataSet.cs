@@ -83,6 +83,7 @@ public class LoadDataSet : MonoBehaviour {
 
     public Dataset _currentDataset = Dataset.None;
     public ParticipantGroup _participantGroup = ParticipantGroup.Group1;
+    public int _userId;
 
     public int _startQuestionIdx = 0;
 
@@ -358,6 +359,7 @@ public class LoadDataSet : MonoBehaviour {
 
     void loadTestDataset(Dataset dataset) 
     {
+        StudyPlot.Instance.setUserId(_userId);
         StudyPlot.Instance.setDataset(dataset, _participantGroup);
 
         string data = System.IO.File.ReadAllText(StudyPlot.Instance.getDatasetFile());

@@ -180,7 +180,9 @@ generate_task3_dataset <- function()
   }
   
   dataPoints <- data.frame("id"=integer(), "x"=double(), "y"=double(), "value"=double(), stringsAsFactors = F)
-  angles1 <- randomNumbers(n=datasets_count/2, min=1, max=360, col=1)
+  # each datapoints is at least 2deg away from each other
+  angles1 <- randomNumbers(n=datasets_count/2, min=1, max=180, col=1)
+  angles1 <- angles1 * 2
   currentAngleIdx <- 1
   # Angles1
   for (id in 1:(datasets_count/2))
@@ -253,8 +255,8 @@ generate_task3_dataset <- function()
 }
 
 task3_dataPoints1 <- generate_task3_dataset()
-task3_dataPoints2 <- generate_task3_dataset()
-task3_dataPoints3 <- generate_task3_dataset()
+#task3_dataPoints2 <- generate_task3_dataset()
+#task3_dataPoints3 <- generate_task3_dataset()
 write.csv(task3_dataPoints1, file="dataset_closer1.csv", quote=F, row.names=F)
-write.csv(task3_dataPoints2, file="dataset_closer2.csv", quote=F, row.names=F)
-write.csv(task3_dataPoints3, file="dataset_closer3.csv", quote=F, row.names=F)
+#write.csv(task3_dataPoints2, file="dataset_closer2.csv", quote=F, row.names=F)
+#write.csv(task3_dataPoints3, file="dataset_closer3.csv", quote=F, row.names=F)

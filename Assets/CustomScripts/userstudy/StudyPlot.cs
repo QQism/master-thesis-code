@@ -64,7 +64,7 @@ public class StudyPlot
 			return null;
 
 		var nextQuestion = _questions[_currentQuestionId];
-		_currentResponse = new UserResponse(nextQuestion);
+		_currentResponse = new UserResponse(userId, nextQuestion);
 		_allResponses.Add(_currentResponse);
 
 		state = PlotState.OnDoingQuestion;
@@ -109,7 +109,7 @@ public class StudyPlot
 		}
 
 		var nextQuestion = _questions[++_currentQuestionId];
-		_currentResponse = new UserResponse(nextQuestion);
+		_currentResponse = new UserResponse(userId, nextQuestion);
 		_allResponses.Add(_currentResponse);
 
 		_currentResponse.startTime = Time.time;
@@ -125,18 +125,23 @@ public class StudyPlot
 		_questions = datasetQuestions[getDatasetKey(dataset, group)];
 	}
 
+	public void setUserId(int userId)
+	{
+		this.userId = userId;
+	}
+
 	void setUpQuestions()
 	{
 		datasetFiles = new Dictionary<Dataset, string>();
 		datasetFiles.Add(Dataset.Dataset1, "dataset_est_latest.csv");
 
-		datasetFiles.Add(Dataset.Dataset2, "dataset_higher1.csv");
-		datasetFiles.Add(Dataset.Dataset3, "dataset_higher2_latest.csv");
-		datasetFiles.Add(Dataset.Dataset4, "dataset_higher3_latest.csv");
+		datasetFiles.Add(Dataset.Dataset2, "dataset_higher1_latest.csv");
+		//datasetFiles.Add(Dataset.Dataset3, "dataset_higher2_latest.csv");
+		//datasetFiles.Add(Dataset.Dataset4, "dataset_higher3_latest.csv");
 
 		datasetFiles.Add(Dataset.Dataset5, "dataset_closer1_latest.csv");
-		datasetFiles.Add(Dataset.Dataset6, "dataset_closer2_latest.csv");
-		datasetFiles.Add(Dataset.Dataset7, "dataset_closer3_latest.csv");
+		//datasetFiles.Add(Dataset.Dataset6, "dataset_closer2_latest.csv");
+		//datasetFiles.Add(Dataset.Dataset7, "dataset_closer3_latest.csv");
 
 		datasetQuestions = new Dictionary<string, List<Question>>();
 
@@ -165,16 +170,16 @@ public class StudyPlot
 		switch(_currentDataset)
 		{
             case Dataset.Dataset2:
-                nextDataset = Dataset.Dataset3;
+                //nextDataset = Dataset.Dataset3;
                 break;
             case Dataset.Dataset3:
-                nextDataset = Dataset.Dataset4;
+                //nextDataset = Dataset.Dataset4;
                 break;
             case Dataset.Dataset5:
-                nextDataset = Dataset.Dataset6;
+                //nextDataset = Dataset.Dataset6;
                 break;
             case Dataset.Dataset6:
-                nextDataset = Dataset.Dataset7;
+                //nextDataset = Dataset.Dataset7;
                 break;
             case Dataset.Dataset1:
             case Dataset.Dataset4:
@@ -360,40 +365,37 @@ public class StudyPlot
 
 	void setUpDataset5()
 	{
-		string group1Dataset5 = ParticipantGroup.Group1.ToString() + "_" + Dataset.Dataset5.ToString();
-		datasetQuestions.Add(group1Dataset5, new List<Question>() { 
-			// 1
-			Question.createCloser(0, VisualisationType.InPlaceBars, Dataset.Dataset5, 14, 15),
-			Question.createCloser(1, VisualisationType.BarCone, Dataset.Dataset5, 20, 21),
-			Question.createCloser(2, VisualisationType.MapCone, Dataset.Dataset5, 34, 35),
-			// 2
-			Question.createCloser(3, VisualisationType.BarCone, Dataset.Dataset5, 26, 27),
-			Question.createCloser(4, VisualisationType.MapCone, Dataset.Dataset5, 44, 45),
-			Question.createCloser(5, VisualisationType.InPlaceBars, Dataset.Dataset5, 2, 3),
-			// 3
-			Question.createCloser(6, VisualisationType.MapCone, Dataset.Dataset5, 36, 37),
-			Question.createCloser(7, VisualisationType.InPlaceBars, Dataset.Dataset5, 10, 11),
-			Question.createCloser(8, VisualisationType.BarCone, Dataset.Dataset5, 28, 29),
-			// 4
-			Question.createCloser(9, VisualisationType.InPlaceBars, Dataset.Dataset5, 4, 5),
-			Question.createCloser(10, VisualisationType.BarCone, Dataset.Dataset5, 18, 19),
-			Question.createCloser(11, VisualisationType.MapCone, Dataset.Dataset5, 40, 41),
-			// 5
-			Question.createCloser(12, VisualisationType.BarCone, Dataset.Dataset5, 24, 25),
-			Question.createCloser(13, VisualisationType.MapCone, Dataset.Dataset5, 38, 39),
-			Question.createCloser(14, VisualisationType.InPlaceBars, Dataset.Dataset5, 0, 1),
-			// 6
-			Question.createCloser(15, VisualisationType.MapCone, Dataset.Dataset5, 42, 43),
-			Question.createCloser(16, VisualisationType.InPlaceBars, Dataset.Dataset5, 12, 13),
-			Question.createCloser(17, VisualisationType.BarCone, Dataset.Dataset5, 22, 23),
-			// 7
-			Question.createCloser(18, VisualisationType.InPlaceBars, Dataset.Dataset5, 6, 7),
-			Question.createCloser(19, VisualisationType.BarCone, Dataset.Dataset5, 16, 17),
-			Question.createCloser(20, VisualisationType.MapCone, Dataset.Dataset5, 46, 47),
-			// 8
-			Question.createCloser(21, VisualisationType.BarCone, Dataset.Dataset5, 30, 31),
-			Question.createCloser(22, VisualisationType.MapCone, Dataset.Dataset5, 32, 33),
-			Question.createCloser(23, VisualisationType.InPlaceBars, Dataset.Dataset5, 8, 9),
+		int i = 0;
+		datasetQuestions.Add(getDatasetKey(Dataset.Dataset5, ParticipantGroup.Group1), new List<Question>() { 
+			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 0, 1),
+			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 10, 11),
+			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 2, 3),
+			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 8, 9),
+
+			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 4, 5),
+			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 14, 15),
+			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 6, 7),
+			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 12, 13),
+
+			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 16, 17),
+			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 26, 27),
+			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 18, 19),
+			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 24, 25),
+
+			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 20, 21),
+			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 30, 31),
+			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 22, 23),
+			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 28, 29),
+
+			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 32, 33),
+			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 42, 43),
+			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 34, 35),
+			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 40, 41),
+
+			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 36, 37),
+			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 46, 47),
+			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 38, 39),
+			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 44, 45),
 		});
 	}
 

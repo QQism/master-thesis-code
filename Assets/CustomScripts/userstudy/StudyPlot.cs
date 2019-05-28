@@ -130,7 +130,7 @@ public class StudyPlot
 		datasetFiles = new Dictionary<Dataset, string>();
 		datasetFiles.Add(Dataset.Dataset1, "dataset_est_latest.csv");
 
-		datasetFiles.Add(Dataset.Dataset2, "dataset_higher1_latest.csv");
+		datasetFiles.Add(Dataset.Dataset2, "dataset_higher1.csv");
 		datasetFiles.Add(Dataset.Dataset3, "dataset_higher2_latest.csv");
 		datasetFiles.Add(Dataset.Dataset4, "dataset_higher3_latest.csv");
 
@@ -246,108 +246,52 @@ public class StudyPlot
 
 	void setUpDataset2()
 	{
-		string group1Dataset2 = ParticipantGroup.Group1.ToString() + "_" + Dataset.Dataset2.ToString();
+		int i = 0;
+		datasetQuestions.Add(getDatasetKey(Dataset.Dataset2, ParticipantGroup.Group1), new List<Question>() {
+			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 4, 5),
+			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 8, 9),
+			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 20, 21),
+			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 0, 1),
 
-		datasetQuestions.Add(group1Dataset2, new List<Question>() {
-			/*
-			// 1
-			Question.createLarger(0, VisualisationType.InPlaceBars, Dataset.Dataset2, 25, 26),
-			Question.createLarger(1, VisualisationType.BarCone, Dataset.Dataset2, 43, 44),
-			Question.createLarger(2, VisualisationType.MapCone, Dataset.Dataset2, 85, 86),
-			// 2
-			Question.createLarger(3, VisualisationType.BarCone, Dataset.Dataset2, 67, 68),
-			Question.createLarger(4, VisualisationType.MapCone, Dataset.Dataset2, 73, 74),
-			Question.createLarger(5, VisualisationType.InPlaceBars, Dataset.Dataset2, 1, 2),
-			// 3
-			Question.createLarger(6, VisualisationType.MapCone, Dataset.Dataset2, 103, 104),
-			Question.createLarger(7, VisualisationType.InPlaceBars, Dataset.Dataset2, 19, 20),
-			Question.createLarger(8, VisualisationType.BarCone, Dataset.Dataset2, 49, 50),
-			// 4
-			Question.createLarger(9, VisualisationType.InPlaceBars, Dataset.Dataset2, 7, 8),
-			Question.createLarger(10, VisualisationType.BarCone, Dataset.Dataset2, 61, 62),
-			Question.createLarger(11, VisualisationType.MapCone, Dataset.Dataset2, 97, 98),
-			// 5
-			Question.createLarger(12, VisualisationType.BarCone, Dataset.Dataset2, 55, 56),
-			Question.createLarger(13, VisualisationType.MapCone, Dataset.Dataset2, 91, 92),
-			Question.createLarger(14, VisualisationType.InPlaceBars, Dataset.Dataset2, 13, 14),
-			// 6
-			Question.createLarger(15, VisualisationType.MapCone, Dataset.Dataset2, 79, 80),
-			Question.createLarger(16, VisualisationType.InPlaceBars, Dataset.Dataset2, 31, 32),
-			Question.createLarger(17, VisualisationType.BarCone, Dataset.Dataset2, 37, 38),
-			// 7
-			Question.createLarger(18, VisualisationType.InPlaceBars, Dataset.Dataset2, 15, 16),
-			Question.createLarger(19, VisualisationType.BarCone, Dataset.Dataset2, 57, 58),
-			Question.createLarger(20, VisualisationType.MapCone, Dataset.Dataset2, 81, 82),
-			// 8
-			Question.createLarger(21, VisualisationType.BarCone, Dataset.Dataset2, 39, 40),
-			Question.createLarger(22, VisualisationType.MapCone, Dataset.Dataset2, 99, 100),
-			Question.createLarger(23, VisualisationType.InPlaceBars, Dataset.Dataset2, 33, 34),
-			// 9
-			Question.createLarger(24, VisualisationType.MapCone, Dataset.Dataset2, 93, 94),
-			Question.createLarger(25, VisualisationType.InPlaceBars, Dataset.Dataset2, 3, 4),
-			Question.createLarger(26, VisualisationType.BarCone, Dataset.Dataset2, 63, 64),
-			// 10
-			Question.createLarger(27, VisualisationType.InPlaceBars, Dataset.Dataset2, 27, 28),
-			Question.createLarger(28, VisualisationType.BarCone, Dataset.Dataset2, 45, 46),
-			Question.createLarger(29, VisualisationType.MapCone, Dataset.Dataset2, 87, 88),
-			// 11
-			Question.createLarger(30, VisualisationType.BarCone, Dataset.Dataset2, 69, 70),
-			Question.createLarger(31, VisualisationType.MapCone, Dataset.Dataset2, 75, 76),
-			Question.createLarger(32, VisualisationType.InPlaceBars, Dataset.Dataset2, 9, 10),
-			// 12
-			Question.createLarger(33, VisualisationType.MapCone, Dataset.Dataset2, 105, 106),
-			Question.createLarger(34, VisualisationType.InPlaceBars, Dataset.Dataset2, 21, 22),
-			Question.createLarger(35, VisualisationType.BarCone, Dataset.Dataset2, 51, 52),
-			// 13
-			Question.createLarger(36, VisualisationType.InPlaceBars, Dataset.Dataset2, 5, 6),
-			Question.createLarger(37, VisualisationType.BarCone, Dataset.Dataset2, 71, 72),
-			Question.createLarger(38, VisualisationType.MapCone, Dataset.Dataset2, 107, 108),
-			// 14
-			Question.createLarger(39, VisualisationType.BarCone, Dataset.Dataset2, 53, 54),
-			Question.createLarger(40, VisualisationType.MapCone, Dataset.Dataset2, 89, 90),
-			Question.createLarger(41, VisualisationType.InPlaceBars, Dataset.Dataset2, 23, 24),
-			// 15
-			Question.createLarger(42, VisualisationType.MapCone, Dataset.Dataset2, 77, 78),
-			Question.createLarger(43, VisualisationType.InPlaceBars, Dataset.Dataset2, 29, 30),
-			Question.createLarger(44, VisualisationType.BarCone, Dataset.Dataset2, 47, 48),
-			// 16
-			Question.createLarger(45, VisualisationType.InPlaceBars, Dataset.Dataset2, 17, 18),
-			Question.createLarger(46, VisualisationType.BarCone, Dataset.Dataset2, 59, 60),
-			Question.createLarger(47, VisualisationType.MapCone, Dataset.Dataset2, 83, 84),
-			// 17
-			Question.createLarger(48, VisualisationType.BarCone, Dataset.Dataset2, 41, 42),
-			Question.createLarger(49, VisualisationType.MapCone, Dataset.Dataset2, 101, 102),
-			Question.createLarger(50, VisualisationType.InPlaceBars, Dataset.Dataset2, 35, 36),
-			// 18
-			Question.createLarger(51, VisualisationType.MapCone, Dataset.Dataset2, 95, 96),
-			Question.createLarger(52, VisualisationType.InPlaceBars, Dataset.Dataset2, 11, 12),
-			Question.createLarger(53, VisualisationType.BarCone, Dataset.Dataset2, 65, 66),
-			*/
+			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 12, 13),
+			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 16, 17),
+			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 6, 7),
+			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 10, 11),
 
-			// 1
-			Question.createLarger(0, VisualisationType.InPlaceBars, Dataset.Dataset2, 10, 11),
-			Question.createLarger(1, VisualisationType.BarCone, Dataset.Dataset2, 16, 17),
-			Question.createLarger(2, VisualisationType.MapCone, Dataset.Dataset2, 26, 27),
-			// 2
-			Question.createLarger(3, VisualisationType.BarCone, Dataset.Dataset2, 22, 23),
-			Question.createLarger(4, VisualisationType.MapCone, Dataset.Dataset2, 28, 29),
-			Question.createLarger(5, VisualisationType.InPlaceBars, Dataset.Dataset2, 0, 1),
-			// 3
-			Question.createLarger(6, VisualisationType.MapCone, Dataset.Dataset2, 32, 33),
-			Question.createLarger(7, VisualisationType.InPlaceBars, Dataset.Dataset2, 6, 7),
-			Question.createLarger(8, VisualisationType.BarCone, Dataset.Dataset2, 12, 13),
-			// 4
-			Question.createLarger(9, VisualisationType.InPlaceBars, Dataset.Dataset2, 2, 3),
-			Question.createLarger(10, VisualisationType.BarCone, Dataset.Dataset2, 20, 21),
-			Question.createLarger(11, VisualisationType.MapCone, Dataset.Dataset2, 30, 31),
-			// 5
-			Question.createLarger(12, VisualisationType.BarCone, Dataset.Dataset2, 14, 15),
-			Question.createLarger(13, VisualisationType.MapCone, Dataset.Dataset2, 34, 35),
-			Question.createLarger(14, VisualisationType.InPlaceBars, Dataset.Dataset2, 4, 5),
-			// 6
-			Question.createLarger(15, VisualisationType.MapCone, Dataset.Dataset2, 24, 25),
-			Question.createLarger(16, VisualisationType.InPlaceBars, Dataset.Dataset2, 8, 9),
-			Question.createLarger(17, VisualisationType.BarCone, Dataset.Dataset2, 18, 19),
+			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 22, 23),
+			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 2, 3),
+			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 14, 15),
+			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 18, 19),
+
+			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 28, 29),
+			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 32, 33),
+			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 44, 45),
+			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 24, 25),
+
+			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 36, 37),
+			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 40, 41),
+			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 30, 31),
+			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 34, 35),
+
+			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 46, 47),
+			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 26, 27),
+			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 38, 39),
+			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 42, 43),
+
+			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 52, 53),
+			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 56, 57),
+			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 68, 69),
+			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 48, 49),
+
+			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 60, 61),
+			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 64, 65),
+			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 54, 55),
+			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 58, 59),
+
+			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 70, 71),
+			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 50, 51),
+			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 62, 63),
+			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 66, 67),
 		});
 	}
 

@@ -9,7 +9,7 @@ maxRadius <- 1
 # Each vis: 1-18-37
 generate_task2_dataset <- function()
 {
-  task2_repetition <- 1
+  task2_repetition <- 2
   vis_levels <- 3
   radius_levels <- 3
   fov_levels <- 2
@@ -154,7 +154,12 @@ generate_task2_dataset <- function()
   }
   
   dataPoints <- data.frame("id"=integer(), "x"=double(), "y"=double(), "value"=double(), stringsAsFactors = F)
-  angles1 <- randomNumbers(n=datasets_count/2, min=1, max=360, col=1)
+  #angles1 <- randomNumbers(n=datasets_count/2, min=1, max=360, col=1)
+  # each datapoints is at least 2deg away from each other
+  angles1 <- randomNumbers(n=datasets_count/2, min=1, max=180, col=1)
+  
+  angles1 <- angles1 * 2
+  
   currentAngleIdx <- 1
   # Angles1
   for (id in 1:(datasets_count/2))
@@ -227,11 +232,11 @@ generate_task2_dataset <- function()
 }
 
 dataPoints1 <- generate_task2_dataset()
-dataPoints2 <- generate_task2_dataset()
-dataPoints3 <- generate_task2_dataset()
+#dataPoints2 <- generate_task2_dataset()
+#dataPoints3 <- generate_task2_dataset()
 
 write.csv(dataPoints1, file="dataset_higher1.csv", quote=F, row.names=F)
-write.csv(dataPoints2, file="dataset_higher2.csv", quote=F, row.names=F)
-write.csv(dataPoints3, file="dataset_higher3.csv", quote=F, row.names=F)
+#write.csv(dataPoints2, file="dataset_higher2.csv", quote=F, row.names=F)
+#write.csv(dataPoints3, file="dataset_higher3.csv", quote=F, row.names=F)
   
   

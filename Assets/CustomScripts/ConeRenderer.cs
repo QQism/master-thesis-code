@@ -164,6 +164,7 @@ public class ConeRenderer : MonoBehaviour {
 		var lineWidth = 0.05f;
 		LineRenderer line = bar.GetComponentInChildren<LineRenderer>();
 		line.enabled = true;
+		line.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
 		var traperzoid = bar.GetComponent<TrapezoidBarBehavior>();
 		line.positionCount = 2;
 		lineWidth = 0.005514949f * 2;

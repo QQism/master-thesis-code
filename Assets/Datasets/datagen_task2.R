@@ -61,7 +61,7 @@ generate_task2_dataset <- function()
   base_values <- base_values / 100 # normalise [0, 100] to [0, 1]
   currentBaseValues <- 1
   
-  # Diff values: min 5%, max 10%
+  # Diff values: min 3%, max 5%
   diff_values <- randomNumbers(n=datasets_count/2/3, min=3, max = 5, col=1)
   diff_values <- diff_values / 100
   currentDiffValues <- 1
@@ -156,9 +156,9 @@ generate_task2_dataset <- function()
   dataPoints <- data.frame("id"=integer(), "x"=double(), "y"=double(), "value"=double(), stringsAsFactors = F)
   #angles1 <- randomNumbers(n=datasets_count/2, min=1, max=360, col=1)
   # each datapoints is at least 2deg away from each other
-  angles1 <- randomNumbers(n=datasets_count/2, min=1, max=180, col=1)
+  angles1 <- randomNumbers(n=datasets_count/2, min=1, max=120, col=1)
   
-  angles1 <- angles1 * 2
+  angles1 <- angles1 * 3
   
   currentAngleIdx <- 1
   # Angles1

@@ -42,6 +42,8 @@ public class TrapezoidBarBehavior : MonoBehaviour {
 
 	public int _quadsCount = 0;
 
+	public string _dataPointName = "";
+
 	private Material dataMaterial;
 	private Material frameMaterial;
 
@@ -73,6 +75,8 @@ public class TrapezoidBarBehavior : MonoBehaviour {
                 framePose.onPoseEnter += _mapDataPoint.poseEnter;
                 framePose.onPoseLeave += _mapDataPoint.poseLeave;
             }
+
+			_dataPointName = _mapDataPoint.Name;
 		}
 	}
 

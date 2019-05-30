@@ -58,6 +58,7 @@ public class NumericAnswerPanelBehavior : MonoBehaviour {
 		if (controller.confirmAnswer())
 		{
 			StudyPlot.Instance.answer(answerValue);
+			resetState();
 		}
 
 		if (controller.isIncreasingValueFaster() || controller.isIncreasingValue()) 

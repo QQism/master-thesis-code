@@ -72,7 +72,7 @@ public class UserResponse
         return String.Join(System.IO.Path.DirectorySeparatorChar.ToString(), new string[] {
             Application.dataPath,
             "Results",
-            userId.ToString()+ "_" + "_" + question.task.ToString() + ".csv"
+            userId.ToString()+ "_" + "_" + question.task.ToString() + "_" + question.dataset.ToString() + ".csv"
         });
     }
 }

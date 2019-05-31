@@ -20,7 +20,7 @@ fluctuate_values <- function(base_value, fluc)
 # Task 1
 # 3 (vis) x 2 (distances) x 4 repetitions = 24 questions
 
-generate_task1_dataset <- function()
+generate_task1_dataset <- function(task1_repetition)
 {
   # Generate 4 close radius, 4 far radius, 
   # Each of 4 close radius will be used to generate 3 datapoints 
@@ -28,7 +28,7 @@ generate_task1_dataset <- function()
   # For the rest of  76 (100-24), would be randomly placed in uniform distribution
   
   # repetition
-  task1_repetition <- 2
+  #task1_repetition <- 2
   vis_levels <- 3
   radius_level <- 2
   datasets_count <- vis_levels * radius_level * task1_repetition
@@ -80,6 +80,9 @@ generate_task1_dataset <- function()
   return(dataPoints)
 }
 
-dataPoints <- generate_task1_dataset()
+dataPoints <- generate_task1_dataset(2)
 
 write.csv(dataPoints, file="dataset_est.csv", quote=F, row.names=F)
+
+trainingDataPoints <- generate_task1_dataset(1)
+write.csv(trainingDataPoints, file="dataset_est_training.csv", quote=F, row.names=F)

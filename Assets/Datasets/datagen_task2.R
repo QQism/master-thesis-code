@@ -7,9 +7,9 @@ maxRadius <- 1
 # Task 2
 # Which is higher
 # Each vis: 1-18-37
-generate_task2_dataset <- function()
+generate_task2_dataset <- function(task2_repetition)
 {
-  task2_repetition <- 2
+  #task2_repetition <- 2
   vis_levels <- 3
   radius_levels <- 3
   fov_levels <- 2
@@ -231,12 +231,14 @@ generate_task2_dataset <- function()
   return(dataPoints)
 }
 
-dataPoints1 <- generate_task2_dataset()
+dataPoints1 <- generate_task2_dataset(2)
 #dataPoints2 <- generate_task2_dataset()
 #dataPoints3 <- generate_task2_dataset()
 
 write.csv(dataPoints1, file="dataset_higher1.csv", quote=F, row.names=F)
 #write.csv(dataPoints2, file="dataset_higher2.csv", quote=F, row.names=F)
 #write.csv(dataPoints3, file="dataset_higher3.csv", quote=F, row.names=F)
-  
+
+trainingDataPoints1 <- generate_task2_dataset(1)
+write.csv(trainingDataPoints1, file="dataset_higher_training.csv", quote=F, row.names=F)
   

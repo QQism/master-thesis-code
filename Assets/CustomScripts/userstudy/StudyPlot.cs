@@ -603,18 +603,54 @@ public class StudyPlot
 	void setUpTask3TrainingDataset(Dataset dataset)
 	{
 		int i = 0;
+		// Group 1 - V1-V2-V3
         datasetQuestions.Add(getDatasetKey(dataset, ParticipantGroup.Group1), new List<Question>()
         {
+            Question.createCloser(i++, VisualisationType.InPlaceBars, dataset, 0, 1),
+            Question.createCloser(i++, VisualisationType.InPlaceBars, dataset, 2, 3),
+            Question.createCloser(i++, VisualisationType.InPlaceBars, dataset, 4, 5),
+
+            Question.createCloser(i++, VisualisationType.BarCone, dataset, 6, 7),
+            Question.createCloser(i++, VisualisationType.BarCone, dataset, 8, 9),
+            Question.createCloser(i++, VisualisationType.BarCone, dataset, 10, 11),
+
+            Question.createCloser(i++, VisualisationType.MapCone, dataset, 12, 13),
+            Question.createCloser(i++, VisualisationType.MapCone, dataset, 14, 15),
+            Question.createCloser(i++, VisualisationType.MapCone, dataset, 16, 17),
         });
 
 		i = 0;
+		// Group 2 - V2-V3-V1
         datasetQuestions.Add(getDatasetKey(dataset, ParticipantGroup.Group2), new List<Question>()
         {
+            Question.createCloser(i++, VisualisationType.BarCone, dataset, 6, 7),
+            Question.createCloser(i++, VisualisationType.BarCone, dataset, 8, 9),
+            Question.createCloser(i++, VisualisationType.BarCone, dataset, 10, 11),
+
+            Question.createCloser(i++, VisualisationType.MapCone, dataset, 12, 13),
+            Question.createCloser(i++, VisualisationType.MapCone, dataset, 14, 15),
+            Question.createCloser(i++, VisualisationType.MapCone, dataset, 16, 17),
+
+            Question.createCloser(i++, VisualisationType.InPlaceBars, dataset, 0, 1),
+            Question.createCloser(i++, VisualisationType.InPlaceBars, dataset, 2, 3),
+            Question.createCloser(i++, VisualisationType.InPlaceBars, dataset, 4, 5),
         });
 
 		i = 0;
+		// Group 3 - V3-V1-V2
         datasetQuestions.Add(getDatasetKey(dataset, ParticipantGroup.Group3), new List<Question>()
         {
+            Question.createCloser(i++, VisualisationType.MapCone, dataset, 12, 13),
+            Question.createCloser(i++, VisualisationType.MapCone, dataset, 14, 15),
+            Question.createCloser(i++, VisualisationType.MapCone, dataset, 16, 17), 
+
+            Question.createCloser(i++, VisualisationType.InPlaceBars, dataset, 0, 1),
+            Question.createCloser(i++, VisualisationType.InPlaceBars, dataset, 2, 3),
+            Question.createCloser(i++, VisualisationType.InPlaceBars, dataset, 4, 5),
+
+            Question.createCloser(i++, VisualisationType.BarCone, dataset, 6, 7),
+            Question.createCloser(i++, VisualisationType.BarCone, dataset, 8, 9),
+            Question.createCloser(i++, VisualisationType.BarCone, dataset, 10, 11),
         });
 	}
 

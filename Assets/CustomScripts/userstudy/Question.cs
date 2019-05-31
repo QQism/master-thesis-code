@@ -13,6 +13,9 @@ public enum Dataset
 {
 	None,
 	// Estimation
+	Task1TrainingDataset,
+	Task2TrainingDataset,
+	Task3TrainingDataset,
 	Dataset1,
 	// Higher 1
 	Dataset2,

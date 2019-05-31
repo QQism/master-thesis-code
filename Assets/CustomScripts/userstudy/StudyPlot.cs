@@ -147,8 +147,8 @@ public class StudyPlot
 		datasetQuestions = new Dictionary<string, List<Question>>();
 
 		setUpTask1Dataset();
-		setUpDataset2();
-		setUpDataset5();
+		setUpTask2Dataset();
+		setUpTask3Dataset();
 	}
 
 	public string getDatasetFile()
@@ -237,7 +237,7 @@ public class StudyPlot
         });
 	}
 
-	void setUpDataset2()
+	void setUpTask2Dataset()
 	{
 		int i = 0;
 		// Group 1 - V1-V2-V3
@@ -387,7 +387,7 @@ public class StudyPlot
 		});
 	}
 
-	void setUpDataset5()
+	void setUpTask3Dataset()
 	{
 		int i = 0;
 		// Group 1 - V1-V2-V3
@@ -490,6 +490,51 @@ public class StudyPlot
 			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 22, 23),
 			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 28, 29),
 		});
+	}
+
+	void setUpTask1TrainingDataset()
+	{
+        datasetQuestions.Add(getDatasetKey(Dataset.Task1TrainingDataset, ParticipantGroup.Group1), new List<Question>()
+        {
+        });
+
+        datasetQuestions.Add(getDatasetKey(Dataset.Task1TrainingDataset, ParticipantGroup.Group2), new List<Question>()
+        {
+        });
+
+        datasetQuestions.Add(getDatasetKey(Dataset.Task1TrainingDataset, ParticipantGroup.Group3), new List<Question>()
+        {
+        });
+	}
+
+    void setUpTask2TrainingDataset()
+    {
+        datasetQuestions.Add(getDatasetKey(Dataset.Task2TrainingDataset, ParticipantGroup.Group1), new List<Question>()
+        {
+        });
+
+        datasetQuestions.Add(getDatasetKey(Dataset.Task2TrainingDataset, ParticipantGroup.Group2), new List<Question>()
+        {
+        });
+
+        datasetQuestions.Add(getDatasetKey(Dataset.Task2TrainingDataset, ParticipantGroup.Group3), new List<Question>()
+        {
+        });
+    }
+
+	void setUpTask3TrainingDataset()
+	{
+        datasetQuestions.Add(getDatasetKey(Dataset.Task3TrainingDataset, ParticipantGroup.Group1), new List<Question>()
+        {
+        });
+
+        datasetQuestions.Add(getDatasetKey(Dataset.Task3TrainingDataset, ParticipantGroup.Group2), new List<Question>()
+        {
+        });
+
+        datasetQuestions.Add(getDatasetKey(Dataset.Task3TrainingDataset, ParticipantGroup.Group3), new List<Question>()
+        {
+        });
 	}
 
 	string getDatasetKey(Dataset dataset, ParticipantGroup group)

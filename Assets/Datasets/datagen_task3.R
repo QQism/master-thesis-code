@@ -5,9 +5,9 @@ minRadius <- 0.05
 maxRadius <- 1
 
 # Task 3
-generate_task3_dataset <- function()
+generate_task3_dataset <- function(task3_repetition)
 {
-  task3_repetition <- 1
+  #task3_repetition <- 1
   vis_levels <- 3
   radius_levels <- 4
   fov_levels <- 2
@@ -65,7 +65,7 @@ generate_task3_dataset <- function()
   currentDiffValues <- 1
   
   # Diff values: min 3%, max 5%
-  radius_diff_values <- randomNumbers(n=datasets_count/2/3, min=3, max = 5, col=1)
+  radius_diff_values <- randomNumbers(n=datasets_count/2/3, min=4, max = 8, col=1)
   radius_diff_values <- radius_diff_values / 100
   currentRadiusDiffValues <- 1
   
@@ -254,9 +254,12 @@ generate_task3_dataset <- function()
   return(dataPoints)
 }
 
-task3_dataPoints1 <- generate_task3_dataset()
+task3_dataPoints1 <- generate_task3_dataset(1)
 #task3_dataPoints2 <- generate_task3_dataset()
 #task3_dataPoints3 <- generate_task3_dataset()
 write.csv(task3_dataPoints1, file="dataset_closer1.csv", quote=F, row.names=F)
 #write.csv(task3_dataPoints2, file="dataset_closer2.csv", quote=F, row.names=F)
 #write.csv(task3_dataPoints3, file="dataset_closer3.csv", quote=F, row.names=F)
+
+task3_trainingDataPoints <- generate_task3_dataset(1)
+write.csv(task3_trainingDataPoints, file="dataset_closer_training.csv", quote=F, row.names=F)

@@ -382,6 +382,8 @@ public class LoadDataSet : MonoBehaviour {
             var rawX = float.Parse(lineData[1]);
             var rawY = float.Parse(lineData[2]);
 
+            Debug.Log("Point " + point.Name + ", X: " +  rawX + ", Y: " + rawY);
+
             point.RawPosition = new Vector2(rawX, rawY);
 
             //Debug.Log("Pos " + i + " : " + point.WorldPosition.ToString());

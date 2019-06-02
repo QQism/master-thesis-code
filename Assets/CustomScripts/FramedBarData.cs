@@ -325,6 +325,7 @@ public class FramedBarData : MonoBehaviour {
     {
         if (_mapDataPoint != null && _mapDataPoint.RawPosition != _rawPosition)
         {
+            Debug.Log("Old: " + _mapDataPoint.RawPosition + ", New: " + _rawPosition);
             _mapDataPoint.RawPosition = _rawPosition;
             this.transform.position = _mapDataPoint.WorldPosition;
         }

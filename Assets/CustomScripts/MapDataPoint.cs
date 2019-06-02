@@ -18,6 +18,7 @@ public class MapDataPoint {
 		set 
 		{
 			_rawPosition = value;
+			ConePosition = value;
 
 			DataPointsManager manager = DataPointsManager.Instance;
 			AbstractMap map = manager.Map;

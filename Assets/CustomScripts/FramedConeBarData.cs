@@ -238,7 +238,7 @@ public class FramedConeBarData : MonoBehaviour {
 
     void onPoseEnter()
     {
-        //Debug.Log("Pose enter: " + name);
+        //Debug.Log("Pose enter: " + name + ", Distance: " + mapDataPoint.getDistance());
         if (dataMaterial != null && frameMaterial != null) 
         {
             dataMaterial.SetInt("_OutlineOn", 1);

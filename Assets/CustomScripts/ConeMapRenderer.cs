@@ -138,6 +138,7 @@ public class ConeMapRenderer : MonoBehaviour {
 		Vector2 cone2DPosition = new Vector2(transform.position.x, transform.position.z);
 		float maxMagnitude = 0;
 		MapDataPoint furthestPoint = new MapDataPoint();
+		/*
 		foreach(MapDataPoint dataPoint in _dataPoints)
 		{
 			// Calculate the position of datapoint relative to the cone position
@@ -158,15 +159,21 @@ public class ConeMapRenderer : MonoBehaviour {
 		//Debug.Log("Max magnitude: " + maxMagnitude);
 		//Debug.Log("Furthest point: " + furthestPoint.Name + furthestPoint.ConePosition);
 		scaleDataPoints(maxMagnitude);
+		//scaleDataPoints(1);
+		*/
 	}
 
 	void scaleDataPoints(float maxMagnitude)
 	{
-		float buffer = 1.2f;
+		float buffer = 1f;
 		maxMagnitude *= buffer;
 		foreach(MapDataPoint dataPoint in _dataPoints)
 		{
 			dataPoint.ConePosition /= maxMagnitude;
+			if (dataPoint.Name == "Point 47")
+			{
+				Debug.Log("Cone Positiion: " + dataPoint.ConePosition + ", Raw Position: " + dataPoint.RawPosition);
+			}
 			//Debug.Log("Bar position (to Cone, after scale): " + dataPoint.ConePosition);
 		}
 	}

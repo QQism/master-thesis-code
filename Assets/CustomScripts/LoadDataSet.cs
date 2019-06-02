@@ -306,13 +306,13 @@ public class LoadDataSet : MonoBehaviour {
 
     void handleEstimateQuestion(Question question)
     {
-        DataPointsManager.Instance.mapDataPoints[question.dataPoint1Idx].showQuestionOption1();
+        question.getDataPoint1().showQuestionOption1();
     }
 
     void handleOptionQuestion(Question question)
     {
-        DataPointsManager.Instance.mapDataPoints[question.dataPoint1Idx].showQuestionOption1();
-        DataPointsManager.Instance.mapDataPoints[question.dataPoint2Idx].showQuestionOption2();
+        question.getDataPoint1().showQuestionOption1();
+        question.getDataPoint2().showQuestionOption2();
     }
 
     void readSizeOfMap() {

@@ -45,9 +45,8 @@ public class Question
 	public VisualisationType visualisationType;
 	//public List<MapDataPoint> dataPoints;
 	public Dataset dataset;
-	public int dataPoint1Idx;
-	public int dataPoint2Idx;
-	public int dataPoint3Idx;
+	public int dataPoint1Idx = -1;
+	public int dataPoint2Idx = -1;
 
 	public Question(int id, string code, Task task, VisualisationType visualisationType, Dataset dataset, int dataPoint1Idx, int dataPoint2Idx)
 	{
@@ -74,6 +73,23 @@ public class Question
 	{
 		return new Question(id, code, Task.PickCloserDataPoint, visualisationType, dataset, dataPoint1Idx, dataPoint2Idx);
 	}
+
+    public MapDataPoint getDataPoint1()
+    {
+        return DataPointsManager.Instance.mapDataPoints[dataPoint1Idx];
+    }
+
+    public MapDataPoint getDataPoint2()
+    {
+        if (dataPoint2Idx >= 0)
+        {
+            return DataPointsManager.Instance.mapDataPoints[dataPoint2Idx];
+        }
+        else
+        {
+            return null;
+        }
+    }
 
     /* If est question, would be in [0, 100]
 	 * If option question, would be in [1, 2]

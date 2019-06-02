@@ -85,6 +85,11 @@ public class MapDataPoint {
 		OnQuestionOption2Completed();
 	}
 
+	public float getDistance()
+	{
+		return _rawPosition.magnitude;
+	}
+
 	public enum MapDataPointState 
 	{
 		Question1,

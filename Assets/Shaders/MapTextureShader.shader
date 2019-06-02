@@ -12,6 +12,10 @@
 		_RotationAngle("Rotation Angle Degree", Range(0, 360)) = 0
 		_MiterAngle("Miter Angle Degree", Range(0, 360)) = 90
 		_QuadsCount("Quads Count", Int) = 4
+		_TickColor("Tick Color", Color) = (.75, .79, 0.8, 1)
+		_TickTransparency("Tick Transparency", Range(0, 1)) = 0.8
+		_TickThickness("Tick Thickness", Range(0, 1)) = 0.005
+		_TickStep("Tick Step", Range(0, 1)) = 0.2
 	}
 	SubShader
 	{
@@ -40,6 +44,7 @@
 				float2 uv : TEXCOORD0;
 				UNITY_FOG_COORDS(1)
 				float4 vertex : SV_POSITION;
+				float4 og_vertex: TEXCOORD1;
 			};
 
 			sampler2D _MainTex;
@@ -50,6 +55,10 @@
 			float _RotationAngle;
 			float _MiterAngle;
 			uint _QuadsCount;
+			float4 _TickColor;
+			float _TickTransparency;
+			float _TickThickness;
+			float _TickStep;
 			
 			v2f vert (appdata v)
 			{
@@ -73,6 +82,7 @@
 				v.vertex.x *=  avg + (v.vertex.z * (_UpperScale - avg));
 
 				o.vertex = UnityObjectToClipPos(v.vertex);
+				o.og_vertex = v.vertex;
 
 				float dx = v.vertex.x;
 				// quad coordinates are relative to center of quad
@@ -88,11 +98,35 @@
 			}
 			
 			fixed4 frag (v2f i) : SV_Target
-			{
-				fixed4 col = tex2D(_MainTex, i.uv);
+			{ 
+				fixed4 col;
+
+				float offset, full_range, step, bottom_end, tick_pos, topOffset, bottomOffset;
+
+				offset = 0;
+				full_range = offset + 2;
+				step = _TickStep * full_range;
+
+				//bottom_end = offset * _OnTop + 1;
+				bottom_end = 1;
+				tick_pos = (i.og_vertex.z + bottom_end) % step;
+				topOffset = i.og_vertex.z + bottom_end + _TickThickness;
+				bottomOffset = i.og_vertex.z + bottom_end - _TickThickness;
+
+				//float tick_pos = i.og_vertex.z % step;
+
+				if ((topOffset < full_range && bottomOffset > 0) && tick_pos >= (step - _TickThickness) || (tick_pos <= _TickThickness))
+				{
+					col = _TickColor;
+					col.a = _TickTransparency;
+				} else
+				{
+					col = tex2D(_MainTex, i.uv);
+					col.a = _Transparency;
+				}
+
 				float diffx = abs(i.uv.x - 0.5);
 				float diffy = abs(i.uv.y - 0.5);
-				col.a = _Transparency;
 
 				//float radius = 0.1;
 				//if (diffx < radius && diffy < radius) 

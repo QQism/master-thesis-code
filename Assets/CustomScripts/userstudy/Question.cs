@@ -40,6 +40,7 @@ public enum ParticipantGroup
 public class Question
 {
 	public int id;
+	public string code;
 	public Task task;
 	public VisualisationType visualisationType;
 	//public List<MapDataPoint> dataPoints;
@@ -48,9 +49,10 @@ public class Question
 	public int dataPoint2Idx;
 	public int dataPoint3Idx;
 
-	public Question(int id, Task task, VisualisationType visualisationType, Dataset dataset, int dataPoint1Idx, int dataPoint2Idx)
+	public Question(int id, string code, Task task, VisualisationType visualisationType, Dataset dataset, int dataPoint1Idx, int dataPoint2Idx)
 	{
 		this.id = id;
+		this.code = code;
 		this.task = task;
 		this.visualisationType = visualisationType;	
 		this.dataset = dataset;
@@ -58,19 +60,19 @@ public class Question
 		this.dataPoint2Idx = dataPoint2Idx;
 	}
 
-	public static Question createEstimate(int id, VisualisationType visualisationType, Dataset dataset, int dataPoint1Idx) 
+	public static Question createEstimate(int id, string code, VisualisationType visualisationType, Dataset dataset, int dataPoint1Idx) 
 	{
-		return new Question(id, Task.EstimateSinglePoint, visualisationType, dataset, dataPoint1Idx, -1);
+		return new Question(id, code, Task.EstimateSinglePoint, visualisationType, dataset, dataPoint1Idx, -1);
 	}
 
-	public static Question createLarger(int id, VisualisationType visualisationType, Dataset dataset, int dataPoint1Idx, int dataPoint2Idx) 
+	public static Question createLarger(int id, string code, VisualisationType visualisationType, Dataset dataset, int dataPoint1Idx, int dataPoint2Idx) 
 	{
-		return new Question(id, Task.PickLargerDataPoint, visualisationType, dataset, dataPoint1Idx, dataPoint2Idx);
+		return new Question(id, code, Task.PickLargerDataPoint, visualisationType, dataset, dataPoint1Idx, dataPoint2Idx);
 	}
 
-	public static Question createCloser(int id, VisualisationType visualisationType, Dataset dataset, int dataPoint1Idx, int dataPoint2Idx) 
+	public static Question createCloser(int id, string code, VisualisationType visualisationType, Dataset dataset, int dataPoint1Idx, int dataPoint2Idx) 
 	{
-		return new Question(id, Task.PickCloserDataPoint, visualisationType, dataset, dataPoint1Idx, dataPoint2Idx);
+		return new Question(id, code, Task.PickCloserDataPoint, visualisationType, dataset, dataPoint1Idx, dataPoint2Idx);
 	}
 
     /* If est question, would be in [0, 100]

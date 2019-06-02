@@ -155,9 +155,9 @@ public class StudyPlot
 		setUpTask2TrainingDataset(Dataset.Task2TrainingDataset);
 		setUpTask3TrainingDataset(Dataset.Task3TrainingDataset);
 
-		setUpTask1Dataset();
-		setUpTask2Dataset();
-		setUpTask3Dataset();
+		setUpTask1Dataset(Dataset.Dataset1);
+		setUpTask2Dataset(Dataset.Dataset2);
+		setUpTask3Dataset(Dataset.Dataset5);
 	}
 
 	public string getDatasetFile()
@@ -189,316 +189,345 @@ public class StudyPlot
 		return nextDataset;
 	}
 
-	void setUpTask1Dataset()
-	{
-		// Group 1 - V1-V2-V3
-        datasetQuestions.Add(getDatasetKey(Dataset.Dataset1, ParticipantGroup.Group1), new List<Question>() {
-            Question.createEstimate(0, VisualisationType.InPlaceBars, Dataset.Dataset1, 0),
-            Question.createEstimate(1, VisualisationType.InPlaceBars, Dataset.Dataset1, 2),
-            Question.createEstimate(2, VisualisationType.InPlaceBars, Dataset.Dataset1, 1),
-            Question.createEstimate(3, VisualisationType.InPlaceBars, Dataset.Dataset1, 3),
-
-            Question.createEstimate(4, VisualisationType.BarCone, Dataset.Dataset1, 4),
-            Question.createEstimate(5, VisualisationType.BarCone, Dataset.Dataset1, 6),
-            Question.createEstimate(6, VisualisationType.BarCone, Dataset.Dataset1, 5),
-            Question.createEstimate(7, VisualisationType.BarCone, Dataset.Dataset1, 7),
-
-            Question.createEstimate(8, VisualisationType.MapCone, Dataset.Dataset1, 8),
-            Question.createEstimate(9, VisualisationType.MapCone, Dataset.Dataset1, 10),
-            Question.createEstimate(10, VisualisationType.MapCone, Dataset.Dataset1, 9),
-            Question.createEstimate(11, VisualisationType.MapCone, Dataset.Dataset1, 11),
-        });
-
-		// Group 2 - V2-V3-V1
-        datasetQuestions.Add(getDatasetKey(Dataset.Dataset1, ParticipantGroup.Group2) , new List<Question>() {
-            Question.createEstimate(0, VisualisationType.BarCone, Dataset.Dataset1, 4),
-            Question.createEstimate(1, VisualisationType.BarCone, Dataset.Dataset1, 6),
-            Question.createEstimate(2, VisualisationType.BarCone, Dataset.Dataset1, 5),
-            Question.createEstimate(3, VisualisationType.BarCone, Dataset.Dataset1, 7),
-
-            Question.createEstimate(4, VisualisationType.MapCone, Dataset.Dataset1, 8),
-            Question.createEstimate(5, VisualisationType.MapCone, Dataset.Dataset1, 10),
-            Question.createEstimate(6, VisualisationType.MapCone, Dataset.Dataset1, 9),
-            Question.createEstimate(7, VisualisationType.MapCone, Dataset.Dataset1, 11),
-
-            Question.createEstimate(8, VisualisationType.InPlaceBars, Dataset.Dataset1, 0),
-            Question.createEstimate(9, VisualisationType.InPlaceBars, Dataset.Dataset1, 2),
-            Question.createEstimate(10, VisualisationType.InPlaceBars, Dataset.Dataset1, 1),
-            Question.createEstimate(11, VisualisationType.InPlaceBars, Dataset.Dataset1, 3),
-        });
-
-		// Group 3 - V3-V1-V2
-        datasetQuestions.Add(getDatasetKey(Dataset.Dataset1, ParticipantGroup.Group3), new List<Question>() {
-            Question.createEstimate(0, VisualisationType.MapCone, Dataset.Dataset1, 8),
-            Question.createEstimate(1, VisualisationType.MapCone, Dataset.Dataset1, 10),
-            Question.createEstimate(2, VisualisationType.MapCone, Dataset.Dataset1, 9),
-            Question.createEstimate(3, VisualisationType.MapCone, Dataset.Dataset1, 11),
-
-            Question.createEstimate(4, VisualisationType.InPlaceBars, Dataset.Dataset1, 0),
-            Question.createEstimate(5, VisualisationType.InPlaceBars, Dataset.Dataset1, 2),
-            Question.createEstimate(6, VisualisationType.InPlaceBars, Dataset.Dataset1, 1),
-            Question.createEstimate(7, VisualisationType.InPlaceBars, Dataset.Dataset1, 3),
-
-            Question.createEstimate(8, VisualisationType.BarCone, Dataset.Dataset1, 4),
-            Question.createEstimate(9, VisualisationType.BarCone, Dataset.Dataset1, 6),
-            Question.createEstimate(10, VisualisationType.BarCone, Dataset.Dataset1, 5),
-            Question.createEstimate(11, VisualisationType.BarCone, Dataset.Dataset1, 7),
-        });
-	}
-
-	void setUpTask2Dataset()
+	void setUpTask1Dataset(Dataset dataset)
 	{
 		int i = 0;
 		// Group 1 - V1-V2-V3
-		datasetQuestions.Add(getDatasetKey(Dataset.Dataset2, ParticipantGroup.Group1), new List<Question>() {
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 4, 5),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 8, 9),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 20, 21),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 0, 1),
+		string group1Key = getDatasetKey(dataset, ParticipantGroup.Group1);
+        datasetQuestions.Add(group1Key, new List<Question>() {
+            Question.createEstimate(i++, "V1R1Re1", VisualisationType.InPlaceBars, Dataset.Dataset1, 0),
+            Question.createEstimate(i++, "V1R2Re1", VisualisationType.InPlaceBars, Dataset.Dataset1, 2),
+            Question.createEstimate(i++, "V1R1Re2", VisualisationType.InPlaceBars, Dataset.Dataset1, 1),
+            Question.createEstimate(i++, "V1R2Re2", VisualisationType.InPlaceBars, Dataset.Dataset1, 3),
 
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 12, 13),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 16, 17),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 6, 7),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 10, 11),
+            Question.createEstimate(i++, "V2R1Re1", VisualisationType.BarCone, Dataset.Dataset1, 4),
+            Question.createEstimate(i++, "V2R2Re1", VisualisationType.BarCone, Dataset.Dataset1, 6),
+            Question.createEstimate(i++, "V2R1Re2", VisualisationType.BarCone, Dataset.Dataset1, 5),
+            Question.createEstimate(i++, "V2R2Re2", VisualisationType.BarCone, Dataset.Dataset1, 7),
 
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 22, 23),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 2, 3),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 14, 15),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 18, 19),
+            Question.createEstimate(i++, "V3R1Re1", VisualisationType.MapCone, Dataset.Dataset1, 8),
+            Question.createEstimate(i++, "V3R2Re1", VisualisationType.MapCone, Dataset.Dataset1, 10),
+            Question.createEstimate(i++, "V3R1Re2", VisualisationType.MapCone, Dataset.Dataset1, 9),
+            Question.createEstimate(i++, "V3R2Re2", VisualisationType.MapCone, Dataset.Dataset1, 11),
+        });
 
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 28, 29),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 32, 33),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 44, 45),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 24, 25),
-
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 36, 37),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 40, 41),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 30, 31),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 34, 35),
-
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 46, 47),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 26, 27),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 38, 39),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 42, 43),
-
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 52, 53),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 56, 57),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 68, 69),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 48, 49),
-
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 60, 61),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 64, 65),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 54, 55),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 58, 59),
-
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 70, 71),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 50, 51),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 62, 63),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 66, 67),
-		});
+		checkDuplicateQuestions(datasetQuestions[group1Key]);
 
 		i = 0;
 		// Group 2 - V2-V3-V1
-		datasetQuestions.Add(getDatasetKey(Dataset.Dataset2, ParticipantGroup.Group2), new List<Question>() {
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 28, 29),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 32, 33),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 44, 45),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 24, 25),
+		string group2Key = getDatasetKey(dataset, ParticipantGroup.Group2);
+        datasetQuestions.Add(group2Key, new List<Question>() {
+            Question.createEstimate(i++, "V2R1Re1", VisualisationType.BarCone, Dataset.Dataset1, 4),
+            Question.createEstimate(i++, "V2R2Re1", VisualisationType.BarCone, Dataset.Dataset1, 6),
+            Question.createEstimate(i++, "V2R1Re2", VisualisationType.BarCone, Dataset.Dataset1, 5),
+            Question.createEstimate(i++, "V2R2Re2", VisualisationType.BarCone, Dataset.Dataset1, 7),
 
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 36, 37),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 40, 41),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 30, 31),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 34, 35),
+            Question.createEstimate(i++, "V3R1Re1", VisualisationType.MapCone, Dataset.Dataset1, 8),
+            Question.createEstimate(i++, "V3R2Re1", VisualisationType.MapCone, Dataset.Dataset1, 10),
+            Question.createEstimate(i++, "V3R1Re2", VisualisationType.MapCone, Dataset.Dataset1, 9),
+            Question.createEstimate(i++, "V3R2Re2", VisualisationType.MapCone, Dataset.Dataset1, 11),
 
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 46, 47),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 26, 27),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 38, 39),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 42, 43),
+            Question.createEstimate(i++, "V1R1Re1", VisualisationType.InPlaceBars, Dataset.Dataset1, 0),
+            Question.createEstimate(i++, "V1R2Re1", VisualisationType.InPlaceBars, Dataset.Dataset1, 2),
+            Question.createEstimate(i++, "V1R1Re2", VisualisationType.InPlaceBars, Dataset.Dataset1, 1),
+            Question.createEstimate(i++, "V1R2Re2", VisualisationType.InPlaceBars, Dataset.Dataset1, 3),
+        });
 
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 52, 53),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 56, 57),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 68, 69),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 48, 49),
+		checkDuplicateQuestions(datasetQuestions[group2Key]);
 
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 60, 61),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 64, 65),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 54, 55),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 58, 59),
-
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 70, 71),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 50, 51),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 62, 63),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 66, 67),
-
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 4, 5),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 8, 9),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 20, 21),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 0, 1),
-
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 12, 13),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 16, 17),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 6, 7),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 10, 11),
-
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 22, 23),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 2, 3),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 14, 15),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 18, 19),
-		});
-
-		i = 0;
 		// Group 3 - V3-V1-V2
-		datasetQuestions.Add(getDatasetKey(Dataset.Dataset2, ParticipantGroup.Group3), new List<Question>() {
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 52, 53),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 56, 57),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 68, 69),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 48, 49),
+		string group3Key = getDatasetKey(dataset, ParticipantGroup.Group3);
+        datasetQuestions.Add(group3Key, new List<Question>() {
+            Question.createEstimate(i++, "V3R1Re1", VisualisationType.MapCone, Dataset.Dataset1, 8),
+            Question.createEstimate(i++, "V3R2Re1", VisualisationType.MapCone, Dataset.Dataset1, 10),
+            Question.createEstimate(i++, "V3R1Re2", VisualisationType.MapCone, Dataset.Dataset1, 9),
+            Question.createEstimate(i++, "V3R2Re2", VisualisationType.MapCone, Dataset.Dataset1, 11),
 
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 60, 61),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 64, 65),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 54, 55),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 58, 59),
+            Question.createEstimate(i++, "V1R1Re1", VisualisationType.InPlaceBars, Dataset.Dataset1, 0),
+            Question.createEstimate(i++, "V1R2Re1", VisualisationType.InPlaceBars, Dataset.Dataset1, 2),
+            Question.createEstimate(i++, "V1R1Re2", VisualisationType.InPlaceBars, Dataset.Dataset1, 1),
+            Question.createEstimate(i++, "V1R2Re2", VisualisationType.InPlaceBars, Dataset.Dataset1, 3),
 
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 70, 71),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 50, 51),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 62, 63),
-			Question.createLarger(i++, VisualisationType.MapCone, Dataset.Dataset2, 66, 67),
+            Question.createEstimate(i++, "V2R1Re1", VisualisationType.BarCone, Dataset.Dataset1, 4),
+            Question.createEstimate(i++, "V2R2Re1", VisualisationType.BarCone, Dataset.Dataset1, 6),
+            Question.createEstimate(i++, "V2R1Re2", VisualisationType.BarCone, Dataset.Dataset1, 5),
+            Question.createEstimate(i++, "V2R2Re2", VisualisationType.BarCone, Dataset.Dataset1, 7),
+        });
 
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 4, 5),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 8, 9),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 20, 21),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 0, 1),
-
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 12, 13),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 16, 17),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 6, 7),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 10, 11),
-
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 22, 23),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 2, 3),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 14, 15),
-			Question.createLarger(i++, VisualisationType.InPlaceBars, Dataset.Dataset2, 18, 19),
-
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 28, 29),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 32, 33),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 44, 45),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 24, 25),
-
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 36, 37),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 40, 41),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 30, 31),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 34, 35),
-
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 46, 47),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 26, 27),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 38, 39),
-			Question.createLarger(i++, VisualisationType.BarCone, Dataset.Dataset2, 42, 43),
-		});
+		checkDuplicateQuestions(datasetQuestions[group3Key]);
 	}
 
-	void setUpTask3Dataset()
+	void setUpTask2Dataset(Dataset dataset)
 	{
 		int i = 0;
 		// Group 1 - V1-V2-V3
-		datasetQuestions.Add(getDatasetKey(Dataset.Dataset5, ParticipantGroup.Group1), new List<Question>() { 
-			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 0, 1),
-			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 10, 11),
-			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 2, 3),
-			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 8, 9),
+		string group1Key = getDatasetKey(dataset, ParticipantGroup.Group1);
+		datasetQuestions.Add(group1Key, new List<Question>() {
+			Question.createLarger(i++, "V1R1F2Re1", VisualisationType.InPlaceBars, Dataset.Dataset2, 4, 5),
+			Question.createLarger(i++, "V1R2F1Re1", VisualisationType.InPlaceBars, Dataset.Dataset2, 8, 9),
+			Question.createLarger(i++, "V1R3F2Re1", VisualisationType.InPlaceBars, Dataset.Dataset2, 20, 21),
+			Question.createLarger(i++, "V1R1F1Re1", VisualisationType.InPlaceBars, Dataset.Dataset2, 0, 1),
 
-			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 4, 5),
-			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 14, 15),
-			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 6, 7),
-			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 12, 13),
+			Question.createLarger(i++, "V1R2F2Re1", VisualisationType.InPlaceBars, Dataset.Dataset2, 12, 13),
+			Question.createLarger(i++, "V1R3F1Re1", VisualisationType.InPlaceBars, Dataset.Dataset2, 16, 17),
+			Question.createLarger(i++, "V1R1F2Re2", VisualisationType.InPlaceBars, Dataset.Dataset2, 6, 7),
+			Question.createLarger(i++, "V1R2F1Re2", VisualisationType.InPlaceBars, Dataset.Dataset2, 10, 11),
 
-			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 16, 17),
-			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 26, 27),
-			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 18, 19),
-			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 24, 25),
+			Question.createLarger(i++, "V1R3F2Re2", VisualisationType.InPlaceBars, Dataset.Dataset2, 22, 23),
+			Question.createLarger(i++, "V1R1F1Re2", VisualisationType.InPlaceBars, Dataset.Dataset2, 2, 3),
+			Question.createLarger(i++, "V1R2F2Re2", VisualisationType.InPlaceBars, Dataset.Dataset2, 14, 15),
+			Question.createLarger(i++, "V1R3F1Re2", VisualisationType.InPlaceBars, Dataset.Dataset2, 18, 19),
 
-			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 20, 21),
-			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 30, 31),
-			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 22, 23),
-			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 28, 29),
+			Question.createLarger(i++, "V2R1F2Re1", VisualisationType.BarCone, Dataset.Dataset2, 28, 29),
+			Question.createLarger(i++, "V2R2F1Re1", VisualisationType.BarCone, Dataset.Dataset2, 32, 33),
+			Question.createLarger(i++, "V2R3F2Re1", VisualisationType.BarCone, Dataset.Dataset2, 44, 45),
+			Question.createLarger(i++, "V2R1F1Re1", VisualisationType.BarCone, Dataset.Dataset2, 24, 25),
 
-			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 32, 33),
-			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 42, 43),
-			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 34, 35),
-			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 40, 41),
+			Question.createLarger(i++, "V2R2F2Re1", VisualisationType.BarCone, Dataset.Dataset2, 36, 37),
+			Question.createLarger(i++, "V2R3F1Re1", VisualisationType.BarCone, Dataset.Dataset2, 40, 41),
+			Question.createLarger(i++, "V2R1F2Re2", VisualisationType.BarCone, Dataset.Dataset2, 30, 31),
+			Question.createLarger(i++, "V2R2F1Re2", VisualisationType.BarCone, Dataset.Dataset2, 34, 35),
 
-			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 36, 37),
-			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 46, 47),
-			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 38, 39),
-			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 44, 45),
+			Question.createLarger(i++, "V2R3F2Re2", VisualisationType.BarCone, Dataset.Dataset2, 46, 47),
+			Question.createLarger(i++, "V2R1F1Re2", VisualisationType.BarCone, Dataset.Dataset2, 26, 27),
+			Question.createLarger(i++, "V2R2F2Re2", VisualisationType.BarCone, Dataset.Dataset2, 38, 39),
+			Question.createLarger(i++, "V2R3F1Re2", VisualisationType.BarCone, Dataset.Dataset2, 42, 43),
+
+			Question.createLarger(i++, "V3R1F2Re1", VisualisationType.MapCone, Dataset.Dataset2, 52, 53),
+			Question.createLarger(i++, "V3R2F1Re1", VisualisationType.MapCone, Dataset.Dataset2, 56, 57),
+			Question.createLarger(i++, "V3R3F2Re1", VisualisationType.MapCone, Dataset.Dataset2, 68, 69),
+			Question.createLarger(i++, "V3R1F1Re1", VisualisationType.MapCone, Dataset.Dataset2, 48, 49),
+
+			Question.createLarger(i++, "V3R2F2Re1", VisualisationType.MapCone, Dataset.Dataset2, 60, 61),
+			Question.createLarger(i++, "V3R3F1Re1", VisualisationType.MapCone, Dataset.Dataset2, 64, 65),
+			Question.createLarger(i++, "V3R1F2Re2", VisualisationType.MapCone, Dataset.Dataset2, 54, 55),
+			Question.createLarger(i++, "V3R2F1Re2", VisualisationType.MapCone, Dataset.Dataset2, 58, 59),
+
+			Question.createLarger(i++, "V3R3F2Re2", VisualisationType.MapCone, Dataset.Dataset2, 70, 71),
+			Question.createLarger(i++, "V3R1F1Re2", VisualisationType.MapCone, Dataset.Dataset2, 50, 51),
+			Question.createLarger(i++, "V3R2F2Re2", VisualisationType.MapCone, Dataset.Dataset2, 62, 63),
+			Question.createLarger(i++, "V3R3F1Re2", VisualisationType.MapCone, Dataset.Dataset2, 66, 67),
 		});
+
+		checkDuplicateQuestions(datasetQuestions[group1Key]);
 
 		i = 0;
 		// Group 2 - V2-V3-V1
-		datasetQuestions.Add(getDatasetKey(Dataset.Dataset5, ParticipantGroup.Group2), new List<Question>() { 
-			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 16, 17),
-			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 26, 27),
-			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 18, 19),
-			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 24, 25),
+		string group2Key = getDatasetKey(dataset, ParticipantGroup.Group2);
+		datasetQuestions.Add(group2Key, new List<Question>() {
+			Question.createLarger(i++, "V2R1F2Re1", VisualisationType.BarCone, Dataset.Dataset2, 28, 29),
+			Question.createLarger(i++, "V2R2F1Re1", VisualisationType.BarCone, Dataset.Dataset2, 32, 33),
+			Question.createLarger(i++, "V2R3F2Re1", VisualisationType.BarCone, Dataset.Dataset2, 44, 45),
+			Question.createLarger(i++, "V2R1F1Re1", VisualisationType.BarCone, Dataset.Dataset2, 24, 25),
 
-			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 20, 21),
-			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 30, 31),
-			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 22, 23),
-			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 28, 29),
+			Question.createLarger(i++, "V2R2F2Re1", VisualisationType.BarCone, Dataset.Dataset2, 36, 37),
+			Question.createLarger(i++, "V2R3F1Re1", VisualisationType.BarCone, Dataset.Dataset2, 40, 41),
+			Question.createLarger(i++, "V2R1F2Re2", VisualisationType.BarCone, Dataset.Dataset2, 30, 31),
+			Question.createLarger(i++, "V2R2F1Re2", VisualisationType.BarCone, Dataset.Dataset2, 34, 35),
 
-			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 32, 33),
-			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 42, 43),
-			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 34, 35),
-			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 40, 41),
+			Question.createLarger(i++, "V2R3F2Re2", VisualisationType.BarCone, Dataset.Dataset2, 46, 47),
+			Question.createLarger(i++, "V2R1F1Re2", VisualisationType.BarCone, Dataset.Dataset2, 26, 27),
+			Question.createLarger(i++, "V2R2F2Re2", VisualisationType.BarCone, Dataset.Dataset2, 38, 39),
+			Question.createLarger(i++, "V2R3F1Re2", VisualisationType.BarCone, Dataset.Dataset2, 42, 43),
 
-			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 36, 37),
-			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 46, 47),
-			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 38, 39),
-			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 44, 45),
+			Question.createLarger(i++, "V3R1F2Re1", VisualisationType.MapCone, Dataset.Dataset2, 52, 53),
+			Question.createLarger(i++, "V3R2F1Re1", VisualisationType.MapCone, Dataset.Dataset2, 56, 57),
+			Question.createLarger(i++, "V3R3F2Re1", VisualisationType.MapCone, Dataset.Dataset2, 68, 69),
+			Question.createLarger(i++, "V3R1F1Re1", VisualisationType.MapCone, Dataset.Dataset2, 48, 49),
 
-			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 0, 1),
-			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 10, 11),
-			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 2, 3),
-			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 8, 9),
+			Question.createLarger(i++, "V3R2F2Re1", VisualisationType.MapCone, Dataset.Dataset2, 60, 61),
+			Question.createLarger(i++, "V3R3F1Re1", VisualisationType.MapCone, Dataset.Dataset2, 64, 65),
+			Question.createLarger(i++, "V3R1F2Re2", VisualisationType.MapCone, Dataset.Dataset2, 54, 55),
+			Question.createLarger(i++, "V3R2F1Re2", VisualisationType.MapCone, Dataset.Dataset2, 58, 59),
 
-			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 4, 5),
-			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 14, 15),
-			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 6, 7),
-			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 12, 13),
+			Question.createLarger(i++, "V3R3F2Re2", VisualisationType.MapCone, Dataset.Dataset2, 70, 71),
+			Question.createLarger(i++, "V3R1F1Re2", VisualisationType.MapCone, Dataset.Dataset2, 50, 51),
+			Question.createLarger(i++, "V3R2F2Re2", VisualisationType.MapCone, Dataset.Dataset2, 62, 63),
+			Question.createLarger(i++, "V3R3F1Re2", VisualisationType.MapCone, Dataset.Dataset2, 66, 67),
+
+			Question.createLarger(i++, "V1R1F2Re1", VisualisationType.InPlaceBars, Dataset.Dataset2, 4, 5),
+			Question.createLarger(i++, "V1R2F1Re1", VisualisationType.InPlaceBars, Dataset.Dataset2, 8, 9),
+			Question.createLarger(i++, "V1R3F2Re1", VisualisationType.InPlaceBars, Dataset.Dataset2, 20, 21),
+			Question.createLarger(i++, "V1R1F1Re1", VisualisationType.InPlaceBars, Dataset.Dataset2, 0, 1),
+
+			Question.createLarger(i++, "V1R2F2Re1", VisualisationType.InPlaceBars, Dataset.Dataset2, 12, 13),
+			Question.createLarger(i++, "V1R3F1Re1", VisualisationType.InPlaceBars, Dataset.Dataset2, 16, 17),
+			Question.createLarger(i++, "V1R1F2Re2", VisualisationType.InPlaceBars, Dataset.Dataset2, 6, 7),
+			Question.createLarger(i++, "V1R2F1Re2", VisualisationType.InPlaceBars, Dataset.Dataset2, 10, 11),
+
+			Question.createLarger(i++, "V1R3F2Re2", VisualisationType.InPlaceBars, Dataset.Dataset2, 22, 23),
+			Question.createLarger(i++, "V1R1F1Re2", VisualisationType.InPlaceBars, Dataset.Dataset2, 2, 3),
+			Question.createLarger(i++, "V1R2F2Re2", VisualisationType.InPlaceBars, Dataset.Dataset2, 14, 15),
+			Question.createLarger(i++, "V1R3F1Re2", VisualisationType.InPlaceBars, Dataset.Dataset2, 18, 19),
 		});
+
+		checkDuplicateQuestions(datasetQuestions[group2Key]);
 
 		i = 0;
 		// Group 3 - V3-V1-V2
-		datasetQuestions.Add(getDatasetKey(Dataset.Dataset5, ParticipantGroup.Group3), new List<Question>() { 
-			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 32, 33),
-			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 42, 43),
-			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 34, 35),
-			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 40, 41),
+		string group3Key = getDatasetKey(dataset, ParticipantGroup.Group3);
+		datasetQuestions.Add(group3Key, new List<Question>() {
+			Question.createLarger(i++, "V3R1F2Re1", VisualisationType.MapCone, Dataset.Dataset2, 52, 53),
+			Question.createLarger(i++, "V3R2F1Re1", VisualisationType.MapCone, Dataset.Dataset2, 56, 57),
+			Question.createLarger(i++, "V3R3F2Re1", VisualisationType.MapCone, Dataset.Dataset2, 68, 69),
+			Question.createLarger(i++, "V3R1F1Re1", VisualisationType.MapCone, Dataset.Dataset2, 48, 49),
 
-			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 36, 37),
-			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 46, 47),
-			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 38, 39),
-			Question.createCloser(i++, VisualisationType.MapCone, Dataset.Dataset5, 44, 45),
+			Question.createLarger(i++, "V3R2F2Re1", VisualisationType.MapCone, Dataset.Dataset2, 60, 61),
+			Question.createLarger(i++, "V3R3F1Re1", VisualisationType.MapCone, Dataset.Dataset2, 64, 65),
+			Question.createLarger(i++, "V3R1F2Re2", VisualisationType.MapCone, Dataset.Dataset2, 54, 55),
+			Question.createLarger(i++, "V3R2F1Re2", VisualisationType.MapCone, Dataset.Dataset2, 58, 59),
 
-			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 0, 1),
-			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 10, 11),
-			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 2, 3),
-			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 8, 9),
+			Question.createLarger(i++, "V3R3F2Re2", VisualisationType.MapCone, Dataset.Dataset2, 70, 71),
+			Question.createLarger(i++, "V3R1F1Re2", VisualisationType.MapCone, Dataset.Dataset2, 50, 51),
+			Question.createLarger(i++, "V3R2F2Re2", VisualisationType.MapCone, Dataset.Dataset2, 62, 63),
+			Question.createLarger(i++, "V3R3F1Re2", VisualisationType.MapCone, Dataset.Dataset2, 66, 67),
 
-			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 4, 5),
-			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 14, 15),
-			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 6, 7),
-			Question.createCloser(i++, VisualisationType.InPlaceBars, Dataset.Dataset5, 12, 13),
+			Question.createLarger(i++, "V1R1F2Re1", VisualisationType.InPlaceBars, Dataset.Dataset2, 4, 5),
+			Question.createLarger(i++, "V1R2F1Re1", VisualisationType.InPlaceBars, Dataset.Dataset2, 8, 9),
+			Question.createLarger(i++, "V1R3F2Re1", VisualisationType.InPlaceBars, Dataset.Dataset2, 20, 21),
+			Question.createLarger(i++, "V1R1F1Re1", VisualisationType.InPlaceBars, Dataset.Dataset2, 0, 1),
 
-			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 16, 17),
-			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 26, 27),
-			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 18, 19),
-			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 24, 25),
+			Question.createLarger(i++, "V1R2F2Re1", VisualisationType.InPlaceBars, Dataset.Dataset2, 12, 13),
+			Question.createLarger(i++, "V1R3F1Re1", VisualisationType.InPlaceBars, Dataset.Dataset2, 16, 17),
+			Question.createLarger(i++, "V1R1F2Re2", VisualisationType.InPlaceBars, Dataset.Dataset2, 6, 7),
+			Question.createLarger(i++, "V1R2F1Re2", VisualisationType.InPlaceBars, Dataset.Dataset2, 10, 11),
 
-			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 20, 21),
-			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 30, 31),
-			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 22, 23),
-			Question.createCloser(i++, VisualisationType.BarCone, Dataset.Dataset5, 28, 29),
+			Question.createLarger(i++, "V1R3F2Re2", VisualisationType.InPlaceBars, Dataset.Dataset2, 22, 23),
+			Question.createLarger(i++, "V1R1F1Re2", VisualisationType.InPlaceBars, Dataset.Dataset2, 2, 3),
+			Question.createLarger(i++, "V1R2F2Re2", VisualisationType.InPlaceBars, Dataset.Dataset2, 14, 15),
+			Question.createLarger(i++, "V1R3F1Re2", VisualisationType.InPlaceBars, Dataset.Dataset2, 18, 19),
+
+			Question.createLarger(i++, "V2R1F2Re1", VisualisationType.BarCone, Dataset.Dataset2, 28, 29),
+			Question.createLarger(i++, "V2R2F1Re1", VisualisationType.BarCone, Dataset.Dataset2, 32, 33),
+			Question.createLarger(i++, "V2R3F2Re1", VisualisationType.BarCone, Dataset.Dataset2, 44, 45),
+			Question.createLarger(i++, "V2R1F1Re1", VisualisationType.BarCone, Dataset.Dataset2, 24, 25),
+
+			Question.createLarger(i++, "V2R2F2Re1", VisualisationType.BarCone, Dataset.Dataset2, 36, 37),
+			Question.createLarger(i++, "V2R3F1Re1", VisualisationType.BarCone, Dataset.Dataset2, 40, 41),
+			Question.createLarger(i++, "V2R1F2Re2", VisualisationType.BarCone, Dataset.Dataset2, 30, 31),
+			Question.createLarger(i++, "V2R2F1Re2", VisualisationType.BarCone, Dataset.Dataset2, 34, 35),
+
+			Question.createLarger(i++, "V2R3F2Re2", VisualisationType.BarCone, Dataset.Dataset2, 46, 47),
+			Question.createLarger(i++, "V2R1F1Re2", VisualisationType.BarCone, Dataset.Dataset2, 26, 27),
+			Question.createLarger(i++, "V2R2F2Re2", VisualisationType.BarCone, Dataset.Dataset2, 38, 39),
+			Question.createLarger(i++, "V2R3F1Re2", VisualisationType.BarCone, Dataset.Dataset2, 42, 43),
 		});
+
+		checkDuplicateQuestions(datasetQuestions[group3Key]);
+	}
+
+	void setUpTask3Dataset(Dataset dataset)
+	{
+		int i = 0;
+		// Group 1 - V1-V2-V3
+		string group1Key = getDatasetKey(dataset, ParticipantGroup.Group1);
+		datasetQuestions.Add(group1Key, new List<Question>() { 
+			Question.createCloser(i++, "V1R1F1Re1", VisualisationType.InPlaceBars, Dataset.Dataset5, 0, 1),
+			Question.createCloser(i++, "V1R2F2Re1", VisualisationType.InPlaceBars, Dataset.Dataset5, 10, 11),
+			Question.createCloser(i++, "V1R1F2Re1", VisualisationType.InPlaceBars, Dataset.Dataset5, 2, 3),
+			Question.createCloser(i++, "V1R2F1Re1", VisualisationType.InPlaceBars, Dataset.Dataset5, 8, 9),
+
+			Question.createCloser(i++, "V1R1F1Re2", VisualisationType.InPlaceBars, Dataset.Dataset5, 4, 5),
+			Question.createCloser(i++, "V1R2F2Re2", VisualisationType.InPlaceBars, Dataset.Dataset5, 14, 15),
+			Question.createCloser(i++, "V1R1F2Re2", VisualisationType.InPlaceBars, Dataset.Dataset5, 6, 7),
+			Question.createCloser(i++, "V1R2F1Re2", VisualisationType.InPlaceBars, Dataset.Dataset5, 12, 13),
+
+			Question.createCloser(i++, "V2R1F1Re1", VisualisationType.BarCone, Dataset.Dataset5, 16, 17),
+			Question.createCloser(i++, "V2R2F2Re1", VisualisationType.BarCone, Dataset.Dataset5, 26, 27),
+			Question.createCloser(i++, "V2R1F2Re1", VisualisationType.BarCone, Dataset.Dataset5, 18, 19),
+			Question.createCloser(i++, "V2R2F1Re1", VisualisationType.BarCone, Dataset.Dataset5, 24, 25),
+
+			Question.createCloser(i++, "V2R1F1Re2", VisualisationType.BarCone, Dataset.Dataset5, 20, 21),
+			Question.createCloser(i++, "V2R2F2Re2", VisualisationType.BarCone, Dataset.Dataset5, 30, 31),
+			Question.createCloser(i++, "V2R1F2Re2", VisualisationType.BarCone, Dataset.Dataset5, 22, 23),
+			Question.createCloser(i++, "V2R2F1Re2", VisualisationType.BarCone, Dataset.Dataset5, 28, 29),
+
+			Question.createCloser(i++, "V3R1F1Re1", VisualisationType.MapCone, Dataset.Dataset5, 32, 33),
+			Question.createCloser(i++, "V3R2F2Re1", VisualisationType.MapCone, Dataset.Dataset5, 42, 43),
+			Question.createCloser(i++, "V3R1F2Re1", VisualisationType.MapCone, Dataset.Dataset5, 34, 35),
+			Question.createCloser(i++, "V3R2F1Re1", VisualisationType.MapCone, Dataset.Dataset5, 40, 41),
+
+			Question.createCloser(i++, "V3R1F1Re2", VisualisationType.MapCone, Dataset.Dataset5, 36, 37),
+			Question.createCloser(i++, "V3R2F2Re2", VisualisationType.MapCone, Dataset.Dataset5, 46, 47),
+			Question.createCloser(i++, "V3R1F2Re2", VisualisationType.MapCone, Dataset.Dataset5, 38, 39),
+			Question.createCloser(i++, "V3R2F1Re2", VisualisationType.MapCone, Dataset.Dataset5, 44, 45),
+		});
+
+		checkDuplicateQuestions(datasetQuestions[group1Key]);
+
+		i = 0;
+		// Group 2 - V2-V3-V1
+		string group2Key = getDatasetKey(dataset, ParticipantGroup.Group2);
+		datasetQuestions.Add(group2Key, new List<Question>() { 
+			Question.createCloser(i++, "V2R1F1Re1", VisualisationType.BarCone, Dataset.Dataset5, 16, 17),
+			Question.createCloser(i++, "V2R2F2Re1", VisualisationType.BarCone, Dataset.Dataset5, 26, 27),
+			Question.createCloser(i++, "V2R1F2Re1", VisualisationType.BarCone, Dataset.Dataset5, 18, 19),
+			Question.createCloser(i++, "V2R2F1Re1", VisualisationType.BarCone, Dataset.Dataset5, 24, 25),
+
+			Question.createCloser(i++, "V2R1F1Re2", VisualisationType.BarCone, Dataset.Dataset5, 20, 21),
+			Question.createCloser(i++, "V2R2F2Re2", VisualisationType.BarCone, Dataset.Dataset5, 30, 31),
+			Question.createCloser(i++, "V2R1F2Re2", VisualisationType.BarCone, Dataset.Dataset5, 22, 23),
+			Question.createCloser(i++, "V2R2F1Re2", VisualisationType.BarCone, Dataset.Dataset5, 28, 29),
+
+			Question.createCloser(i++, "V3R1F1Re1", VisualisationType.MapCone, Dataset.Dataset5, 32, 33),
+			Question.createCloser(i++, "V3R2F2Re1", VisualisationType.MapCone, Dataset.Dataset5, 42, 43),
+			Question.createCloser(i++, "V3R1F2Re1", VisualisationType.MapCone, Dataset.Dataset5, 34, 35),
+			Question.createCloser(i++, "V3R2F1Re1", VisualisationType.MapCone, Dataset.Dataset5, 40, 41),
+
+			Question.createCloser(i++, "V3R1F1Re2", VisualisationType.MapCone, Dataset.Dataset5, 36, 37),
+			Question.createCloser(i++, "V3R2F2Re2", VisualisationType.MapCone, Dataset.Dataset5, 46, 47),
+			Question.createCloser(i++, "V3R1F2Re2", VisualisationType.MapCone, Dataset.Dataset5, 38, 39),
+			Question.createCloser(i++, "V3R2F1Re2", VisualisationType.MapCone, Dataset.Dataset5, 44, 45),
+
+			Question.createCloser(i++, "V1R1F1Re1", VisualisationType.InPlaceBars, Dataset.Dataset5, 0, 1),
+			Question.createCloser(i++, "V1R2F2Re1", VisualisationType.InPlaceBars, Dataset.Dataset5, 10, 11),
+			Question.createCloser(i++, "V1R1F2Re1", VisualisationType.InPlaceBars, Dataset.Dataset5, 2, 3),
+			Question.createCloser(i++, "V1R2F1Re1", VisualisationType.InPlaceBars, Dataset.Dataset5, 8, 9),
+
+			Question.createCloser(i++, "V1R1F1Re2", VisualisationType.InPlaceBars, Dataset.Dataset5, 4, 5),
+			Question.createCloser(i++, "V1R2F2Re2", VisualisationType.InPlaceBars, Dataset.Dataset5, 14, 15),
+			Question.createCloser(i++, "V1R1F2Re2", VisualisationType.InPlaceBars, Dataset.Dataset5, 6, 7),
+			Question.createCloser(i++, "V1R2F1Re2", VisualisationType.InPlaceBars, Dataset.Dataset5, 12, 13),
+		});
+
+		checkDuplicateQuestions(datasetQuestions[group2Key]);
+
+		i = 0;
+		// Group 3 - V3-V1-V2
+		string group3Key = getDatasetKey(dataset, ParticipantGroup.Group3);
+		datasetQuestions.Add(group3Key, new List<Question>() { 
+			Question.createCloser(i++, "V3R1F1Re1", VisualisationType.MapCone, Dataset.Dataset5, 32, 33),
+			Question.createCloser(i++, "V3R2F2Re1", VisualisationType.MapCone, Dataset.Dataset5, 42, 43),
+			Question.createCloser(i++, "V3R1F2Re1", VisualisationType.MapCone, Dataset.Dataset5, 34, 35),
+			Question.createCloser(i++, "V3R2F1Re1", VisualisationType.MapCone, Dataset.Dataset5, 40, 41),
+
+			Question.createCloser(i++, "V3R1F1Re2", VisualisationType.MapCone, Dataset.Dataset5, 36, 37),
+			Question.createCloser(i++, "V3R2F2Re2", VisualisationType.MapCone, Dataset.Dataset5, 46, 47),
+			Question.createCloser(i++, "V3R1F2Re2", VisualisationType.MapCone, Dataset.Dataset5, 38, 39),
+			Question.createCloser(i++, "V3R2F1Re2", VisualisationType.MapCone, Dataset.Dataset5, 44, 45),
+
+			Question.createCloser(i++, "V1R1F1Re1", VisualisationType.InPlaceBars, Dataset.Dataset5, 0, 1),
+			Question.createCloser(i++, "V1R2F2Re1", VisualisationType.InPlaceBars, Dataset.Dataset5, 10, 11),
+			Question.createCloser(i++, "V1R1F2Re1", VisualisationType.InPlaceBars, Dataset.Dataset5, 2, 3),
+			Question.createCloser(i++, "V1R2F1Re1", VisualisationType.InPlaceBars, Dataset.Dataset5, 8, 9),
+
+			Question.createCloser(i++, "V1R1F1Re2", VisualisationType.InPlaceBars, Dataset.Dataset5, 4, 5),
+			Question.createCloser(i++, "V1R2F2Re2", VisualisationType.InPlaceBars, Dataset.Dataset5, 14, 15),
+			Question.createCloser(i++, "V1R1F2Re2", VisualisationType.InPlaceBars, Dataset.Dataset5, 6, 7),
+			Question.createCloser(i++, "V1R2F1Re2", VisualisationType.InPlaceBars, Dataset.Dataset5, 12, 13),
+
+			Question.createCloser(i++, "V2R1F1Re1", VisualisationType.BarCone, Dataset.Dataset5, 16, 17),
+			Question.createCloser(i++, "V2R2F2Re1", VisualisationType.BarCone, Dataset.Dataset5, 26, 27),
+			Question.createCloser(i++, "V2R1F2Re1", VisualisationType.BarCone, Dataset.Dataset5, 18, 19),
+			Question.createCloser(i++, "V2R2F1Re1", VisualisationType.BarCone, Dataset.Dataset5, 24, 25),
+
+			Question.createCloser(i++, "V2R1F1Re2", VisualisationType.BarCone, Dataset.Dataset5, 20, 21),
+			Question.createCloser(i++, "V2R2F2Re2", VisualisationType.BarCone, Dataset.Dataset5, 30, 31),
+			Question.createCloser(i++, "V2R1F2Re2", VisualisationType.BarCone, Dataset.Dataset5, 22, 23),
+			Question.createCloser(i++, "V2R2F1Re2", VisualisationType.BarCone, Dataset.Dataset5, 28, 29),
+		});
+
+		checkDuplicateQuestions(datasetQuestions[group3Key]);
 	}
 
 	void setUpTask1TrainingDataset(Dataset dataset)
@@ -507,42 +536,42 @@ public class StudyPlot
 		// Group 1 - V1-V2-V3
         datasetQuestions.Add(getDatasetKey(dataset, ParticipantGroup.Group1), new List<Question>()
         {
-            Question.createEstimate(i++, VisualisationType.InPlaceBars, dataset, 0),
-            Question.createEstimate(i++, VisualisationType.InPlaceBars, dataset, 1),
+            Question.createEstimate(i++, "V1R1Re1", VisualisationType.InPlaceBars, dataset, 0),
+            Question.createEstimate(i++, "V1R1Re2", VisualisationType.InPlaceBars, dataset, 1),
 
-            Question.createEstimate(i++, VisualisationType.BarCone, dataset, 2),
-            Question.createEstimate(i++, VisualisationType.BarCone, dataset, 3),
+            Question.createEstimate(i++, "V2R1Re1", VisualisationType.BarCone, dataset, 2),
+            Question.createEstimate(i++, "V2R1Re2", VisualisationType.BarCone, dataset, 3),
 
-            Question.createEstimate(i++, VisualisationType.MapCone, dataset, 4),
-            Question.createEstimate(i++, VisualisationType.MapCone, dataset, 5),
+            Question.createEstimate(i++, "V3R1Re1", VisualisationType.MapCone, dataset, 4),
+            Question.createEstimate(i++, "V3R1Re2", VisualisationType.MapCone, dataset, 5),
         });
 
 		i = 0;
 		// Group 2 - V2-V3-V1
         datasetQuestions.Add(getDatasetKey(dataset, ParticipantGroup.Group2), new List<Question>()
         {
-            Question.createEstimate(i++, VisualisationType.BarCone, dataset, 2),
-            Question.createEstimate(i++, VisualisationType.BarCone, dataset, 3),
+            Question.createEstimate(i++, "V2R1Re1", VisualisationType.BarCone, dataset, 2),
+            Question.createEstimate(i++, "V2R1Re2", VisualisationType.BarCone, dataset, 3),
 
-            Question.createEstimate(i++, VisualisationType.MapCone, dataset, 4),
-            Question.createEstimate(i++, VisualisationType.MapCone, dataset, 5),
+            Question.createEstimate(i++, "V3R1Re1", VisualisationType.MapCone, dataset, 4),
+            Question.createEstimate(i++, "V3R1Re2", VisualisationType.MapCone, dataset, 5),
 
-            Question.createEstimate(i++, VisualisationType.InPlaceBars, dataset, 0),
-            Question.createEstimate(i++, VisualisationType.InPlaceBars, dataset, 1),
+            Question.createEstimate(i++, "V1R1Re1", VisualisationType.InPlaceBars, dataset, 0),
+            Question.createEstimate(i++, "V1R1Re2", VisualisationType.InPlaceBars, dataset, 1),
         });
 
 		i = 0;
 		// Group 3 - V3-V1-V2
         datasetQuestions.Add(getDatasetKey(dataset, ParticipantGroup.Group3), new List<Question>()
         {
-            Question.createEstimate(i++, VisualisationType.MapCone, dataset, 4),
-            Question.createEstimate(i++, VisualisationType.MapCone, dataset, 5),
+            Question.createEstimate(i++, "V3R1Re1", VisualisationType.MapCone, dataset, 4),
+            Question.createEstimate(i++, "V3R1Re2", VisualisationType.MapCone, dataset, 5),
 
-            Question.createEstimate(i++, VisualisationType.InPlaceBars, dataset, 0),
-            Question.createEstimate(i++, VisualisationType.InPlaceBars, dataset, 1),
+            Question.createEstimate(i++, "V1R1Re1", VisualisationType.InPlaceBars, dataset, 0),
+            Question.createEstimate(i++, "V1R1Re2", VisualisationType.InPlaceBars, dataset, 1),
 
-            Question.createEstimate(i++, VisualisationType.BarCone, dataset, 2),
-            Question.createEstimate(i++, VisualisationType.BarCone, dataset, 3),
+            Question.createEstimate(i++, "V2R1Re1", VisualisationType.BarCone, dataset, 2),
+            Question.createEstimate(i++, "V2R1Re2", VisualisationType.BarCone, dataset, 3),
         });
 	}
 
@@ -552,51 +581,51 @@ public class StudyPlot
 		// Group 1 - V1-V2-V3
         datasetQuestions.Add(getDatasetKey(dataset, ParticipantGroup.Group1), new List<Question>()
         {
-            Question.createLarger(i++, VisualisationType.InPlaceBars, dataset, 0, 1),
-            Question.createLarger(i++, VisualisationType.InPlaceBars, dataset, 2, 3),
-            Question.createLarger(i++, VisualisationType.InPlaceBars, dataset, 4, 5),
+            Question.createLarger(i++, "V1R1F1Re1", VisualisationType.InPlaceBars, dataset, 0, 1),
+            Question.createLarger(i++, "V1R1F1Re2", VisualisationType.InPlaceBars, dataset, 2, 3),
+            Question.createLarger(i++, "V1R1F1Re3", VisualisationType.InPlaceBars, dataset, 4, 5),
 
-            Question.createLarger(i++, VisualisationType.BarCone, dataset, 6, 7),
-            Question.createLarger(i++, VisualisationType.BarCone, dataset, 8, 9),
-            Question.createLarger(i++, VisualisationType.BarCone, dataset, 10, 11),
+            Question.createLarger(i++, "V2R1F1Re1", VisualisationType.BarCone, dataset, 6, 7),
+            Question.createLarger(i++, "V2R1F1Re2", VisualisationType.BarCone, dataset, 8, 9),
+            Question.createLarger(i++, "V2R1F1Re3", VisualisationType.BarCone, dataset, 10, 11),
 
-            Question.createLarger(i++, VisualisationType.MapCone, dataset, 12, 13),
-            Question.createLarger(i++, VisualisationType.MapCone, dataset, 14, 15),
-            Question.createLarger(i++, VisualisationType.MapCone, dataset, 16, 17),
+            Question.createLarger(i++, "V3R1F1Re1", VisualisationType.MapCone, dataset, 12, 13),
+            Question.createLarger(i++, "V3R1F1Re2", VisualisationType.MapCone, dataset, 14, 15),
+            Question.createLarger(i++, "V3R1F1Re3", VisualisationType.MapCone, dataset, 16, 17),
         });
 
 		i = 0;
 		// Group 2 - V2-V3-V1
         datasetQuestions.Add(getDatasetKey(dataset, ParticipantGroup.Group2), new List<Question>()
         {
-            Question.createLarger(i++, VisualisationType.BarCone, dataset, 6, 7),
-            Question.createLarger(i++, VisualisationType.BarCone, dataset, 8, 9),
-            Question.createLarger(i++, VisualisationType.BarCone, dataset, 10, 11),
+            Question.createLarger(i++, "V2R1F1Re1", VisualisationType.BarCone, dataset, 6, 7),
+            Question.createLarger(i++, "V2R1F1Re2", VisualisationType.BarCone, dataset, 8, 9),
+            Question.createLarger(i++, "V2R1F1Re3", VisualisationType.BarCone, dataset, 10, 11),
 
-            Question.createLarger(i++, VisualisationType.MapCone, dataset, 12, 13),
-            Question.createLarger(i++, VisualisationType.MapCone, dataset, 14, 15),
-            Question.createLarger(i++, VisualisationType.MapCone, dataset, 16, 17),
+            Question.createLarger(i++, "V3R1F1Re1", VisualisationType.MapCone, dataset, 12, 13),
+            Question.createLarger(i++, "V3R1F1Re2", VisualisationType.MapCone, dataset, 14, 15),
+            Question.createLarger(i++, "V3R1F1Re3", VisualisationType.MapCone, dataset, 16, 17),
 
-            Question.createLarger(i++, VisualisationType.InPlaceBars, dataset, 0, 1),
-            Question.createLarger(i++, VisualisationType.InPlaceBars, dataset, 2, 3),
-            Question.createLarger(i++, VisualisationType.InPlaceBars, dataset, 4, 5),
+            Question.createLarger(i++, "V1R1F1Re1", VisualisationType.InPlaceBars, dataset, 0, 1),
+            Question.createLarger(i++, "V1R1F1Re2", VisualisationType.InPlaceBars, dataset, 2, 3),
+            Question.createLarger(i++, "V1R1F1Re3", VisualisationType.InPlaceBars, dataset, 4, 5),
         });
 
 		i = 0;
 		// Group 3 - V3-V1-V2
         datasetQuestions.Add(getDatasetKey(dataset, ParticipantGroup.Group3), new List<Question>()
         {
-            Question.createLarger(i++, VisualisationType.MapCone, dataset, 12, 13),
-            Question.createLarger(i++, VisualisationType.MapCone, dataset, 14, 15),
-            Question.createLarger(i++, VisualisationType.MapCone, dataset, 16, 17), 
+            Question.createLarger(i++, "V3R1F1Re1", VisualisationType.MapCone, dataset, 12, 13),
+            Question.createLarger(i++, "V3R1F1Re2", VisualisationType.MapCone, dataset, 14, 15),
+            Question.createLarger(i++, "V3R1F1Re3", VisualisationType.MapCone, dataset, 16, 17),
 
-            Question.createLarger(i++, VisualisationType.InPlaceBars, dataset, 0, 1),
-            Question.createLarger(i++, VisualisationType.InPlaceBars, dataset, 2, 3),
-            Question.createLarger(i++, VisualisationType.InPlaceBars, dataset, 4, 5),
+            Question.createLarger(i++, "V1R1F1Re1", VisualisationType.InPlaceBars, dataset, 0, 1),
+            Question.createLarger(i++, "V1R1F1Re2", VisualisationType.InPlaceBars, dataset, 2, 3),
+            Question.createLarger(i++, "V1R1F1Re3", VisualisationType.InPlaceBars, dataset, 4, 5),
 
-            Question.createLarger(i++, VisualisationType.BarCone, dataset, 6, 7),
-            Question.createLarger(i++, VisualisationType.BarCone, dataset, 8, 9),
-            Question.createLarger(i++, VisualisationType.BarCone, dataset, 10, 11),
+            Question.createLarger(i++, "V2R1F1Re1", VisualisationType.BarCone, dataset, 6, 7),
+            Question.createLarger(i++, "V2R1F1Re2", VisualisationType.BarCone, dataset, 8, 9),
+            Question.createLarger(i++, "V2R1F1Re3", VisualisationType.BarCone, dataset, 10, 11),
         });
     }
 
@@ -606,56 +635,86 @@ public class StudyPlot
 		// Group 1 - V1-V2-V3
         datasetQuestions.Add(getDatasetKey(dataset, ParticipantGroup.Group1), new List<Question>()
         {
-            Question.createCloser(i++, VisualisationType.InPlaceBars, dataset, 0, 1),
-            Question.createCloser(i++, VisualisationType.InPlaceBars, dataset, 2, 3),
-            Question.createCloser(i++, VisualisationType.InPlaceBars, dataset, 4, 5),
+            Question.createCloser(i++, "V1R1F1Re1", VisualisationType.InPlaceBars, dataset, 0, 1),
+            Question.createCloser(i++, "V1R1F1Re2", VisualisationType.InPlaceBars, dataset, 2, 3),
+            Question.createCloser(i++, "V1R1F1Re3", VisualisationType.InPlaceBars, dataset, 4, 5),
 
-            Question.createCloser(i++, VisualisationType.BarCone, dataset, 6, 7),
-            Question.createCloser(i++, VisualisationType.BarCone, dataset, 8, 9),
-            Question.createCloser(i++, VisualisationType.BarCone, dataset, 10, 11),
+            Question.createCloser(i++, "V2R1F1Re1", VisualisationType.BarCone, dataset, 6, 7),
+            Question.createCloser(i++, "V2R1F1Re2", VisualisationType.BarCone, dataset, 8, 9),
+            Question.createCloser(i++, "V2R1F1Re3", VisualisationType.BarCone, dataset, 10, 11),
 
-            Question.createCloser(i++, VisualisationType.MapCone, dataset, 12, 13),
-            Question.createCloser(i++, VisualisationType.MapCone, dataset, 14, 15),
-            Question.createCloser(i++, VisualisationType.MapCone, dataset, 16, 17),
+            Question.createCloser(i++, "V3R1F1Re1", VisualisationType.MapCone, dataset, 12, 13),
+            Question.createCloser(i++, "V3R1F1Re2", VisualisationType.MapCone, dataset, 14, 15),
+            Question.createCloser(i++, "V3R1F1Re3", VisualisationType.MapCone, dataset, 16, 17),
         });
 
 		i = 0;
 		// Group 2 - V2-V3-V1
         datasetQuestions.Add(getDatasetKey(dataset, ParticipantGroup.Group2), new List<Question>()
         {
-            Question.createCloser(i++, VisualisationType.BarCone, dataset, 6, 7),
-            Question.createCloser(i++, VisualisationType.BarCone, dataset, 8, 9),
-            Question.createCloser(i++, VisualisationType.BarCone, dataset, 10, 11),
+            Question.createCloser(i++, "V2R1F1Re1", VisualisationType.BarCone, dataset, 6, 7),
+            Question.createCloser(i++, "V2R1F1Re2", VisualisationType.BarCone, dataset, 8, 9),
+            Question.createCloser(i++, "V2R1F1Re3", VisualisationType.BarCone, dataset, 10, 11),
 
-            Question.createCloser(i++, VisualisationType.MapCone, dataset, 12, 13),
-            Question.createCloser(i++, VisualisationType.MapCone, dataset, 14, 15),
-            Question.createCloser(i++, VisualisationType.MapCone, dataset, 16, 17),
+            Question.createCloser(i++, "V3R1F1Re1", VisualisationType.MapCone, dataset, 12, 13),
+            Question.createCloser(i++, "V3R1F1Re2", VisualisationType.MapCone, dataset, 14, 15),
+            Question.createCloser(i++, "V3R1F1Re3", VisualisationType.MapCone, dataset, 16, 17),
 
-            Question.createCloser(i++, VisualisationType.InPlaceBars, dataset, 0, 1),
-            Question.createCloser(i++, VisualisationType.InPlaceBars, dataset, 2, 3),
-            Question.createCloser(i++, VisualisationType.InPlaceBars, dataset, 4, 5),
+            Question.createCloser(i++, "V1R1F1Re1", VisualisationType.InPlaceBars, dataset, 0, 1),
+            Question.createCloser(i++, "V1R1F1Re2", VisualisationType.InPlaceBars, dataset, 2, 3),
+            Question.createCloser(i++, "V1R1F1Re3", VisualisationType.InPlaceBars, dataset, 4, 5),
         });
 
 		i = 0;
 		// Group 3 - V3-V1-V2
         datasetQuestions.Add(getDatasetKey(dataset, ParticipantGroup.Group3), new List<Question>()
         {
-            Question.createCloser(i++, VisualisationType.MapCone, dataset, 12, 13),
-            Question.createCloser(i++, VisualisationType.MapCone, dataset, 14, 15),
-            Question.createCloser(i++, VisualisationType.MapCone, dataset, 16, 17), 
+            Question.createCloser(i++, "V3R1F1Re1", VisualisationType.MapCone, dataset, 12, 13),
+            Question.createCloser(i++, "V3R1F1Re2", VisualisationType.MapCone, dataset, 14, 15),
+            Question.createCloser(i++, "V3R1F1Re3", VisualisationType.MapCone, dataset, 16, 17),
 
-            Question.createCloser(i++, VisualisationType.InPlaceBars, dataset, 0, 1),
-            Question.createCloser(i++, VisualisationType.InPlaceBars, dataset, 2, 3),
-            Question.createCloser(i++, VisualisationType.InPlaceBars, dataset, 4, 5),
+            Question.createCloser(i++, "V1R1F1Re1", VisualisationType.InPlaceBars, dataset, 0, 1),
+            Question.createCloser(i++, "V1R1F1Re2", VisualisationType.InPlaceBars, dataset, 2, 3),
+            Question.createCloser(i++, "V1R1F1Re3", VisualisationType.InPlaceBars, dataset, 4, 5),
 
-            Question.createCloser(i++, VisualisationType.BarCone, dataset, 6, 7),
-            Question.createCloser(i++, VisualisationType.BarCone, dataset, 8, 9),
-            Question.createCloser(i++, VisualisationType.BarCone, dataset, 10, 11),
+            Question.createCloser(i++, "V2R1F1Re1", VisualisationType.BarCone, dataset, 6, 7),
+            Question.createCloser(i++, "V2R1F1Re2", VisualisationType.BarCone, dataset, 8, 9),
+            Question.createCloser(i++, "V2R1F1Re3", VisualisationType.BarCone, dataset, 10, 11),
         });
 	}
 
 	string getDatasetKey(Dataset dataset, ParticipantGroup group)
 	{
 		return group.ToString() + "_" + dataset.ToString();
+	}
+
+	void checkDuplicateQuestions(List<Question> questions)
+	{
+		HashSet<String> questionCodes = new HashSet<String>();
+		HashSet<int> questionDataPoinnt1Idx = new HashSet<int>();
+		HashSet<int> questionDataPoinnt2Idx = new HashSet<int>();
+		foreach (Question question in questions)
+		{
+			if (!questionCodes.Add(question.code))
+			{
+				Debug.Log(question.code);
+				throw new Exception("Duplicate Question Code");
+			}
+
+			if (!questionDataPoinnt1Idx.Add(question.dataPoint1Idx))
+			{
+				Debug.Log(question.dataPoint1Idx);
+				throw new Exception("Duplicate Question DataPoint 1 idx");
+			}
+
+            if (question.task != Task.EstimateSinglePoint)
+            {
+                if (!questionDataPoinnt2Idx.Add(question.dataPoint2Idx))
+                {
+                    Debug.Log(question.dataPoint2Idx);
+                    throw new Exception("Duplicate Question DataPoint 2 idx");
+                }
+            }
+		}
 	}
 }

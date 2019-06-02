@@ -292,12 +292,12 @@ public class LoadDataSet : MonoBehaviour {
         switch(question.task)
         {
             case Task.EstimateSinglePoint:
-                DataPointsManager.Instance.mapDataPoints[question.dataPoint1Idx].completeQuestionOption1();
+                question.getDataPoint1().completeQuestionOption1();
                 break;
             case Task.PickLargerDataPoint:
             case Task.PickCloserDataPoint:
-                DataPointsManager.Instance.mapDataPoints[question.dataPoint1Idx].completeQuestionOption1();
-                DataPointsManager.Instance.mapDataPoints[question.dataPoint2Idx].completeQuestionOption2();
+                question.getDataPoint1().completeQuestionOption1();
+                question.getDataPoint2().completeQuestionOption2();
                 break;
             default:
                 break;

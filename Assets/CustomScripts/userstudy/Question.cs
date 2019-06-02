@@ -100,11 +100,12 @@ public class Question
         switch (task)
         {
             case Task.EstimateSinglePoint:
-                answer = Mathf.RoundToInt(DataPointsManager.Instance.mapDataPoints[dataPoint1Idx].Value * 100f);
+                var dataPoint = getDataPoint1();
+                answer = Mathf.RoundToInt(dataPoint.Value * 100f);
                 break;
             case Task.PickLargerDataPoint:
-                var dataPointL1 = DataPointsManager.Instance.mapDataPoints[dataPoint1Idx];
-                var dataPointL2 = DataPointsManager.Instance.mapDataPoints[dataPoint2Idx];
+                var dataPointL1 = getDataPoint1();
+                var dataPointL2 = getDataPoint2();
 
                 if (dataPointL1.Value > dataPointL2.Value)
                 {
@@ -116,8 +117,8 @@ public class Question
                 }
                 break;
             case Task.PickCloserDataPoint:
-                var dataPointC1 = DataPointsManager.Instance.mapDataPoints[dataPoint1Idx];
-                var dataPointC2 = DataPointsManager.Instance.mapDataPoints[dataPoint2Idx];
+                var dataPointC1 = getDataPoint1();
+                var dataPointC2 = getDataPoint2();
 
                 if (dataPointC1.RawPosition.magnitude < dataPointC2.RawPosition.magnitude)
                 {

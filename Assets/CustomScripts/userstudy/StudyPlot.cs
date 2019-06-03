@@ -140,7 +140,7 @@ public class StudyPlot
 
 		datasetFiles.Add(Dataset.Dataset1, "dataset_est_latest.csv");
 
-		datasetFiles.Add(Dataset.Dataset2, "dataset_higher1_latest.csv");
+		datasetFiles.Add(Dataset.Dataset2, "dataset_higher1_latest_difficult.csv");
 		//datasetFiles.Add(Dataset.Dataset3, "dataset_higher2_latest.csv");
 		//datasetFiles.Add(Dataset.Dataset4, "dataset_higher3_latest.csv");
 

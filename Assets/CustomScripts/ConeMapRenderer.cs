@@ -136,9 +136,11 @@ public class ConeMapRenderer : MonoBehaviour {
 	void calculateDataPointPositionsOnCone()
 	{
 		Vector2 cone2DPosition = new Vector2(transform.position.x, transform.position.z);
+		//Vector2 cone2DPosition = new Vector2(0, 0);
+		//Vector2 cone2DPosition = new Vector2(49.1f, 38.1f);
 		float maxMagnitude = 0;
 		MapDataPoint furthestPoint = new MapDataPoint();
-		/*
+		
 		foreach(MapDataPoint dataPoint in _dataPoints)
 		{
 			// Calculate the position of datapoint relative to the cone position
@@ -158,9 +160,10 @@ public class ConeMapRenderer : MonoBehaviour {
 
 		//Debug.Log("Max magnitude: " + maxMagnitude);
 		//Debug.Log("Furthest point: " + furthestPoint.Name + furthestPoint.ConePosition);
+		Debug.Log("Max magnitude: " + maxMagnitude);
 		scaleDataPoints(maxMagnitude);
+		//scaleDataPoints(1050);
 		//scaleDataPoints(1);
-		*/
 	}
 
 	void scaleDataPoints(float maxMagnitude)
@@ -170,9 +173,29 @@ public class ConeMapRenderer : MonoBehaviour {
 		foreach(MapDataPoint dataPoint in _dataPoints)
 		{
 			dataPoint.ConePosition /= maxMagnitude;
+			// Keep the same direction (angle) to dataPoint.ConePosition, but with the same magnitude to RawPosition, change the magnitude
+			float distance = dataPoint.getDistance();
+
+            float signedAngle = (Mathf.Atan2(dataPoint.ConePosition.y, dataPoint.ConePosition.x) - Mathf.Atan2(0, 0)) * Mathf.Rad2Deg;
+
+            var positiveAngle = signedAngle;
+            if (signedAngle < 0)
+                positiveAngle = signedAngle + 4 * 90; // Convert the negative angle to all positive if it is negative
+
+            float sinAlpha = dataPoint.ConePosition.y / dataPoint.ConePosition.x;
+
+			float newY =  Mathf.Sin(signedAngle * Mathf.Deg2Rad) * distance;
+			float newX = Mathf.Sin((90 - signedAngle) * Mathf.Deg2Rad) * distance;
+
+			dataPoint.ConePosition = new Vector2(newX, newY);	
+
 			if (dataPoint.Name == "Point 47")
 			{
-				Debug.Log("Cone Positiion: " + dataPoint.ConePosition + ", Raw Position: " + dataPoint.RawPosition);
+				Debug.Log("Point 47: Cone Position: " + dataPoint.ConePosition + ", Raw Position: " + dataPoint.RawPosition);
+			}
+			if (dataPoint.Name == "Point 48")
+			{
+				Debug.Log("Point 48: Cone Positiion: " + dataPoint.ConePosition + ", Raw Position: " + dataPoint.RawPosition);
 			}
 			//Debug.Log("Bar position (to Cone, after scale): " + dataPoint.ConePosition);
 		}

@@ -14,6 +14,9 @@ public class ArrowIndicationBehavior : MonoBehaviour {
 
 	public MapDataPoint.MapDataPointState _state = MapDataPoint.MapDataPointState.NotQuestion;
 	private MapDataPoint _mapDataPoint;
+
+	public bool _selected = false;
+
 	public MapDataPoint mapDataPoint
 	{
 		get
@@ -27,6 +30,8 @@ public class ArrowIndicationBehavior : MonoBehaviour {
 			_mapDataPoint.OnQuestionOption2ToShow += OnQuestionOption2ToShow;
 			_mapDataPoint.OnQuestionOption1Completed += OnQuestionOption1Completed;
 			_mapDataPoint.OnQuestionOption2Completed += OnQuestionOption2Completed;
+			_mapDataPoint.OnPoseEnter += OnQuestionOptionToShowSelected;
+			_mapDataPoint.OnPoseLeave += OnQuestionOptionToShowUnselected;
 		}
 	}
 
@@ -52,18 +57,32 @@ public class ArrowIndicationBehavior : MonoBehaviour {
         switch (_state)
         {
             case MapDataPoint.MapDataPointState.Question1:
-				_textMesh.enabled = true;
-                _textMesh.color = Color.blue;
-				animate();
+                _textMesh.enabled = true;
+                if (_selected)
+                {
+                    _textMesh.color = Color.green;
+                }
+                else
+                {
+                    _textMesh.color = Color.blue;
+                }
+                animate();
                 break;
             case MapDataPoint.MapDataPointState.Question2:
-				_textMesh.enabled = true;
-                _textMesh.color = Color.red;
-				animate();
+                _textMesh.enabled = true;
+                if (_selected)
+                {
+                    _textMesh.color = Color.green;
+                }
+                else
+                {
+                    _textMesh.color = Color.red;
+                }
+                animate();
                 break;
-			default:
-				_textMesh.enabled = false;
-				break;
+            default:
+                _textMesh.enabled = false;
+                break;
         }
     }
 
@@ -93,6 +112,17 @@ public class ArrowIndicationBehavior : MonoBehaviour {
 	{
 		_state = MapDataPoint.MapDataPointState.NotQuestion;
 	}
+
+	void OnQuestionOptionToShowSelected()
+	{
+		_selected = true;
+	}
+
+	void OnQuestionOptionToShowUnselected()
+	{
+		_selected = false;
+	}
+
     void OnDestroy()
     {
         if (_mapDataPoint != null)
@@ -101,6 +131,9 @@ public class ArrowIndicationBehavior : MonoBehaviour {
 			_mapDataPoint.OnQuestionOption2ToShow -= OnQuestionOption2ToShow;
 			_mapDataPoint.OnQuestionOption1Completed -= OnQuestionOption1Completed;
 			_mapDataPoint.OnQuestionOption2Completed -= OnQuestionOption2Completed;
+			_mapDataPoint.OnPoseEnter -= OnQuestionOptionToShowSelected;
+			_mapDataPoint.OnPoseLeave -= OnQuestionOptionToShowUnselected;
+			_selected = false;
         }
     }
 }

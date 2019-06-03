@@ -16,6 +16,8 @@ public class HiResScreenShots : MonoBehaviour {
 	 void Awake()
 	 {
 		 _camera = GetComponent<Camera>();
+         // Lat, Long -37.82177, 144.96470
+         // Center: Lat Long -37.81846, 144.97009
 	 }
  
      public static string ScreenShotName(int width, int height) {

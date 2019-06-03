@@ -113,9 +113,8 @@
 				topOffset = i.og_vertex.z + bottom_end + _TickThickness;
 				bottomOffset = i.og_vertex.z + bottom_end - _TickThickness;
 
-				//float tick_pos = i.og_vertex.z % step;
-
-				if ((topOffset < full_range && bottomOffset > 0) && tick_pos >= (step - _TickThickness) || (tick_pos <= _TickThickness))
+				// Turn off tick
+				if (0 && ((topOffset < full_range && bottomOffset > 0) && tick_pos >= (step - _TickThickness) || (tick_pos <= _TickThickness)))
 				{
 					col = _TickColor;
 					col.a = _TickTransparency;

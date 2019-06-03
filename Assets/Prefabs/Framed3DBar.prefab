@@ -820,6 +820,7 @@ MonoBehaviour:
   _animationSpeed: 6
   _textAnimationThreshold: 2.5
   _state: 2
+  _selected: 0
 --- !u!114 &114961520442391128
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -351,6 +351,13 @@ public class LoadDataSet : MonoBehaviour {
         DataPointsManager.Instance.MapMinX = mapMinX;
         DataPointsManager.Instance.MapMinY = mapMinY;
 
+        float centerX = mapMaxX - ((Mathf.Abs(mapMaxX) + Mathf.Abs(mapMinX)) / 2);
+        float centerY = mapMaxY - ((Mathf.Abs(mapMaxY) + Mathf.Abs(mapMinY)) / 2);
+        Vector2 center = new Vector2(centerX, centerY);
+
+        Debug.Log("Center: " + center);
+        Debug.Log("Center Map:" + _map.WorldToGeoPosition(new Vector3(centerX, 0, centerY)));
+
         Debug.Log("Max X: " + mapMaxX);
         Debug.Log("Max Y: " + mapMaxY);
         Debug.Log("Min X: " + mapMinX);
